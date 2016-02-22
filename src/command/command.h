@@ -12,5 +12,6 @@ void name();
 void boardsize(unsigned int n_rows, unsigned int n_cols);
 void clear_board(int** grid);
 void walls(unsigned int n_walls);
+void list_commands();
 
 #endif
