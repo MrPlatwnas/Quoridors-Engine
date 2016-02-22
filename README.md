@@ -19,3 +19,4 @@ About us
 ========
 
 This was a group project. The group members were Platon-Nikolaos "MrPlatwnas" Kiorpelidis and Giorgos "GeorgeKo" Korillos.
+In case you want to see who contributed to which part, be sure to check the blame view.
