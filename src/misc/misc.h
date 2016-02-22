@@ -10,5 +10,7 @@ Date                : 2-1-2015
 
 int** initGridInt(unsigned int n_rows, unsigned n_cols);
 void zerofyGrid(unsigned int n_rows, unsigned int n_cols, int** grid);
+void print2DArrayAsInt(unsigned int n_rows, unsigned int n_cols, int** array);
+void print2DArrayAsChar(unsigned int n_rows, unsigned int n_cols, int** array);
 
 #endif
