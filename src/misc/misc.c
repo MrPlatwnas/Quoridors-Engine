@@ -8,8 +8,9 @@ Date                : 28-1-2015
 #include <stdio.h>
 #include <stdlib.h>
 
-int** initGrid(unsigned int n_rows, unsigned n_cols, int** grid)
+int** initGridInt(unsigned int n_rows, unsigned n_cols)
 {
+  int** grid;
   grid = malloc(n_rows * sizeof(int*));
   if(grid == NULL)
   {
@@ -22,7 +23,7 @@ int** initGrid(unsigned int n_rows, unsigned n_cols, int** grid)
     grid[counter] = malloc(n_cols * sizeof(int));
     if(grid[counter] == NULL)
     {
-      fprintf(stderr, "Error when malloc'ing grid's memory!");                  //In case the malloc failed for some reason.
+      fprintf(stderr, "Error when malloc'ing grid's memory!");  //In case the malloc failed for some reason.
     }
   }
   return grid;
