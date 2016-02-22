@@ -8,6 +8,12 @@ Date                : 28-1-2015
 #include <stdio.h>
 #include <stdlib.h>
 
+void name()
+{
+  char* engineName = "Deep Orange";
+  printf("%s\n", engineName);
+}
+
 void boardsize(unsigned int n_rows, unsigned int n_cols)
 {
 
