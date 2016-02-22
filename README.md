@@ -18,4 +18,4 @@ Although at this point the game should be considered finished.
 About us
 ========
 
-This was a group project for the course. The group members were Platon-Nikolaos Kiorpelidis and Giorgos Korillos.
+This was a group project. The group members were Platon-Nikolaos "MrPlatwnas" Kiorpelidis and Giorgos "GeorgeKo" Korillos.
