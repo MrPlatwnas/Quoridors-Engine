@@ -8,7 +8,7 @@ Date                : 2-1-2015
 #ifndef _MISC_H_
 #define _MISC_H_
 
-int** initGrid(unsigned int n_rows, unsigned n_cols, int** grid);
+int** initGridInt(unsigned int n_rows, unsigned n_cols);
 void zerofyGrid(unsigned int n_rows, unsigned int n_cols, int** grid);
 
 #endif
