@@ -42,5 +42,5 @@ void clear_board(int** grid)
 
 void walls(unsigned int n_walls)
 {
-  
+
 }
