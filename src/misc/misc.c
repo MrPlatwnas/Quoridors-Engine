@@ -27,3 +27,17 @@ int** initGrid(unsigned int n_rows, unsigned n_cols, int** grid)
   }
   return grid;
 }
+
+void zerofyGrid(unsigned int n_rows, unsigned int n_cols, int** grid)
+{
+  unsigned int counterRows;
+  unsigned int counterCols;
+
+  for(counterRows = 0; counterRows < n_rows; counterRows++)
+  {
+    for(counterCols = 0; counterCols < n_cols; counterCols++)
+    {
+      grid[counterRows][counterCols] = 0;
+    }
+  }
+}
