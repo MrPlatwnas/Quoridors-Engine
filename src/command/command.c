@@ -14,6 +14,11 @@ void name()
   printf("%s\n", engineName);
 }
 
+void knownCommand()
+{
+
+}
+
 void boardsize(unsigned int n_rows, unsigned int n_cols)
 {
 
