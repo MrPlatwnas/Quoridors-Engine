@@ -57,3 +57,16 @@ void print2DArrayAsInt(unsigned int n_rows, unsigned int n_cols, int** array)
   }
 }
 
+void print2DArrayAsChar(unsigned int n_rows, unsigned int n_cols, int** array)
+{
+  unsigned int rowsCounter = 0;
+  unsigned int colsCounter = 0;
+  for(rowsCounter = 0; rowsCounter < n_rows; rowsCounter++)
+  {
+    for(colsCounter = 0; colsCounter < n_cols; colsCounter++)
+    {
+      printf("%c ", array[rowsCounter][colsCounter]);
+    }
+    printf("\n");
+  }
+}
