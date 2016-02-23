@@ -71,3 +71,18 @@ void print2DArrayAsChar(unsigned int n_rows, unsigned int n_cols, int** array)
     printf("\n");
   }
 }
+int getStringlenUntil(char* string, char endChar)
+{
+  unsigned int stringLength = strlen(string);
+  unsigned int counter = 0;
+  unsigned int n_chars = 0;
+  for(counter = 0; counter < stringLength; counter++)
+  {
+    n_chars++;
+    if(string[counter] == endChar)
+    {
+      return n_chars;
+    }
+  }
+  return -1;
+}
