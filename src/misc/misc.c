@@ -135,3 +135,31 @@ void removeChar(char* string, char garbageChar)
   }
   *dst = '\0';
 }
+
+void removeExtraSpaces(char* string)
+{
+  char* src = string;
+  char* dst = string;
+  while (isspace(*src)) src++;
+  for(; *src != '\0'; src++)
+  {
+    *dst = *src;
+    if(*src != '\0')
+    {
+      if(*dst != *(src + 1) || *dst != ' ')
+      {
+        dst++;
+      }
+    }
+  }
+  //if(*(dst - 1) == ' ')
+  if(dst[-1] == ' ')
+  {
+    //*(dst - 1) = '\0';
+    dst[-1] = '\0';
+  }
+  else
+  {
+    *dst = '\0';
+  }
+}
