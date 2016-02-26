@@ -26,4 +26,18 @@ void copyStringUntil(char* sourceStr, char* destinationStr, unsigned int destina
 //returns the amount of characters until character endChar. If endChar character does not exist in the string then -1 is returned.
 unsigned int getStringlenUntil(char* string, char endChar);
 
+//replaces string characters with odd indexed replaceChars characters when string characters are the same as even indexed replaceChars characters.
+/*
+string: the string that will be edited.
+replaceChars: a char array with pairs of characters. the characters that are at
+even indexes and exist inside string variable will be replaced with the characters at the next odd index.
+
+Example:
+char bla[21] = "Platwnas Kiorpelidis";
+char bla2[4] = {'a', 'b', ' ', 'X'};
+replaceStringChars(bla, bla2, 4);
+printf("%s\n", bla);
+
+This will print PlbtwnbsXKiorpelidis*/
+void replaceStringChars(char* string, char* replaceChars, unsigned int n_rows);
 #endif //#ifndef _MISC_H_
