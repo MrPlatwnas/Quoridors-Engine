@@ -102,3 +102,21 @@ int getStringlenUntil(char* string, char endChar)
   }
   return -1;  //returns -1 if endChar does not exist inside string.
 }
+
+void replaceStringChars(char* string, char* replaceChars, unsigned int n_rows)
+{
+  unsigned int stringLength = strlen(string);
+  unsigned int counterString = 0;
+  unsigned int counterReplaceChar = 0;
+  for(counterString = 0; counterString < stringLength; counterString++)
+  {
+    for(counterReplaceChar = 0; counterReplaceChar < n_rows - 1; counterReplaceChar += 2) //n_rows - 1 because counterReplaceChar is increased by 2 each time(segmentation fault).
+    {
+      if(string[counterString] == replaceChars[counterReplaceChar])
+      {
+        string[counterString] = replaceChars[counterReplaceChar + 1];
+      }
+    }
+  }
+  string[stringLength] = '\0';
+}
