@@ -84,5 +84,5 @@ int getStringlenUntil(char* string, char endChar)
       return n_chars;
     }
   }
-  return -1;
+  return -1;  //returns -1 if endChar does not exist inside string.
 }
