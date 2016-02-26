@@ -40,4 +40,7 @@ printf("%s\n", bla);
 
 This will print PlbtwnbsXKiorpelidis*/
 void replaceStringChars(char* string, char* replaceChars, unsigned int n_rows);
+
+//removes garbageChar from string.
+void removeChar(char* string, char garbageChar);
 #endif //#ifndef _MISC_H_
