@@ -120,3 +120,18 @@ void replaceStringChars(char* string, char* replaceChars, unsigned int n_rows)
   }
   string[stringLength] = '\0';
 }
+
+void removeChar(char* string, char garbageChar)
+{
+  char* src;
+  char* dst;
+  for(src = dst = string; *src != '\0'; src++)
+  {
+    *dst = *src;
+    if(*dst != garbageChar)
+    {
+      dst++;  //so the garbageChar char gets overwriten.
+    }
+  }
+  *dst = '\0';
+}
