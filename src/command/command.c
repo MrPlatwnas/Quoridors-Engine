@@ -30,9 +30,25 @@ void list_commands()
   }
 }
 
-void boardsize(unsigned int n_rows, unsigned int n_cols)
+void boardsize(unsigned int newSize)
 {
-
+  if (newSize<=24)
+  {
+    if(gridMade == 0)
+    {
+      initGridInt(newSize, newSize);
+    }
+    else
+    {
+      reset(grid);
+      gridMade = 1;
+    }
+  }
+  else 
+  {
+    printf("unacceptable size");
+  }
+  
 }
 
 void clear_board(int** grid)

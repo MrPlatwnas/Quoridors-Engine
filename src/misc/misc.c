@@ -86,3 +86,12 @@ int getStringlenUntil(char* string, char endChar)
   }
   return -1;
 }
+
+void freeGrid (int ** grid, unsigned int n_rows)
+{
+    for (i=0 ; i < n_rows ; i++)
+    {
+      free(*(grid+i));
+      free(grid);
+    }
+}
