@@ -43,4 +43,8 @@ void replaceStringChars(char* string, char* replaceChars, unsigned int n_rows);
 
 //removes garbageChar from string.
 void removeChar(char* string, char garbageChar);
+
+//removes extra spaces.
+void removeExtraSpaces(char* string);
+
 #endif //#ifndef _MISC_H_
