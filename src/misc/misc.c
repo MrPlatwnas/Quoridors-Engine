@@ -71,6 +71,21 @@ void print2DArrayAsChar(unsigned int n_rows, unsigned int n_cols, int** array)
     printf("\n");
   }
 }
+
+void copyStringUntil(char* sourceStr, char* destinationStr, unsigned int destinationStrSize, int endChar)
+{
+  unsigned int counter = 0;
+  for(counter = 0; counter < destinationStrSize; counter++)
+  {
+    if(sourceStr[counter] == endChar)
+    {
+      break;
+    }
+    destinationStr[counter] = sourceStr[counter];
+  }
+  destinationStr[counter] = '\0'; //To remove garbage from destinationStr in case destinationStr is bigger than sourceStr.
+}
+
 int getStringlenUntil(char* string, char endChar)
 {
   unsigned int stringLength = strlen(string); //so we wont go out of bountaries.
