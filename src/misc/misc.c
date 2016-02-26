@@ -73,9 +73,9 @@ void print2DArrayAsChar(unsigned int n_rows, unsigned int n_cols, int** array)
 }
 int getStringlenUntil(char* string, char endChar)
 {
-  unsigned int stringLength = strlen(string);
+  unsigned int stringLength = strlen(string); //so we wont go out of bountaries.
   unsigned int counter = 0;
-  unsigned int n_chars = 0;
+  unsigned int n_chars = 0; //number of characters until endChar.
   for(counter = 0; counter < stringLength; counter++)
   {
     n_chars++;
