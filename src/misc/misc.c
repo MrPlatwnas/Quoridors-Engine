@@ -173,10 +173,8 @@ void removeExtraSpaces(char* string)
       }
     }
   }
-  //if(*(dst - 1) == ' ')
   if(dst[-1] == ' ')
   {
-    //*(dst - 1) = '\0';
     dst[-1] = '\0';
   }
   else
