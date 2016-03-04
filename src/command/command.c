@@ -52,9 +52,9 @@ void name()
   printf("%s\n", engineName);
 }
 
-void knownCommand()
+void known_command(char* command)
 {
-
+  //FIXME: Add function to this function.
 }
 
 void list_commands()
@@ -80,5 +80,5 @@ void clear_board(int** grid)
 
 void walls(unsigned int n_walls)
 {
-
+  //FIXME: Add function to this function.
 }
