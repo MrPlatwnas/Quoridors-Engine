@@ -182,3 +182,21 @@ void removeExtraSpaces(char* string)
     *dst = '\0';
   }
 }
+
+char* getLine()
+{
+  char c;
+  unsigned int no_chars = 1;
+  char* input_command = malloc(no_chars * sizeof(char));
+
+  c = getchar();
+  while(c != '\n' && c != EOF)
+  {
+    input_command[no_chars - 1] = c;
+    no_chars++;
+    input_command = realloc(input_command, no_chars * sizeof(char));
+    c = getchar();
+  }
+  input_command[no_chars - 1] = '\0';
+  return input_command;
+}
