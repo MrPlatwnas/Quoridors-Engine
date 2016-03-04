@@ -12,6 +12,39 @@ Date                : 28-1-2015
 #include "../misc/misc.h"
 #include "../command/command.h"
 
+void inputCommand()
+{
+  char* inputCommand = getLine();
+
+  char replaceChars[2] = {9, ' '};
+  replaceStringChars(inputCommand, replaceChars, 2);
+  removeChar(inputCommand, 13);
+  removeExtraSpaces(inputCommand);
+
+  char* command = NULL;
+  command = commandDecode(inputCommand, command);
+
+  unsigned int no_arguments;
+  char** arguments = NULL;
+  arguments = argumentsDecode(inputCommand, &no_arguments);
+
+  if(strcmp(command, "name"))
+  {
+    name();
+  }
+  else if(strcmp(command, "known_command"))
+  {
+    known_command(command);
+  }
+  else if(strcmp(command, "list_commands"))
+  {
+    list_commands();
+  }
+  else
+  {
+    // Add all the commands.
+  }
+}
 
 void name()
 {
