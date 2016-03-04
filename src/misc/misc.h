@@ -53,4 +53,13 @@ void buildGrid(int** grid, unsigned int gridSize);
 //frees malloc'ed grid
 void freeGrid (int ** grid, unsigned int n_rows);
 
+//returns the user's command from stdin to getCommand's name.
+char* getLine();
+
+//decodes the user's command to the command. Returns the command.
+char* commandDecode(char* input_command, char* output_command);
+
+//decodes the user's command to it's arguments. Returns the arguments as a 2D array.
+char** argumentsDecode(char* input_command, unsigned int* arguments_count);
+
 #endif //#ifndef _MISC_H_

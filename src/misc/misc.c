@@ -52,11 +52,33 @@ void buildGrid(int** grid, unsigned int gridSize)
 				else
 					grid[i][j]='+';
 			}
-				
+
 		}
 	}
-				
+
 }
+
+char** initGridChar(unsigned int n_rows, unsigned int n_cols)
+{
+  char** grid;
+  grid = malloc(n_rows * sizeof(char*));
+  if(grid == NULL)
+  {
+    fprintf(stderr, "Error when malloc'ing grid's memory!");
+  }
+
+  unsigned int counter = 0;
+  for(counter = 0; counter < n_rows; counter++)
+  {
+    grid[counter] = malloc(n_cols * sizeof(char));
+    if(grid[counter] == NULL)
+    {
+      fprintf(stderr, "Error when malloc'ing grid's memory!");  //In case the malloc failed for some reason.
+    }
+  }
+  return grid;
+}
+
 void zerofyGrid(unsigned int n_rows, unsigned int n_cols, int** grid)
 {
   unsigned int counterRows;
@@ -178,10 +200,8 @@ void removeExtraSpaces(char* string)
       }
     }
   }
-  //if(*(dst - 1) == ' ')
   if(dst[-1] == ' ')
   {
-    //*(dst - 1) = '\0';
     dst[-1] = '\0';
   }
   else
@@ -189,6 +209,7 @@ void removeExtraSpaces(char* string)
     *dst = '\0';
   }
 }
+
 
 void freeGrid (int ** grid, unsigned int n_rows)
 {
@@ -198,4 +219,91 @@ void freeGrid (int ** grid, unsigned int n_rows)
       free(grid[i]);
     }
     free(grid);
+
+char* getLine()
+{
+  char c;
+  unsigned int no_chars = 1;
+  char* input_command = malloc(no_chars * sizeof(char));
+
+  c = getchar();
+  while(c != '\n' && c != EOF)
+  {
+    input_command[no_chars - 1] = c;
+    no_chars++;
+    input_command = realloc(input_command, no_chars * sizeof(char));
+    c = getchar();
+  }
+  input_command[no_chars - 1] = '\0';
+  return input_command;
+}
+
+char* commandDecode(char* input_command, char* output_command)
+{
+  unsigned int no_chars = 0;
+  unsigned int index = 0;
+  while(input_command[index] != ' ' && input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF)
+  {
+    no_chars++;
+    output_command = realloc(output_command, no_chars * sizeof(char));
+    output_command[index] = input_command[index];
+    index++;
+  }
+  output_command[index] = '\0';
+  return output_command;
+}
+
+char** argumentsDecode(char* input_command, unsigned int* arguments_count)
+{
+  char** output_arguments = NULL;
+  unsigned int index = 0;
+  while(input_command[index] != ' ' && input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF) index++;
+  if(input_command[index] != '\n' && input_command[index] != EOF && input_command != '\0')
+  {
+    unsigned int current_chars = 0;
+    unsigned int max_chars = 0;
+    unsigned int no_arguments = 0;
+    while(input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF)
+    {
+      if(input_command[index] != ' ')
+      {
+        current_chars++;
+      }
+      else
+      {
+        if(current_chars > max_chars) max_chars = current_chars;
+        current_chars = 0;
+        no_arguments++;
+      }
+      index++;
+    }
+    if(current_chars > max_chars) max_chars = current_chars;
+
+    output_arguments = initGridChar(no_arguments, max_chars + 1);
+
+    index = 0;
+    while(input_command[index] != ' ' && input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF) index++;
+
+    index++;
+    unsigned int n_rows = 0;
+    unsigned int n_cols = 0;
+    while(input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF)
+    {
+      if(input_command[index] != ' ')
+      {
+        output_arguments[n_rows][n_cols] = input_command[index];
+        n_cols++;
+        index++;
+      }
+      else
+      {
+        output_arguments[n_rows][n_cols] = '\0';
+        n_rows++;
+        n_cols = 0;
+        index++;
+      }
+    }
+    *arguments_count = no_arguments;
+    return output_arguments;
+  }
 }

@@ -14,6 +14,9 @@ void inputCommand();
 //prints at stdout the engine's name.
 void name();
 
+//prints true if command exits otherwise prints false.
+void known_command(char* command);
+
 //mallocs a 2D array with n_rows rows and n_cols columns. Changes the board size.
 int** boardSize(unsigned int n_rows, unsigned int n_cols);
 
@@ -24,6 +27,8 @@ void walls(unsigned int n_walls);
 
 //Prints at stdin all the commands. One per row.
 void list_commands();
+
 //Prints the whole board as is
 void show_board(int** grid, int gridSize);
-#endif
+
+#endif  //ifndef _COMMAND_H_

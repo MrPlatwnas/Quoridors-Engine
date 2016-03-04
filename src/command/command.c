@@ -7,6 +7,44 @@ Date                : 28-1-2015
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#include "../misc/misc.h"
+#include "../command/command.h"
+
+void inputCommand()
+{
+  char* inputCommand = getLine();
+
+  char replaceChars[2] = {9, ' '};
+  replaceStringChars(inputCommand, replaceChars, 2);
+  removeChar(inputCommand, 13);
+  removeExtraSpaces(inputCommand);
+
+  char* command = NULL;
+  command = commandDecode(inputCommand, command);
+
+  unsigned int no_arguments;
+  char** arguments = NULL;
+  arguments = argumentsDecode(inputCommand, &no_arguments);
+
+  if(strcmp(command, "name"))
+  {
+    name();
+  }
+  else if(strcmp(command, "known_command"))
+  {
+    known_command(command);
+  }
+  else if(strcmp(command, "list_commands"))
+  {
+    list_commands();
+  }
+  else
+  {
+    // Add all the commands.
+  }
+}
 
 #include "../misc/misc.h"
 
@@ -35,7 +73,7 @@ void list_commands()
 int** boardSize(int** grid, unsigned int newSize)
 {
 	static int gridMade=0, gridSize;
-	
+
   if (newSize<=24)
   {
 		gridSize = (newSize*2)-1;
@@ -50,11 +88,11 @@ int** boardSize(int** grid, unsigned int newSize)
     grid = initGridInt(gridSize, gridSize);
     printf("made %d\n",gridSize);
   }
-  else 
+  else
   {
     printf("unacceptable size");
   }
-  
+
   return grid;
 }
 
@@ -72,9 +110,9 @@ void show_board(int** grid, int gridSize)
 			{
 				if ((j/2)==0)
 				printf("%c " , c+j);
-				else 
+				else
 				printf("   ");
-				
+
 			}
 		}
 		printf(" %d |", i);
@@ -82,7 +120,7 @@ void show_board(int** grid, int gridSize)
 		{
 			for (j=0 ; j<gridSize ; j++)
 			{
-				printf(" %c ", grid[i-1][j]);			
+				printf(" %c ", grid[i-1][j]);
 			}
 			printf("| %d", i);
 		}
