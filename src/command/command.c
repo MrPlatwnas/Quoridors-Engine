@@ -9,6 +9,9 @@ Date                : 28-1-2015
 #include <stdlib.h>
 #include <string.h>
 
+#include "../misc/misc.h"
+#include "../command/command.h"
+
 
 void name()
 {
