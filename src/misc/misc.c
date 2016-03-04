@@ -31,6 +31,27 @@ int** initGridInt(unsigned int n_rows, unsigned n_cols)
   return grid;
 }
 
+char** initGridChar(unsigned int n_rows, unsigned int n_cols)
+{
+  char** grid;
+  grid = malloc(n_rows * sizeof(char*));
+  if(grid == NULL)
+  {
+    fprintf(stderr, "Error when malloc'ing grid's memory!");
+  }
+
+  unsigned int counter = 0;
+  for(counter = 0; counter < n_rows; counter++)
+  {
+    grid[counter] = malloc(n_cols * sizeof(char));
+    if(grid[counter] == NULL)
+    {
+      fprintf(stderr, "Error when malloc'ing grid's memory!");  //In case the malloc failed for some reason.
+    }
+  }
+  return grid;
+}
+
 void zerofyGrid(unsigned int n_rows, unsigned int n_cols, int** grid)
 {
   unsigned int counterRows;
