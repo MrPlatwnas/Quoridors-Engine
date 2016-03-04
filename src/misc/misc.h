@@ -50,4 +50,6 @@ void removeExtraSpaces(char* string);
 //returns the user's command from stdin to getCommand's name.
 char* getLine();
 
+//decodes the user's command to the command. Returns the command.
+char* commandDecode(char* input_command, char* output_command);
 #endif //#ifndef _MISC_H_
