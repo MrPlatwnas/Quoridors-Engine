@@ -211,12 +211,12 @@ void removeExtraSpaces(char* string)
 
 void freeGrid (int ** grid, unsigned int n_rows)
 {
-		unsigned int i;
-    for (i=0 ; i < n_rows ; i++)
-    {
-      free(grid[i]);
-    }
-    free(grid);
+  unsigned int i;
+  for (i=0 ; i < n_rows ; i++)
+  {
+    free(grid[i]);
+  }
+  free(grid);
 }
 
 char* getLine()
