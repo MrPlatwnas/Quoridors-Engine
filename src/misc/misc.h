@@ -47,4 +47,7 @@ void removeChar(char* string, char garbageChar);
 //removes extra spaces.
 void removeExtraSpaces(char* string);
 
+//returns the user's command from stdin to getCommand's name.
+char* getLine();
+
 #endif //#ifndef _MISC_H_
