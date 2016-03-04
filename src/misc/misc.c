@@ -219,6 +219,7 @@ void freeGrid (int ** grid, unsigned int n_rows)
       free(grid[i]);
     }
     free(grid);
+}
 
 char* getLine()
 {

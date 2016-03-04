@@ -46,15 +46,13 @@ void inputCommand()
   }
 }
 
-#include "../misc/misc.h"
-
 void name()
 {
   char* engineName = "Deep Orange";
   printf("%s\n", engineName);
 }
 
-void knownCommand()
+void known_command(char* command)
 {
 
 }

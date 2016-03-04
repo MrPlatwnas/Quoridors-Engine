@@ -18,7 +18,7 @@ void name();
 void known_command(char* command);
 
 //mallocs a 2D array with n_rows rows and n_cols columns. Changes the board size.
-int** boardSize(unsigned int n_rows, unsigned int n_cols);
+int** boardSize(int** grid, unsigned int newSize);
 
 //Clears the board. The two pawns return to their starting position.
 void clear_board(int** grid);
