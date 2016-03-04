@@ -215,3 +215,58 @@ char* commandDecode(char* input_command, char* output_command)
   output_command[index] = '\0';
   return output_command;
 }
+
+char** argumentsDecode(char* input_command, unsigned int* arguments_count)
+{
+  char** output_arguments = NULL;
+  unsigned int index = 0;
+  while(input_command[index] != ' ' && input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF) index++;
+  if(input_command[index] != '\n' && input_command[index] != EOF && input_command != '\0')
+  {
+    unsigned int current_chars = 0;
+    unsigned int max_chars = 0;
+    unsigned int no_arguments = 0;
+    while(input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF)
+    {
+      if(input_command[index] != ' ')
+      {
+        current_chars++;
+      }
+      else
+      {
+        if(current_chars > max_chars) max_chars = current_chars;
+        current_chars = 0;
+        no_arguments++;
+      }
+      index++;
+    }
+    if(current_chars > max_chars) max_chars = current_chars;
+
+    output_arguments = initGridChar(no_arguments, max_chars + 1);
+
+    index = 0;
+    while(input_command[index] != ' ' && input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF) index++;
+
+    index++;
+    unsigned int n_rows = 0;
+    unsigned int n_cols = 0;
+    while(input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF)
+    {
+      if(input_command[index] != ' ')
+      {
+        output_arguments[n_rows][n_cols] = input_command[index];
+        n_cols++;
+        index++;
+      }
+      else
+      {
+        output_arguments[n_rows][n_cols] = '\0';
+        n_rows++;
+        n_cols = 0;
+        index++;
+      }
+    }
+    *arguments_count = no_arguments;
+    return output_arguments;
+  }
+}
