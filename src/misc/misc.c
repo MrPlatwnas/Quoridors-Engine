@@ -31,6 +31,33 @@ int** initGridInt(unsigned int n_rows, unsigned n_cols)
   return grid;
 }
 
+void buildGrid(int** grid, unsigned int gridSize)
+{
+	int i,j;
+	for (i=0 ; i<gridSize ; i++)
+	{
+		for (j=0 ; j<gridSize ; j++)
+		{
+			if ((i%2)==0)
+			{
+				if((j%2)==0 )
+					grid[i][j]=' ';
+				else if ((j%2)==1 )
+					grid[i][j]= '|';
+			}
+			else
+			{
+				if ((j%2)==0)
+					grid[i][j]='-';
+				else
+					grid[i][j]='+';
+			}
+
+		}
+	}
+
+}
+
 char** initGridChar(unsigned int n_rows, unsigned int n_cols)
 {
   char** grid;
@@ -181,6 +208,17 @@ void removeExtraSpaces(char* string)
   {
     *dst = '\0';
   }
+}
+
+
+void freeGrid (int ** grid, unsigned int n_rows)
+{
+		unsigned int i;
+    for (i=0 ; i < n_rows ; i++)
+    {
+      free(grid[i]);
+    }
+    free(grid);
 }
 
 char* getLine()
