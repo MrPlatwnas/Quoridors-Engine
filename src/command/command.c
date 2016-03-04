@@ -8,6 +8,8 @@ Date                : 28-1-2015
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../misc/misc.h"
+
 void name()
 {
   char* engineName = "Deep Orange";
@@ -30,26 +32,68 @@ void list_commands()
   }
 }
 
-void boardsize(unsigned int newSize)
+int** boardSize(int** grid, unsigned int newSize)
 {
+	static int gridMade=0, gridSize;
+	
   if (newSize<=24)
   {
+		gridSize = (newSize*2)-1;
     if(gridMade == 0)
     {
-      initGridInt(newSize, newSize);
+      gridMade = 1;
     }
     else
     {
-      reset(grid);
-      gridMade = 1;
+      freeGrid(grid,gridSize);
     }
+    grid = initGridInt(gridSize, gridSize);
+    printf("made %d\n",gridSize);
   }
   else 
   {
     printf("unacceptable size");
   }
   
+  return grid;
 }
+
+void show_board(int** grid, int gridSize)
+{
+	int i,j,realSize;
+	char c='A';
+	realSize=(gridSize-1)/2;
+	for (i=0 ; i<gridSize ; i++)
+	{
+		if (i==0)
+		{
+			printf("     ");
+			for (j=0 ; j<gridSize ; j++)
+			{
+				if ((j/2)==0)
+				printf("%c " , c+j);
+				else 
+				printf("   ");
+				
+			}
+		}
+		printf(" %d |", i);
+		if (i>0)
+		{
+			for (j=0 ; j<gridSize ; j++)
+			{
+				printf(" %c ", grid[i-1][j]);			
+			}
+			printf("| %d", i);
+		}
+		printf("\n");
+	}
+	for (j=0 ; j<=gridSize ; j++)
+			{
+				printf(" %c" , c+j);
+			}
+}
+
 
 void clear_board(int** grid)
 {

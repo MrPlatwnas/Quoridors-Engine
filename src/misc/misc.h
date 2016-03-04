@@ -47,4 +47,10 @@ void removeChar(char* string, char garbageChar);
 //removes extra spaces.
 void removeExtraSpaces(char* string);
 
+//builds initial grid
+void buildGrid(int** grid, unsigned int gridSize);
+
+//frees malloc'ed grid
+void freeGrid (int ** grid, unsigned int n_rows);
+
 #endif //#ifndef _MISC_H_

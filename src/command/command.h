@@ -15,15 +15,15 @@ void inputCommand();
 void name();
 
 //mallocs a 2D array with n_rows rows and n_cols columns. Changes the board size.
-void boardsize(unsigned int n_rows, unsigned int n_cols);
+int** boardSize(unsigned int n_rows, unsigned int n_cols);
 
 //Clears the board. The two pawns return to their starting position.
 void clear_board(int** grid);
-
 //Sets the number of walls each player has at the start of the game.
 void walls(unsigned int n_walls);
 
 //Prints at stdin all the commands. One per row.
 void list_commands();
-
+//Prints the whole board as is
+void show_board(int** grid, int gridSize);
 #endif

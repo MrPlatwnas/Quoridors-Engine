@@ -14,5 +14,9 @@ Date                : 28-1-2015
 
 int main(int argc, char* argv[])
 {
-  
+	int** grid;
+  grid=boardSize(5,5);
+  buildGrid(grid,9);
+	//print2DArrayAsChar(9,9,grid);
+	show_board(grid,9);
 }
