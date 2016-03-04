@@ -29,4 +29,4 @@ void walls(unsigned int n_walls);
 //Prints at stdin all the commands. One per row.
 void list_commands();
 
-#endif
+#endif  //ifndef _COMMAND_H_
