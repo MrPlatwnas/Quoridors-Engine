@@ -28,15 +28,16 @@ void inputCommand()
   char** arguments = NULL;
   arguments = argumentsDecode(inputCommand, &no_arguments);
 
-  if(strcmp(command, "name"))
+  if(strcmp(command, "name") == 0)
   {
     name();
   }
-  else if(strcmp(command, "known_command"))
+  else if(strcmp(command, "known_command") == 0)
   {
-    known_command(command);
+    if(no_arguments == 1) known_command(arguments[0]);
+    else printf("= false\n\n");
   }
-  else if(strcmp(command, "list_commands"))
+  else if(strcmp(command, "list_commands") == 0)
   {
     list_commands();
   }
