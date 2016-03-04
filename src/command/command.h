@@ -14,6 +14,9 @@ void inputCommand();
 //prints at stdout the engine's name.
 void name();
 
+//prints true if command exits otherwise prints false.
+void known_command(char* command);
+
 //mallocs a 2D array with n_rows rows and n_cols columns. Changes the board size.
 void boardsize(unsigned int n_rows, unsigned int n_cols);
 
