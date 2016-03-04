@@ -22,6 +22,7 @@ int** boardSize(int** grid, unsigned int newSize);
 
 //Clears the board. The two pawns return to their starting position.
 void clear_board(int** grid);
+
 //Sets the number of walls each player has at the start of the game.
 void walls(unsigned int n_walls);
 
