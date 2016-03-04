@@ -55,7 +55,19 @@ void name()
 
 void known_command(char* command)
 {
-  //FIXME: Add function to this function.
+  static unsigned int n_elems = 13;
+  static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
+
+  unsigned int n_rows = 0;
+  for(n_rows = 0; n_rows < n_elems; n_rows++)
+  {
+    if(strcmp(command, allCommands[n_rows]) == 0)
+    {
+      printf("= true\n\n");
+      return;
+    }
+  }
+  printf("= false\n\n");
 }
 
 void list_commands()
