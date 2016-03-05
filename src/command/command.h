@@ -38,6 +38,9 @@ void playmove(int** grid);  //FIXME: Add support for the arguments(color & verte
 //a wall place at the requested vertex and orientation. Decrease the number of walls.
 void playwall(int ** grid); //FIXME: Add support for the arguments(vertex and orientation). FIXME: Add support for the wall decreasement.
 
+//the engine makes a move or wall placement at the requested color.
+void genmove(); //FIXME: Add support for the arguments.
+
 //Prints the whole board as is.
 void showboard(int** grid, int gridSize);
 
