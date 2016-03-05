@@ -9,7 +9,7 @@ Date                : 28-1-2015
 #define _COMMAND_H_
 
 //reads the stdin of the program, analyzes it and calls the apropriate function.
-void inputCommand();
+void inputCommand(unsigned int* quit_game);
 
 //prints at stdout the engine's name.
 void name();
