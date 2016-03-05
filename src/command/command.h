@@ -35,6 +35,9 @@ void walls(unsigned int* n_walls);
 //the player of the requested color is played at the requested vertex.
 void playmove(int** grid);  //FIXME: Add support for the arguments(color & vertex).
 
+//a wall place at the requested vertex and orientation. Decrease the number of walls.
+void playwall(int ** grid); //FIXME: Add support for the arguments(vertex and orientation). FIXME: Add support for the wall decreasement.
+
 //Prints the whole board as is.
 void showboard(int** grid, int gridSize);
 
