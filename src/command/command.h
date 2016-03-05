@@ -17,6 +17,12 @@ void name();
 //prints true if command exits otherwise prints false.
 void known_command(char* command);
 
+//Prints at stdin all the commands. One per row.
+void list_commands();
+
+//the session is terminated and the connection is closed.
+void quit(unsigned int* quit_game);
+
 //mallocs a 2D array with n_rows rows and n_cols columns. Changes the board size.
 int** boardSize(int** grid, unsigned int newSize);
 
@@ -26,8 +32,6 @@ void clear_board(int** grid);
 //Sets the number of walls each player has at the start of the game.
 void walls(unsigned int n_walls);
 
-//Prints at stdin all the commands. One per row.
-void list_commands();
 
 //Prints the whole board as is
 void show_board(int** grid, int gridSize);
