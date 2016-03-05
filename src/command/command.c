@@ -100,7 +100,7 @@ void inputCommand(unsigned int* quit_game)
 void name()
 {
   char* engineName = "Deep Orange";
-  printf("%s\n", engineName);
+  printf("= %s\n\n", engineName);
 }
 
 void known_command(char* command)
