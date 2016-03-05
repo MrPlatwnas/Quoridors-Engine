@@ -33,7 +33,7 @@ void clear_board(int** grid);
 void walls(unsigned int* n_walls);
 
 
-//Prints the whole board as is
-void show_board(int** grid, int gridSize);
+//Prints the whole board as is.
+void showboard(int** grid, int gridSize);
 
 #endif  //ifndef _COMMAND_H_
