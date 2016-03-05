@@ -44,9 +44,56 @@ void inputCommand(unsigned int* quit_game)
   {
     list_commands();
   }
+  else if(strcmp(command, "quit") == 0)
+  {
+    quit(quit_game);
+  }
+  else if(strcmp(command, "boardsize") == 0)
+  {
+    if(no_arguments == 1)
+    {
+      gridSize = atoi(arguments[0]);
+      grid = boardSize(grid, gridSize);
+    }
+    else printf("? Error: no argument size specified.\n\n");
+  }
+  else if(strcmp(command, "clear_board") == 0)
+  {
+    //clear_board();
+  }
+  else if(strcmp(command, "walls") == 0)
+  {
+    unsigned int n_walls = 0;
+    walls(&n_walls);
+  }
+  else if(strcmp(command, "playmove") == 0)
+  {
+    if(grid != NULL) playmove(grid);
+    else printf("? Error: you need to create a board first.\n\n");
+  }
+  else if(strcmp(command, "playwall") == 0)
+  {
+    playwall(grid);
+  }
+  else if(strcmp(command, "genmove") == 0)
+  {
+    genmove();
+  }
+  else if(strcmp(command, "undo") == 0)
+  {
+    undo(grid);
+  }
+  else if(strcmp(command, "winner") == 0)
+  {
+    winner();
+  }
+  else if(strcmp(command, "showboard") == 0)
+  {
+    showboard(grid, gridSize);
+  }
   else
   {
-    // Add all the commands.
+    printf("? unknown command\n\n");
   }
 }
 
