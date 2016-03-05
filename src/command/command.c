@@ -12,7 +12,7 @@ Date                : 28-1-2015
 #include "../misc/misc.h"
 #include "../command/command.h"
 
-void inputCommand()
+void inputCommand(unsigned int* quit_game)
 {
   char* inputCommand = getLine();
 
