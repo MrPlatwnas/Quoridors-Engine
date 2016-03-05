@@ -32,6 +32,8 @@ void clear_board(int** grid);
 //Sets the number of walls each player has at the start of the game.
 void walls(unsigned int* n_walls);
 
+//the player of the requested color is played at the requested vertex.
+void playmove(int** grid);  //FIXME: Add support for the arguments(color & vertex).
 
 //Prints the whole board as is.
 void showboard(int** grid, int gridSize);
