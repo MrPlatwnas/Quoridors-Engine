@@ -30,7 +30,7 @@ int** boardSize(int** grid, unsigned int newSize);
 void clear_board(int** grid);
 
 //Sets the number of walls each player has at the start of the game.
-void walls(unsigned int n_walls);
+void walls(unsigned int* n_walls);
 
 
 //Prints the whole board as is
