@@ -165,7 +165,42 @@ int** boardSize(int** grid, unsigned int newSize)
   return grid;
 }
 
-void show_board(int** grid, int gridSize)
+void clear_board(int** grid)
+{
+
+}
+
+void walls(unsigned int* n_walls)
+{
+  //FIXME: Add functionality to this function.
+}
+
+void playmove(int** grid)
+{
+  //FIXME: Add functionality to this function.
+}
+
+void playwall(int ** grid)
+{
+  //FIXME: Add functionality to this function.
+}
+
+void genmove()
+{
+  //FIXME: Add functionality to this function.
+}
+
+void undo(int** grid)
+{
+  //FIXME: Add functionality to this function.
+}
+
+void winner()
+{
+  //FIXME: Add functionality to this function.
+}
+
+void showboard(int** grid, int gridSize)
 {
   int i,j,realSize;
   char c='A';
@@ -196,15 +231,4 @@ void show_board(int** grid, int gridSize)
   }
   for (j=0 ; j<=gridSize ; j++)
     printf(" %c" , c+j);
-}
-
-
-void clear_board(int** grid)
-{
-
-}
-
-void walls(unsigned int n_walls)
-{
-  //FIXME: Add function to this function.
 }
