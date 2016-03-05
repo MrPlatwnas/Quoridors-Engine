@@ -41,6 +41,9 @@ void playwall(int ** grid); //FIXME: Add support for the arguments(vertex and or
 //the engine makes a move or wall placement at the requested color.
 void genmove(); //FIXME: Add support for the arguments.
 
+//the game goes 'times' moves back.
+void undo(int** grid);  //FIXME: Add support for the arguments.
+
 //Prints the whole board as is.
 void showboard(int** grid, int gridSize);
 
