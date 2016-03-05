@@ -28,6 +28,9 @@ void inputCommand(unsigned int* quit_game)
   char** arguments = NULL;
   arguments = argumentsDecode(inputCommand, &no_arguments);
 
+  int** grid = NULL;
+  unsigned int gridSize = 0;
+
   if(strcmp(command, "name") == 0)
   {
     name();
