@@ -44,6 +44,9 @@ void genmove(); //FIXME: Add support for the arguments.
 //the game goes 'times' moves back.
 void undo(int** grid);  //FIXME: Add support for the arguments.
 
+//outputs true and winner's color if the game ended, otherwise false.
+void winner();
+
 //Prints the whole board as is.
 void showboard(int** grid, int gridSize);
 
