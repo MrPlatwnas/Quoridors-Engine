@@ -8,6 +8,12 @@ Date                : 2-1-2015
 #ifndef _MISC_H_
 #define _MISC_H_
 
+#include "../command/command.h"
+
+/**************************
+ARRAY GENERAL FUNCTIONS
+**************************/
+
 //initializes an integer array of n_rows rows and n_cols columns and returns the malloc'ed array to function name.
 int** initGridInt(unsigned int n_rows, unsigned n_cols);
 
