@@ -203,7 +203,8 @@ void clear_board(int** grid, ArraySize grid_size)
 
 void walls(unsigned int* n_walls, unsigned int input_n_walls)
 {
-  //FIXME: Add functionality to this function.
+  *n_walls = input_n_walls;
+  printf("= walls set to %d.\n\n", *n_walls);
 }
 
 void playmove(int** grid, ArraySize grid_size, char player, Vertex move_coordinates)
