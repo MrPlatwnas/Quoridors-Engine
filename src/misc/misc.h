@@ -20,6 +20,9 @@ int** initGridInt(unsigned int n_rows, unsigned n_cols);
 //initializes an character array of n_rows rows and n_cols columns and returns the malloc'ed array to function name.
 char** initGridChar(unsigned n_rows, unsigned n_cols);
 
+//frees malloc'ed grid
+void freeGrid(int** grid, unsigned n_rows);
+
 //for a given 2D grid array with n_rows rows and n_cols columns, it's content is zero'ed.
 void zerofyGrid(unsigned int n_rows, unsigned int n_cols, int** grid);
 
