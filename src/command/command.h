@@ -46,13 +46,13 @@ void list_commands();
 void quit(unsigned int* quit_game);
 
 //mallocs a 2D array with n_rows rows and n_cols columns. Changes the board size.
-int** boardsize(int** grid, ArraySize grid_size);
+int** boardsize(ArraySize grid_size);
 
 //Clears the board. The two pawns return to their starting position.
 void clear_board(int** grid, ArraySize grid_size);
 
 //Sets the number of walls each player has at the start of the game.
-void walls(unsigned int* n_walls, unsigned int input_n_walls);
+void walls(Walls* available_walls, unsigned int input_n_walls);
 
 //the player of the requested color is played at the requested vertex.
 void playmove(int** grid, ArraySize grid_size, char player, Vertex move_coordinates);

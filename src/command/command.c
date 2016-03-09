@@ -12,7 +12,7 @@ Date                : 28-1-2015
 #include "../misc/misc.h"
 #include "../command/command.h"
 
-void inputCommand(unsigned int* quit_game)
+void inputCommand(unsigned* quit_game)
 {
   char* inputCommand = get_line();
 
@@ -24,23 +24,25 @@ void inputCommand(unsigned int* quit_game)
   char* command = NULL;
   command = commandDecode(inputCommand, command);
 
-  unsigned int n_arguments;
+  unsigned n_arguments;
   char** arguments = NULL;
   arguments = argumentsDecode(inputCommand, &n_arguments);
 
-  int** grid = NULL;
-  ArraySize grid_size;
-  unsigned int n_walls = 0;
+  static ArraySize grid_size;
+  static Walls available_walls;
+  static unsigned is_set_walls;
+  static int** grid = NULL;
+
 
   if(strcmp(command, "name") == 0)
   {
-    name();
+    name(); /*NAME FUNCTION CALL*/
   }
   else if(strcmp(command, "known_command") == 0)
   {
     if(n_arguments == 1)
     {
-      known_command(arguments[0]);
+      known_command(arguments[0]);  /*KNOWN_COMMAND FUNCTION CALL*/
     }
     else
     {
@@ -49,18 +51,32 @@ void inputCommand(unsigned int* quit_game)
   }
   else if(strcmp(command, "list_commands") == 0)
   {
-    list_commands();
+    list_commands();  /*LIST_COMMANDS FUNCTION CALL*/
   }
   else if(strcmp(command, "quit") == 0)
   {
-    quit(quit_game);
+    quit(quit_game);  /*QUIT FUNCTION CALL*/
   }
   else if(strcmp(command, "boardsize") == 0)
   {
     if(n_arguments == 1)
     {
       grid_size.size = atoi(arguments[0]);
-      grid = boardsize(grid, grid_size);
+      if(grid_size.size >= 3 && grid_size.size <= 25 && grid_size.size % 2 == 1)
+      {
+        grid_size.v_size = grid_size.size * 2 + 1;
+        grid_size.h_size = grid_size.size * 4 + 1;
+        grid = boardsize(grid_size);  /*BOARDSIZE FUNCTION CALL*/
+        if(is_set_walls == 0)
+        {
+          available_walls.white_walls = 10;
+          available_walls.black_walls = 10;
+        }
+      }
+      else
+      {
+        printf("? Error: you need to input an odd size between 3 and 26\n\n");
+      }
     }
     else
     {
@@ -75,7 +91,8 @@ void inputCommand(unsigned int* quit_game)
   {
     if(n_arguments == 1)
     {
-      walls(&n_walls, atoi(arguments[0]));
+      walls(&available_walls, atoi(arguments[0]));  /*WALLS FUNCTION CALL*/
+      is_set_walls = 1;
     }
     else
     {
@@ -86,11 +103,11 @@ void inputCommand(unsigned int* quit_game)
   {
     if(grid != NULL && n_arguments == 2)
     {
-      //playmove(grid, arguments[0], arguments[1]);
+      //playmove(grid, arguments[0], arguments[1]); /*PLAYMOVE FUNCTION CALL*/
     }
     else if(grid == NULL)
     {
-      printf("? Error: you need to create a board first\n\n");
+      printf("? Error: you need to create a board first (run: boardsize <desired_size>)\n\n");
     }
     else if(n_arguments != 2)
     {
@@ -101,7 +118,7 @@ void inputCommand(unsigned int* quit_game)
   {
     if(n_arguments == 3)
     {
-      //playwall(grid, &n_walls, arguments[0], arguments[1], arguments[2]);
+      //playwall(grid, &n_walls, arguments[0], arguments[1], arguments[2]); /*PLAYWALL FUNCTION CALL*/
     }
     else
     {
@@ -112,7 +129,7 @@ void inputCommand(unsigned int* quit_game)
   {
     if(n_arguments == 1)
     {
-      //genmove(grid, grid_size, arguments[0]);
+      //genmove(grid, grid_size, arguments[0]); /*GENMOVE FUNCTION CALL*/
     }
     else
     {
@@ -123,7 +140,7 @@ void inputCommand(unsigned int* quit_game)
   {
     if(n_arguments == 1)
     {
-      //undo(grid, arguments[0]);
+      //undo(grid, arguments[0]); /*UNDO FUNCTION CALL*/
     }
     else
     {
@@ -132,11 +149,18 @@ void inputCommand(unsigned int* quit_game)
   }
   else if(strcmp(command, "winner") == 0)
   {
-    //winner(grid, grid_size);
+    //winner(grid, grid_size);  /*WINNER FUNCTION CALL*/
   }
   else if(strcmp(command, "showboard") == 0)
   {
-    //showboard(grid, gridSize_v, gridSize_h);
+    if(grid != NULL)
+    {
+      showboard(grid, available_walls, grid_size);  /*SHOWBOARD FUNCTION CALL*/
+    }
+    else
+    {
+      printf("? Error: you need to create a board first (run: boardsize <desired_size>)\n\n");
+    }
   }
   else
   {
@@ -156,10 +180,10 @@ void name()
 
 void known_command(char* command)
 {
-  static unsigned int n_elems = 13;
+  static unsigned n_elems = 13;
   static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
 
-  unsigned int n_rows = 0;
+  unsigned n_rows = 0;
   for(n_rows = 0; n_rows < n_elems; n_rows++)
   {
     if(strcmp(command, allCommands[n_rows]) == 0)
@@ -173,11 +197,11 @@ void known_command(char* command)
 
 void list_commands()
 {
-  static unsigned int n_elems = 13;
+  static unsigned n_elems = 13;
   static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
 
   printf("=\n");
-  unsigned int counter;
+  unsigned counter;
   for(counter = 0; counter < n_elems; counter++)
   {
     printf("%s\n", allCommands[counter]);
@@ -185,15 +209,19 @@ void list_commands()
   printf("\n");
 }
 
-void quit(unsigned int* quit_game)
+void quit(unsigned* quit_game)
 {
   *quit_game = 1;
   printf("= quitting game\n");
 }
 
-int** boardsize(int** grid, ArraySize grid_size)
+int** boardsize(ArraySize grid_size)
 {
-
+  int** grid = NULL;
+  grid = build_grid(grid_size);
+  clear_board(grid, grid_size);
+  printf("= board's size set to %dx%d\n\n", grid_size.size, grid_size.size);
+  return grid;
 }
 
 void clear_board(int** grid, ArraySize grid_size)
@@ -201,10 +229,12 @@ void clear_board(int** grid, ArraySize grid_size)
 
 }
 
-void walls(unsigned int* n_walls, unsigned int input_n_walls)
+void walls(Walls* available_walls, unsigned input_n_walls)
 {
-  *n_walls = input_n_walls;
-  printf("= walls set to %d.\n\n", *n_walls);
+  available_walls->white_walls = input_n_walls;
+  available_walls->black_walls = input_n_walls;
+
+  printf("= number of walls set to %d for each player\n\n", input_n_walls);
 }
 
 void playmove(int** grid, ArraySize grid_size, char player, Vertex move_coordinates)
@@ -239,31 +269,77 @@ void showboard(int** grid, Walls available_walls, ArraySize grid_size)
   unsigned counter_rows = 0;
   unsigned counter_cols = 0;
 
-  unsigned letters = 'A';
-  //while()
+  printf("=\n");
+
+  /*print letters at the bottom*/
+  char letters = 'A';
+  counter_cols = 0;
+  printf("  ");
+  while(counter_cols < (n_cols - 1) / 4)
+  {
+    printf("   %c", letters++);
+    counter_cols++;
+  }
+  printf("\n");
+  /*end of print letters at the bottom*/
 
   for(counter_rows = 0; counter_rows < n_rows; counter_rows++)
   {
+    /*print left side row numbers*/
     if(counter_rows % 2 == 1)
     {
-      printf(" %d ", (counter_rows + 1) / 2);
+      if((((n_rows - 1) / 2) - (counter_rows + 1) / 2) + 1 >= 10)
+      {
+        printf("%d ", (((n_rows - 1) / 2) - (counter_rows + 1) / 2) + 1);
+      }
+      else if((((n_rows - 1) / 2) - (counter_rows + 1) / 2) < 10)
+      {
+        printf(" %d ", (((n_rows - 1) / 2) - (counter_rows + 1) / 2) + 1);
+      }
     }
     else if(counter_rows % 2 == 0)
     {
       printf("   ");
     }
+    /*end of print left side row numbers*/
+
+    /*print array content*/
     for(counter_cols = 0; counter_cols < n_cols; counter_cols++)
     {
       printf("%c", grid[counter_rows][counter_cols]);
     }
+    /*print array content*/
+
+    /*print right side row numbers*/
     if(counter_rows % 2 == 1)
     {
-      printf(" %d ", (counter_rows + 1) / 2);
+      printf(" %d", (((n_rows - 1) / 2) - (counter_rows + 1) / 2) + 1);
     }
-    else if(counter_rows % 2 == 0)
+    /*end of print right side row numbers*/
+
+    /*print available walls for each player on the right*/
+    if(counter_rows == 1)
     {
-      printf("   ");
+      printf("  black walls: %d", available_walls.black_walls);
     }
+    else if(counter_rows == 3)
+    {
+      printf("  white walls: %d", available_walls.white_walls);
+    }
+    /*end of print available walls for each player on the right*/
+
     printf("\n");
   }
+
+  /*print letters at the bottom*/
+  letters = 'A';
+  counter_cols = 0;
+  printf("  ");
+  while(counter_cols < (n_cols - 1) / 4)
+  {
+    printf("   %c", letters++);
+    counter_cols++;
+  }
+  printf("\n\n");
+  /*end of print letters at the bottom*/
 }
