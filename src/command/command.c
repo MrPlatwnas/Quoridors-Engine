@@ -62,7 +62,21 @@ void inputCommand(unsigned* quit_game)
     if(n_arguments == 1)
     {
       grid_size.size = atoi(arguments[0]);
-      grid = boardsize(grid, grid_size);
+      if(grid_size.size >= 3 && grid_size.size <= 25 && grid_size.size % 2 == 1)
+      {
+        grid_size.v_size = grid_size.size * 2 + 1;
+        grid_size.h_size = grid_size.size * 4 + 1;
+        grid = boardsize(grid_size);  /*BOARDSIZE FUNCTION CALL*/
+        if(is_set_walls == 0)
+        {
+          available_walls.white_walls = 10;
+          available_walls.black_walls = 10;
+        }
+      }
+      else
+      {
+        printf("? Error: you need to input an odd size between 3 and 26\n\n");
+      }
     }
     else
     {
