@@ -14,7 +14,7 @@ Date                : 28-1-2015
 
 void inputCommand(unsigned int* quit_game)
 {
-  char* inputCommand = getLine();
+  char* inputCommand = get_line();
 
   char replaceChars[2] = {9, ' '};
   replaceStringChars(inputCommand, replaceChars, 2);
@@ -24,12 +24,13 @@ void inputCommand(unsigned int* quit_game)
   char* command = NULL;
   command = commandDecode(inputCommand, command);
 
-  unsigned int no_arguments;
+  unsigned int n_arguments;
   char** arguments = NULL;
-  arguments = argumentsDecode(inputCommand, &no_arguments);
+  arguments = argumentsDecode(inputCommand, &n_arguments);
 
   int** grid = NULL;
-  unsigned int gridSize = 0;
+  ArraySize grid_size;
+  unsigned int n_walls = 0;
 
   if(strcmp(command, "name") == 0)
   {
@@ -37,8 +38,14 @@ void inputCommand(unsigned int* quit_game)
   }
   else if(strcmp(command, "known_command") == 0)
   {
-    if(no_arguments == 1) known_command(arguments[0]);
-    else printf("= false\n\n");
+    if(n_arguments == 1)
+    {
+      known_command(arguments[0]);
+    }
+    else
+    {
+      printf("= false\n\n");
+    }
   }
   else if(strcmp(command, "list_commands") == 0)
   {
@@ -50,52 +57,96 @@ void inputCommand(unsigned int* quit_game)
   }
   else if(strcmp(command, "boardsize") == 0)
   {
-    if(no_arguments == 1)
+    if(n_arguments == 1)
     {
-      gridSize = atoi(arguments[0]);
-      grid = boardSize(grid, gridSize);
+      grid_size.size = atoi(arguments[0]);
+      grid = boardsize(grid, grid_size);
     }
-    else printf("? Error: no argument size specified.\n\n");
+    else
+    {
+      printf("? Error: you need to give one(1) argument (ex. boardsize 9)\n\n");
+    }
   }
   else if(strcmp(command, "clear_board") == 0)
   {
-    //clear_board();
+    //clear_board(grid);
   }
   else if(strcmp(command, "walls") == 0)
   {
-    unsigned int n_walls = 0;
-    walls(&n_walls);
+    if(n_arguments == 1)
+    {
+      walls(&n_walls, atoi(arguments[0]));
+    }
+    else
+    {
+      printf("? Error: you need to give one(1) argument (ex. walls 10)\n\n");
+    }
   }
   else if(strcmp(command, "playmove") == 0)
   {
-    if(grid != NULL) playmove(grid);
-    else printf("? Error: you need to create a board first.\n\n");
+    if(grid != NULL && n_arguments == 2)
+    {
+      //playmove(grid, arguments[0], arguments[1]);
+    }
+    else if(grid == NULL)
+    {
+      printf("? Error: you need to create a board first\n\n");
+    }
+    else if(n_arguments != 2)
+    {
+      printf("? Error: you need to give two(2) arguments (ex. playmove w a1)\n\n");
+    }
   }
   else if(strcmp(command, "playwall") == 0)
   {
-    playwall(grid);
+    if(n_arguments == 3)
+    {
+      //playwall(grid, &n_walls, arguments[0], arguments[1], arguments[2]);
+    }
+    else
+    {
+      printf("? Error: you need to give 3 arguments (ex. playwall w a5 v)\n\n");
+    }
   }
   else if(strcmp(command, "genmove") == 0)
   {
-    genmove();
+    if(n_arguments == 1)
+    {
+      //genmove(grid, grid_size, arguments[0]);
+    }
+    else
+    {
+      printf("? Error: you need to give one(1) argument (ex. genmove w)\n\n");
+    }
   }
   else if(strcmp(command, "undo") == 0)
   {
-    undo(grid);
+    if(n_arguments == 1)
+    {
+      //undo(grid, arguments[0]);
+    }
+    else
+    {
+      printf("? Error: you need to give one(1) argument (ex. undo 4)\n\n");
+    }
   }
   else if(strcmp(command, "winner") == 0)
   {
-    winner();
+    //winner(grid, grid_size);
   }
   else if(strcmp(command, "showboard") == 0)
   {
-    showboard(grid, gridSize);
+    //showboard(grid, gridSize_v, gridSize_h);
   }
   else
   {
-    printf("? unknown command\n\n");
+    printf("? Error: unknown command (run: list_commands)\n\n");
   }
 }
+
+/*********************************************************
+-------------------------COMMANDS-------------------------
+*********************************************************/
 
 void name()
 {
@@ -125,7 +176,7 @@ void list_commands()
   static unsigned int n_elems = 13;
   static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
 
-  printf("= ");
+  printf("=\n");
   unsigned int counter;
   for(counter = 0; counter < n_elems; counter++)
   {
