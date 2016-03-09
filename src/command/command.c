@@ -107,7 +107,7 @@ void inputCommand(unsigned* quit_game)
     }
     else if(grid == NULL)
     {
-      printf("? Error: you need to create a board first\n\n");
+      printf("? Error: you need to create a board first (run: boardsize <desired_size>)\n\n");
     }
     else if(n_arguments != 2)
     {
