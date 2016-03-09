@@ -8,6 +8,28 @@ Date                : 28-1-2015
 #ifndef _COMMAND_H_
 #define _COMMAND_H_
 
+typedef struct gridsize {
+  unsigned v_size;
+  unsigned h_size;
+  unsigned size;
+}ArraySize;
+
+typedef struct vertex {
+  unsigned x_coordinate;
+  unsigned y_coordinate;
+}Vertex;
+
+typedef struct walls {
+  unsigned white_walls;
+  unsigned black_walls;
+}Walls;
+
+typedef struct move_info {
+  char player;
+  unsigned n_row;
+  unsigned n_col;
+}move_info;
+
 //reads the stdin of the program, analyzes it and calls the apropriate function.
 void inputCommand(unsigned int* quit_game);
 
