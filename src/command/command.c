@@ -191,7 +191,7 @@ void quit(unsigned int* quit_game)
   printf("= quitting game\n");
 }
 
-int** boardSize(int** grid, unsigned int newSize)
+int** boardsize(int** grid, ArraySize grid_size)
 {
   static int gridMade=0, gridSize;
 
