@@ -28,9 +28,11 @@ void inputCommand(unsigned* quit_game)
   char** arguments = NULL;
   arguments = argumentsDecode(inputCommand, &n_arguments);
 
-  int** grid = NULL;
-  ArraySize grid_size;
-  unsigned int n_walls = 0;
+  static ArraySize grid_size;
+  static Walls available_walls;
+  static unsigned is_set_walls;
+  static int** grid = NULL;
+
 
   if(strcmp(command, "name") == 0)
   {
