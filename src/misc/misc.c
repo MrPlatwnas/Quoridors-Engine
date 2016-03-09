@@ -10,6 +10,8 @@ Date                : 28-1-2015
 #include <string.h>
 #include <ctype.h>
 
+#include "../command/command.h"
+
 int** initGridInt(unsigned int n_rows, unsigned n_cols)
 {
   int** grid;
