@@ -12,7 +12,7 @@ Date                : 28-1-2015
 #include "../misc/misc.h"
 #include "../command/command.h"
 
-void inputCommand()
+void inputCommand(unsigned int* quit_game)
 {
   char* inputCommand = getLine();
 
@@ -28,44 +28,116 @@ void inputCommand()
   char** arguments = NULL;
   arguments = argumentsDecode(inputCommand, &no_arguments);
 
-  if(strcmp(command, "name"))
+  int** grid = NULL;
+  unsigned int gridSize = 0;
+
+  if(strcmp(command, "name") == 0)
   {
     name();
   }
-  else if(strcmp(command, "known_command"))
+  else if(strcmp(command, "known_command") == 0)
   {
-    known_command(command);
+    if(no_arguments == 1) known_command(arguments[0]);
+    else printf("= false\n\n");
   }
-  else if(strcmp(command, "list_commands"))
+  else if(strcmp(command, "list_commands") == 0)
   {
     list_commands();
   }
+  else if(strcmp(command, "quit") == 0)
+  {
+    quit(quit_game);
+  }
+  else if(strcmp(command, "boardsize") == 0)
+  {
+    if(no_arguments == 1)
+    {
+      gridSize = atoi(arguments[0]);
+      grid = boardSize(grid, gridSize);
+    }
+    else printf("? Error: no argument size specified.\n\n");
+  }
+  else if(strcmp(command, "clear_board") == 0)
+  {
+    //clear_board();
+  }
+  else if(strcmp(command, "walls") == 0)
+  {
+    unsigned int n_walls = 0;
+    walls(&n_walls);
+  }
+  else if(strcmp(command, "playmove") == 0)
+  {
+    if(grid != NULL) playmove(grid);
+    else printf("? Error: you need to create a board first.\n\n");
+  }
+  else if(strcmp(command, "playwall") == 0)
+  {
+    playwall(grid);
+  }
+  else if(strcmp(command, "genmove") == 0)
+  {
+    genmove();
+  }
+  else if(strcmp(command, "undo") == 0)
+  {
+    undo(grid);
+  }
+  else if(strcmp(command, "winner") == 0)
+  {
+    winner();
+  }
+  else if(strcmp(command, "showboard") == 0)
+  {
+    showboard(grid, gridSize);
+  }
   else
   {
-    // Add all the commands.
+    printf("? unknown command\n\n");
   }
 }
 
 void name()
 {
   char* engineName = "Deep Orange";
-  printf("%s\n", engineName);
+  printf("= %s\n\n", engineName);
 }
 
 void known_command(char* command)
 {
-  //FIXME: Add function to this function.
+  static unsigned int n_elems = 13;
+  static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
+
+  unsigned int n_rows = 0;
+  for(n_rows = 0; n_rows < n_elems; n_rows++)
+  {
+    if(strcmp(command, allCommands[n_rows]) == 0)
+    {
+      printf("= true\n\n");
+      return;
+    }
+  }
+  printf("= false\n\n");
 }
 
 void list_commands()
 {
   static unsigned int n_elems = 13;
   static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
+
+  printf("= ");
   unsigned int counter;
   for(counter = 0; counter < n_elems; counter++)
   {
     printf("%s\n", allCommands[counter]);
   }
+  printf("\n");
+}
+
+void quit(unsigned int* quit_game)
+{
+  *quit_game = 1;
+  printf("= quitting game.\n");
 }
 
 int** boardSize(int** grid, unsigned int newSize)
@@ -93,7 +165,42 @@ int** boardSize(int** grid, unsigned int newSize)
   return grid;
 }
 
-void show_board(int** grid, int gridSize)
+void clear_board(int** grid)
+{
+
+}
+
+void walls(unsigned int* n_walls)
+{
+  //FIXME: Add functionality to this function.
+}
+
+void playmove(int** grid)
+{
+  //FIXME: Add functionality to this function.
+}
+
+void playwall(int ** grid)
+{
+  //FIXME: Add functionality to this function.
+}
+
+void genmove()
+{
+  //FIXME: Add functionality to this function.
+}
+
+void undo(int** grid)
+{
+  //FIXME: Add functionality to this function.
+}
+
+void winner()
+{
+  //FIXME: Add functionality to this function.
+}
+
+void showboard(int** grid, int gridSize)
 {
   int i,j,realSize;
   char c='A';
@@ -124,15 +231,4 @@ void show_board(int** grid, int gridSize)
   }
   for (j=0 ; j<=gridSize ; j++)
     printf(" %c" , c+j);
-}
-
-
-void clear_board(int** grid)
-{
-
-}
-
-void walls(unsigned int n_walls)
-{
-  //FIXME: Add function to this function.
 }
