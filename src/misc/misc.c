@@ -54,31 +54,6 @@ char** initGridChar(unsigned int n_rows, unsigned int n_cols)
   return grid;
 }
 
-void buildGrid(int** grid, unsigned int gridSize)
-{
-  int i,j;
-  for (i=0 ; i<gridSize ; i++)
-  {
-    for (j=0 ; j<gridSize ; j++)
-    {
-      if ((i%2)==0)
-      {
-        if((j%2)==0)
-          grid[i][j]=' ';
-        else if ((j%2)==1 )
-          grid[i][j]= '|';
-      }
-      else
-      {
-        if ((j%2)==0)
-          grid[i][j]='-';
-        else
-          grid[i][j]='+';
-      }
-    }
-  }
-}
-
 void zerofyGrid(unsigned int n_rows, unsigned int n_cols, int** grid)
 {
   unsigned int counterRows;
@@ -307,4 +282,44 @@ char** argumentsDecode(char* input_command, unsigned int* arguments_count)
     *arguments_count = no_arguments;
     return output_arguments;
   }
+}
+
+int** build_grid(ArraySize grid_size)
+{
+  int** grid = initGridInt(grid_size.v_size, grid_size.h_size + 1);
+
+  unsigned n_rows = grid_size.v_size;
+  unsigned n_cols = grid_size.h_size + 1; //+1 for the '\0' character.
+  unsigned counter_rows = 0;
+  unsigned counter_cols = 0;
+  for(counter_rows = 0; counter_rows < n_rows; counter_rows++)
+  {
+    for(counter_cols = 0; counter_cols < n_cols; counter_cols++)
+    {
+      if(counter_rows % 2 == 0)
+      {
+        if(counter_cols % 4 == 0)
+        {
+          grid[counter_rows][counter_cols] = '+';
+        }
+        else if(counter_cols % 4 != 0)
+        {
+          grid[counter_rows][counter_cols] = '-';
+        }
+      }
+      else if(counter_rows % 2 == 1)
+      {
+        if(counter_cols % 4 == 0)
+        {
+          grid[counter_rows][counter_cols] = '|';
+        }
+        else if(counter_cols % 4 != 0)
+        {
+          grid[counter_rows][counter_cols] = ' ';
+        }
+      }
+    }
+    grid[counter_rows][counter_cols - 1] = '\0';
+  }
+  return grid;
 }
