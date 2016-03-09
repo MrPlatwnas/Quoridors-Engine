@@ -193,27 +193,7 @@ void quit(unsigned int* quit_game)
 
 int** boardsize(int** grid, ArraySize grid_size)
 {
-  static int gridMade=0, gridSize;
 
-  if (newSize<=24)
-  {
-    gridSize = (newSize*2)-1;
-    if(gridMade == 0)
-    {
-      gridMade = 1;
-    }
-    else
-    {
-      freeGrid(grid,gridSize);
-    }
-    grid = initGridInt(gridSize, gridSize);
-    printf("made %d\n",gridSize);
-  }
-  else
-  {
-    printf("unacceptable size");
-  }
-  return grid;
 }
 
 void clear_board(int** grid)
