@@ -12,7 +12,7 @@ Date                : 28-1-2015
 #include "../misc/misc.h"
 #include "../command/command.h"
 
-void inputCommand(unsigned int* quit_game)
+void inputCommand(unsigned* quit_game)
 {
   char* inputCommand = get_line();
 
@@ -24,7 +24,7 @@ void inputCommand(unsigned int* quit_game)
   char* command = NULL;
   command = commandDecode(inputCommand, command);
 
-  unsigned int n_arguments;
+  unsigned n_arguments;
   char** arguments = NULL;
   arguments = argumentsDecode(inputCommand, &n_arguments);
 
@@ -34,13 +34,13 @@ void inputCommand(unsigned int* quit_game)
 
   if(strcmp(command, "name") == 0)
   {
-    name();
+    name(); /*NAME FUNCTION CALL*/
   }
   else if(strcmp(command, "known_command") == 0)
   {
     if(n_arguments == 1)
     {
-      known_command(arguments[0]);
+      known_command(arguments[0]);  /*KNOWN_COMMAND FUNCTION CALL*/
     }
     else
     {
@@ -49,11 +49,11 @@ void inputCommand(unsigned int* quit_game)
   }
   else if(strcmp(command, "list_commands") == 0)
   {
-    list_commands();
+    list_commands();  /*LIST_COMMANDS FUNCTION CALL*/
   }
   else if(strcmp(command, "quit") == 0)
   {
-    quit(quit_game);
+    quit(quit_game);  /*QUIT FUNCTION CALL*/
   }
   else if(strcmp(command, "boardsize") == 0)
   {
@@ -86,7 +86,7 @@ void inputCommand(unsigned int* quit_game)
   {
     if(grid != NULL && n_arguments == 2)
     {
-      //playmove(grid, arguments[0], arguments[1]);
+      //playmove(grid, arguments[0], arguments[1]); /*PLAYMOVE FUNCTION CALL*/
     }
     else if(grid == NULL)
     {
@@ -101,7 +101,7 @@ void inputCommand(unsigned int* quit_game)
   {
     if(n_arguments == 3)
     {
-      //playwall(grid, &n_walls, arguments[0], arguments[1], arguments[2]);
+      //playwall(grid, &n_walls, arguments[0], arguments[1], arguments[2]); /*PLAYWALL FUNCTION CALL*/
     }
     else
     {
@@ -112,7 +112,7 @@ void inputCommand(unsigned int* quit_game)
   {
     if(n_arguments == 1)
     {
-      //genmove(grid, grid_size, arguments[0]);
+      //genmove(grid, grid_size, arguments[0]); /*GENMOVE FUNCTION CALL*/
     }
     else
     {
@@ -123,7 +123,7 @@ void inputCommand(unsigned int* quit_game)
   {
     if(n_arguments == 1)
     {
-      //undo(grid, arguments[0]);
+      //undo(grid, arguments[0]); /*UNDO FUNCTION CALL*/
     }
     else
     {
@@ -132,7 +132,7 @@ void inputCommand(unsigned int* quit_game)
   }
   else if(strcmp(command, "winner") == 0)
   {
-    //winner(grid, grid_size);
+    //winner(grid, grid_size);  /*WINNER FUNCTION CALL*/
   }
   else if(strcmp(command, "showboard") == 0)
   {
@@ -156,10 +156,10 @@ void name()
 
 void known_command(char* command)
 {
-  static unsigned int n_elems = 13;
+  static unsigned n_elems = 13;
   static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
 
-  unsigned int n_rows = 0;
+  unsigned n_rows = 0;
   for(n_rows = 0; n_rows < n_elems; n_rows++)
   {
     if(strcmp(command, allCommands[n_rows]) == 0)
@@ -173,11 +173,11 @@ void known_command(char* command)
 
 void list_commands()
 {
-  static unsigned int n_elems = 13;
+  static unsigned n_elems = 13;
   static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
 
   printf("=\n");
-  unsigned int counter;
+  unsigned counter;
   for(counter = 0; counter < n_elems; counter++)
   {
     printf("%s\n", allCommands[counter]);
@@ -185,7 +185,7 @@ void list_commands()
   printf("\n");
 }
 
-void quit(unsigned int* quit_game)
+void quit(unsigned* quit_game)
 {
   *quit_game = 1;
   printf("= quitting game\n");
@@ -239,7 +239,7 @@ void showboard(int** grid, Walls available_walls, ArraySize grid_size)
   unsigned counter_rows = 0;
   unsigned counter_cols = 0;
 
-  printf("=\n\n");
+  printf("=\n");
 
   /*print letters at the bottom*/
   char letters = 'A';
@@ -310,6 +310,6 @@ void showboard(int** grid, Walls available_walls, ArraySize grid_size)
     printf("   %c", letters++);
     counter_cols++;
   }
-  printf("\n");
+  printf("\n\n");
   /*end of print letters at the bottom*/
 }
