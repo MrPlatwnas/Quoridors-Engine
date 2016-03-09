@@ -239,31 +239,77 @@ void showboard(int** grid, Walls available_walls, ArraySize grid_size)
   unsigned counter_rows = 0;
   unsigned counter_cols = 0;
 
-  unsigned letters = 'A';
-  //while()
+  printf("=\n\n");
+
+  /*print letters at the bottom*/
+  char letters = 'A';
+  counter_cols = 0;
+  printf("  ");
+  while(counter_cols < (n_cols - 1) / 4)
+  {
+    printf("   %c", letters++);
+    counter_cols++;
+  }
+  printf("\n");
+  /*end of print letters at the bottom*/
 
   for(counter_rows = 0; counter_rows < n_rows; counter_rows++)
   {
+    /*print left side row numbers*/
     if(counter_rows % 2 == 1)
     {
-      printf(" %d ", (counter_rows + 1) / 2);
+      if((((n_rows - 1) / 2) - (counter_rows + 1) / 2) + 1 >= 10)
+      {
+        printf("%d ", (((n_rows - 1) / 2) - (counter_rows + 1) / 2) + 1);
+      }
+      else if((((n_rows - 1) / 2) - (counter_rows + 1) / 2) < 10)
+      {
+        printf(" %d ", (((n_rows - 1) / 2) - (counter_rows + 1) / 2) + 1);
+      }
     }
     else if(counter_rows % 2 == 0)
     {
       printf("   ");
     }
+    /*end of print left side row numbers*/
+
+    /*print array content*/
     for(counter_cols = 0; counter_cols < n_cols; counter_cols++)
     {
       printf("%c", grid[counter_rows][counter_cols]);
     }
+    /*print array content*/
+
+    /*print right side row numbers*/
     if(counter_rows % 2 == 1)
     {
-      printf(" %d ", (counter_rows + 1) / 2);
+      printf(" %d", (((n_rows - 1) / 2) - (counter_rows + 1) / 2) + 1);
     }
-    else if(counter_rows % 2 == 0)
+    /*end of print right side row numbers*/
+
+    /*print available walls for each player on the right*/
+    if(counter_rows == 1)
     {
-      printf("   ");
+      printf("  black walls: %d", available_walls.black_walls);
     }
+    else if(counter_rows == 3)
+    {
+      printf("  white walls: %d", available_walls.white_walls);
+    }
+    /*end of print available walls for each player on the right*/
+
     printf("\n");
   }
+
+  /*print letters at the bottom*/
+  letters = 'A';
+  counter_cols = 0;
+  printf("  ");
+  while(counter_cols < (n_cols - 1) / 4)
+  {
+    printf("   %c", letters++);
+    counter_cols++;
+  }
+  printf("\n");
+  /*end of print letters at the bottom*/
 }
