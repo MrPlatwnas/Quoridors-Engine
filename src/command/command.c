@@ -196,22 +196,22 @@ int** boardsize(int** grid, ArraySize grid_size)
 
 }
 
-void clear_board(int** grid)
+void clear_board(int** grid, ArraySize grid_size)
 {
 
 }
 
-void walls(unsigned int* n_walls)
-{
-  //FIXME: Add functionality to this function.
-}
-
-void playmove(int** grid)
+void walls(unsigned int* n_walls, unsigned int input_n_walls)
 {
   //FIXME: Add functionality to this function.
 }
 
-void playwall(int ** grid)
+void playmove(int** grid, ArraySize grid_size, char player, Vertex move_coordinates)
+{
+  //FIXME: Add functionality to this function.
+}
+
+void playwall(int** grid, ArraySize grid_size, unsigned* n_walls, char player, Vertex wall_coordinates, unsigned orientation)
 {
   //FIXME: Add functionality to this function.
 }
