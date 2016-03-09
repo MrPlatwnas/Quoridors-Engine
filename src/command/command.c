@@ -234,33 +234,36 @@ void winner(int** grid, ArraySize grid_size)
 
 void showboard(int** grid, Walls available_walls, ArraySize grid_size)
 {
-  int i,j,realSize;
-  char c='A';
-  realSize=(gridSize-1)/2;
-  for (i=0 ; i<gridSize ; i++)
+  unsigned n_rows = grid_size.v_size;
+  unsigned n_cols = grid_size.h_size;
+  unsigned counter_rows = 0;
+  unsigned counter_cols = 0;
+
+  unsigned letters = 'A';
+  //while()
+
+  for(counter_rows = 0; counter_rows < n_rows; counter_rows++)
   {
-    if (i==0)
+    if(counter_rows % 2 == 1)
     {
-      printf("     ");
-      for (j=0 ; j<gridSize ; j++)
-      {
-        if ((j/2)==0)
-        printf("%c " , c+j);
-        else
-        printf("   ");
-      }
+      printf(" %d ", (counter_rows + 1) / 2);
     }
-    printf(" %d |", i);
-    if (i>0)
+    else if(counter_rows % 2 == 0)
     {
-      for (j=0 ; j<gridSize ; j++)
-      {
-        printf(" %c ", grid[i-1][j]);
-      }
-      printf("| %d", i);
+      printf("   ");
+    }
+    for(counter_cols = 0; counter_cols < n_cols; counter_cols++)
+    {
+      printf("%c", grid[counter_rows][counter_cols]);
+    }
+    if(counter_rows % 2 == 1)
+    {
+      printf(" %d ", (counter_rows + 1) / 2);
+    }
+    else if(counter_rows % 2 == 0)
+    {
+      printf("   ");
     }
     printf("\n");
   }
-  for (j=0 ; j<=gridSize ; j++)
-    printf(" %c" , c+j);
 }
