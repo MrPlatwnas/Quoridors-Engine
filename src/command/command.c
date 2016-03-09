@@ -91,7 +91,8 @@ void inputCommand(unsigned* quit_game)
   {
     if(n_arguments == 1)
     {
-      walls(&n_walls, atoi(arguments[0]));
+      walls(&available_walls, atoi(arguments[0]));  /*WALLS FUNCTION CALL*/
+      is_set_walls = 1;
     }
     else
     {
@@ -217,10 +218,12 @@ void clear_board(int** grid, ArraySize grid_size)
 
 }
 
-void walls(unsigned int* n_walls, unsigned int input_n_walls)
+void walls(Walls* available_walls, unsigned input_n_walls)
 {
-  *n_walls = input_n_walls;
-  printf("= walls set to %d.\n\n", *n_walls);
+  available_walls->white_walls = input_n_walls;
+  available_walls->black_walls = input_n_walls;
+
+  printf("= number of walls set to %d for each player\n\n", input_n_walls);
 }
 
 void playmove(int** grid, ArraySize grid_size, char player, Vertex move_coordinates)
