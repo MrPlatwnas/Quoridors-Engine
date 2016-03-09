@@ -215,9 +215,13 @@ void quit(unsigned* quit_game)
   printf("= quitting game\n");
 }
 
-int** boardsize(int** grid, ArraySize grid_size)
+int** boardsize(ArraySize grid_size)
 {
-
+  int** grid = NULL;
+  grid = build_grid(grid_size);
+  clear_board(grid, grid_size);
+  printf("= board's size set to %dx%d\n\n", grid_size.size, grid_size.size);
+  return grid;
 }
 
 void clear_board(int** grid, ArraySize grid_size)
