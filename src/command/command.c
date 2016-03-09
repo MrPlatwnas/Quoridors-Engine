@@ -188,7 +188,7 @@ void list_commands()
 void quit(unsigned int* quit_game)
 {
   *quit_game = 1;
-  printf("= quitting game.\n");
+  printf("= quitting game\n");
 }
 
 int** boardSize(int** grid, unsigned int newSize)
