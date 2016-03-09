@@ -82,7 +82,7 @@ void print2DArrayAsInt(unsigned int n_rows, unsigned int n_cols, int** array)
   }
 }
 
-void print2DArrayAsChar(unsigned int n_rows, unsigned int n_cols, int** array)
+void print2DArrayAsChar(unsigned n_rows, unsigned n_cols, int** array)
 {
   unsigned int rowsCounter = 0;
   unsigned int colsCounter = 0;
@@ -90,7 +90,7 @@ void print2DArrayAsChar(unsigned int n_rows, unsigned int n_cols, int** array)
   {
     for(colsCounter = 0; colsCounter < n_cols; colsCounter++)
     {
-      printf("%c ", array[rowsCounter][colsCounter]);
+      printf("%c", array[rowsCounter][colsCounter]);
     }
     printf("\n");
   }
@@ -186,17 +186,17 @@ void removeExtraSpaces(char* string)
 }
 
 
-void freeGrid (int ** grid, unsigned int n_rows)
+void freeGrid(int** grid, unsigned n_rows)
 {
-  unsigned int i;
-  for (i=0 ; i < n_rows ; i++)
+  unsigned counter_rows = 0;
+  for(counter_rows = 0; counter_rows < n_rows; counter_rows++)
   {
-    free(grid[i]);
+    free(grid[counter_rows]);
   }
   free(grid);
 }
 
-char* getLine()
+char* get_line()
 {
   char c;
   unsigned int no_chars = 1;
