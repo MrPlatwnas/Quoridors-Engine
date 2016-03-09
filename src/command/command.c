@@ -153,7 +153,14 @@ void inputCommand(unsigned* quit_game)
   }
   else if(strcmp(command, "showboard") == 0)
   {
-    //showboard(grid, gridSize_v, gridSize_h);
+    if(grid != NULL)
+    {
+      showboard(grid, available_walls, grid_size);  /*SHOWBOARD FUNCTION CALL*/
+    }
+    else
+    {
+      printf("? Error: you need to create a board first (run: boardsize <desired_size>)\n\n");
+    }
   }
   else
   {
