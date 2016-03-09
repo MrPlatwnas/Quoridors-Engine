@@ -68,14 +68,20 @@ void removeChar(char* string, char garbageChar);
 //removes extra spaces.
 void removeExtraSpaces(char* string);
 
-//builds initial grid
-void buildGrid(int** grid, unsigned int gridSize);
 //returns the user's command from stdin to getCommand's name.
 char* get_line();
 
-//frees malloc'ed grid
-void freeGrid (int ** grid, unsigned int n_rows);
+/**************************
+STRING GENERAL FUNCTIONS
+**************************/
 
+
+/**************************
+QUORIDOR MISC FUNCTIONS
+**************************/
+
+//builds int grid for quoridor.
+int** build_grid(ArraySize grid_size);
 
 //decodes the user's command to the command. Returns the command.
 char* commandDecode(char* input_command, char* output_command);
