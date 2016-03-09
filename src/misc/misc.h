@@ -30,7 +30,16 @@ void zerofyGrid(unsigned int n_rows, unsigned int n_cols, int** grid);
 void print2DArrayAsInt(unsigned int n_rows, unsigned int n_cols, int** array);
 
 //for a given 2D array with n_rows rows and n_cols columns, it's content is printed as characters.
-void print2DArrayAsChar(unsigned int n_rows, unsigned int n_cols, int** array);
+void print2DArrayAsChar(unsigned n_rows, unsigned n_cols, int** array);
+
+/**************************
+ARRAY GENERAL FUNCTIONS
+**************************/
+
+
+/**************************
+STRING GENERAL FUNCTIONS
+**************************/
 
 //copies sourceStr content to destinationStr until the character endChar is found, but not endChar. If character endChar does not exist inside sourceStr then everything is copied over.
 void copyStringUntil(char* sourceStr, char* destinationStr, unsigned int destinationStrSize, char endChar);
@@ -51,7 +60,7 @@ replaceStringChars(bla, bla2, 4);
 printf("%s\n", bla);
 
 This will print PlbtwnbsXKiorpelidis*/
-void replaceStringChars(char* string, char* replaceChars, unsigned int n_rows);
+void replaceStringChars(char* string, char* replaceChars, unsigned n_rows);
 
 //removes garbageChar from string.
 void removeChar(char* string, char garbageChar);
