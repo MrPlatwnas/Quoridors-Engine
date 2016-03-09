@@ -227,12 +227,12 @@ void undo(int** grid)
   //FIXME: Add functionality to this function.
 }
 
-void winner()
+void winner(int** grid, ArraySize grid_size)
 {
   //FIXME: Add functionality to this function.
 }
 
-void showboard(int** grid, int gridSize)
+void showboard(int** grid, Walls available_walls, ArraySize grid_size)
 {
   int i,j,realSize;
   char c='A';
