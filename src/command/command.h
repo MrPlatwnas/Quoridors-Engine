@@ -15,8 +15,8 @@ typedef struct gridsize {
 }ArraySize;
 
 typedef struct vertex {
-  unsigned x_coordinate;
-  unsigned y_coordinate;
+  unsigned v_coordinate;
+  unsigned h_coordinate;
 }Vertex;
 
 typedef struct walls {
