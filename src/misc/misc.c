@@ -202,7 +202,7 @@ char* get_line()
   unsigned int no_chars = 1;
   char* input_command = malloc(no_chars * sizeof(char));
 
-  c = getchar();
+  while((c = getchar()) == '\n');
   while(c != '\n' && c != EOF)
   {
     input_command[no_chars - 1] = c;
