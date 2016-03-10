@@ -19,6 +19,7 @@ void inputCommand(unsigned* quit_game)
   char replaceChars[2] = {9, ' '};
   replaceStringChars(inputCommand, replaceChars, 2);
   removeChar(inputCommand, 13);
+  removeComments(inputCommand);
   removeExtraSpaces(inputCommand);
 
   char* command = NULL;
@@ -32,7 +33,6 @@ void inputCommand(unsigned* quit_game)
   static Walls available_walls;
   static unsigned is_set_walls;
   static int** grid = NULL;
-
 
   if(strcmp(command, "name") == 0)
   {
