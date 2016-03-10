@@ -232,7 +232,8 @@ int** boardsize(ArraySize grid_size)
 
 void clear_board(int** grid, ArraySize grid_size)
 {
-
+  grid[1][grid_size.h_size / 2] = 'B';
+  grid[grid_size.v_size - 2][grid_size.h_size / 2] = 'W';
 }
 
 void walls(Walls* available_walls, unsigned input_n_walls)
