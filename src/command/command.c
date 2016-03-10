@@ -91,7 +91,7 @@ void inputCommand(unsigned* quit_game)
   }
   else if(strcmp(command, "clear_board") == 0)
   {
-    //clear_board(grid);
+    clear_board(grid, grid_size); /*CLEAR_BOARD FUNCTION CALL*/
   }
   else if(strcmp(command, "walls") == 0)
   {
