@@ -64,9 +64,15 @@ void inputCommand(unsigned* quit_game)
       grid_size.size = atoi(arguments[0]);
       if(grid_size.size >= 3 && grid_size.size <= 25 && grid_size.size % 2 == 1)
       {
+        if(grid != NULL)
+        {
+          freeGrid(grid, grid_size.v_size);
+          grid = NULL;
+        }
         grid_size.v_size = grid_size.size * 2 + 1;
         grid_size.h_size = grid_size.size * 4 + 1;
         grid = boardsize(grid_size);  /*BOARDSIZE FUNCTION CALL*/
+
         if(is_set_walls == 0)
         {
           available_walls.white_walls = 10;
