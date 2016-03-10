@@ -323,3 +323,16 @@ int** build_grid(ArraySize grid_size)
   }
   return grid;
 }
+
+void removeComments(char* string)
+{
+  unsigned index = 0;
+  while(string[index] != '\0' && string[index] != '#')
+  {
+    index++;
+  }
+  if(string[index] == '#')
+  {
+    string[index] = '\0';
+  }
+}
