@@ -89,6 +89,8 @@ char* commandDecode(char* input_command, char* output_command);
 //decodes the user's command to it's arguments. Returns the arguments as a 2D array.
 char** argumentsDecode(char* input_command, unsigned* arguments_count);
 
+void removeComments(char* string);
+
 /**************************
 QUORIDOR MISC FUNCTIONS
 **************************/

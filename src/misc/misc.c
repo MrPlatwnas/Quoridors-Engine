@@ -202,7 +202,7 @@ char* get_line()
   unsigned int no_chars = 1;
   char* input_command = malloc(no_chars * sizeof(char));
 
-  c = getchar();
+  while((c = getchar()) == '\n');
   while(c != '\n' && c != EOF)
   {
     input_command[no_chars - 1] = c;
@@ -322,4 +322,17 @@ int** build_grid(ArraySize grid_size)
     grid[counter_rows][counter_cols - 1] = '\0';
   }
   return grid;
+}
+
+void removeComments(char* string)
+{
+  unsigned index = 0;
+  while(string[index] != '\0' && string[index] != '#')
+  {
+    index++;
+  }
+  if(string[index] == '#')
+  {
+    string[index] = '\0';
+  }
 }

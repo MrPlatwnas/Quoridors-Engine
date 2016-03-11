@@ -19,6 +19,7 @@ void inputCommand(unsigned* quit_game)
   char replaceChars[2] = {9, ' '};
   replaceStringChars(inputCommand, replaceChars, 2);
   removeChar(inputCommand, 13);
+  removeComments(inputCommand);
   removeExtraSpaces(inputCommand);
 
   char* command = NULL;
@@ -32,7 +33,6 @@ void inputCommand(unsigned* quit_game)
   static Walls available_walls;
   static unsigned is_set_walls;
   static int** grid = NULL;
-
 
   if(strcmp(command, "name") == 0)
   {
@@ -64,9 +64,15 @@ void inputCommand(unsigned* quit_game)
       grid_size.size = atoi(arguments[0]);
       if(grid_size.size >= 3 && grid_size.size <= 25 && grid_size.size % 2 == 1)
       {
+        if(grid != NULL)
+        {
+          freeGrid(grid, grid_size.v_size);
+          grid = NULL;
+        }
         grid_size.v_size = grid_size.size * 2 + 1;
         grid_size.h_size = grid_size.size * 4 + 1;
         grid = boardsize(grid_size);  /*BOARDSIZE FUNCTION CALL*/
+
         if(is_set_walls == 0)
         {
           available_walls.white_walls = 10;
@@ -85,7 +91,7 @@ void inputCommand(unsigned* quit_game)
   }
   else if(strcmp(command, "clear_board") == 0)
   {
-    //clear_board(grid);
+    clear_board(grid, grid_size); /*CLEAR_BOARD FUNCTION CALL*/
   }
   else if(strcmp(command, "walls") == 0)
   {
@@ -226,7 +232,8 @@ int** boardsize(ArraySize grid_size)
 
 void clear_board(int** grid, ArraySize grid_size)
 {
-
+  grid[1][grid_size.h_size / 2] = 'B';
+  grid[grid_size.v_size - 2][grid_size.h_size / 2] = 'W';
 }
 
 void walls(Walls* available_walls, unsigned input_n_walls)
