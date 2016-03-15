@@ -12,6 +12,7 @@ Date                : 28-1-2015
 
 #include "../command/command.h"
 
+//TODO: organize the functions to match the misc.h functions' order.
 int** initGridInt(unsigned int n_rows, unsigned n_cols)
 {
   int** grid;
@@ -159,7 +160,7 @@ void removeChar(char* string, char garbageChar)
   *dst = '\0';
 }
 
-void removeExtraSpaces(char* string)
+void remove_extra_spaces(char* string)
 {
   char* src = string;
   char* dst = string;
@@ -324,7 +325,7 @@ int** build_grid(ArraySize grid_size)
   return grid;
 }
 
-void removeComments(char* string)
+void remove_comments(char* string)
 {
   unsigned index = 0;
   while(string[index] != '\0' && string[index] != '#')
@@ -334,5 +335,18 @@ void removeComments(char* string)
   if(string[index] == '#')
   {
     string[index] = '\0';
+  }
+}
+
+void uncapitalize(char* string)
+{
+  unsigned index = 0;
+  while(string[index] != '\0')
+  {
+    if(string[index] >= 65 && string[index] <= 90)
+    {
+      string[index] += 32;
+    }
+    index++;
   }
 }

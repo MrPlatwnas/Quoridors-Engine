@@ -14,20 +14,20 @@ Date                : 28-1-2015
 
 void user_input_decode(unsigned* quit_game)
 {
-  char* inputCommand = get_line();
+  char* inputed_command = get_line();
 
-  char replaceChars[2] = {9, ' '};
-  replaceStringChars(inputCommand, replaceChars, 2);
-  removeChar(inputCommand, 13);
-  removeComments(inputCommand);
-  removeExtraSpaces(inputCommand);
+  replace_string_chars(inputed_command, 9, ' ');
+  remove_char(inputed_command, 13);
+  remove_comments(inputed_command);
+  remove_extra_spaces(inputed_command);
+  uncapitalize(inputed_command);
 
   char* command = NULL;
-  command = commandDecode(inputCommand, command);
+  command = commandDecode(inputed_command, command);
 
   unsigned n_arguments;
   char** arguments = NULL;
-  arguments = argumentsDecode(inputCommand, &n_arguments);
+  arguments = argumentsDecode(inputed_command, &n_arguments);
 
   static ArraySize grid_size;
   static Walls available_walls;
@@ -40,14 +40,7 @@ void user_input_decode(unsigned* quit_game)
   }
   else if(strcmp(command, "known_command") == 0)
   {
-    if(n_arguments == 1)
-    {
-      known_command(arguments[0]);  /*KNOWN_COMMAND FUNCTION CALL*/
-    }
-    else
-    {
-      printf("= false\n\n");
-    }
+    known_command(arguments[0], n_arguments);  /*KNOWN_COMMAND FUNCTION CALL*/  //FIXME: change known_command to take the n_arguments as an argument so it can print fault if there are more than 1 arguments.
   }
   else if(strcmp(command, "list_commands") == 0)
   {
@@ -109,7 +102,21 @@ void user_input_decode(unsigned* quit_game)
   {
     if(grid != NULL && n_arguments == 2)
     {
-      //playmove(grid, arguments[0], arguments[1]); /*PLAYMOVE FUNCTION CALL*/
+      Vertex move_coordinates;
+      move_coordinates.v_coordinate = arguments[1][1];
+      move_coordinates.h_coordinate = arguments[1][0] - 'a';
+
+      char player;
+      if(strcmp(arguments[0], "w") || strcmp(arguments[0], "white"))
+      {
+        player = 'w';
+      }
+      else if(strcmp(arguments[0], "b") || strcmp(arguments[0], "black"))
+      {
+        player = 'b';
+      }
+
+      playmove(grid, grid_size, player, move_coordinates); /*PLAYMOVE FUNCTION CALL*/
     }
     else if(grid == NULL)
     {
@@ -178,6 +185,7 @@ void user_input_decode(unsigned* quit_game)
 -------------------------COMMANDS-------------------------
 *********************************************************/
 
+//TODO: add comments to each function. organize the code structure.
 void name()
 {
   char* engineName = "Deep Orange";
