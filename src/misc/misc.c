@@ -127,7 +127,7 @@ int getStringlenUntil(char* string, char endChar)
   return -1;  //returns -1 if endChar does not exist inside string.
 }
 
-void replaceStringChars(char* string, char* replaceChars, unsigned int n_rows)
+void replace_string_chars(char* string, char char_unwanted, char char_replacer)
 {
   unsigned int stringLength = strlen(string);
   unsigned int counterString = 0;
@@ -145,7 +145,7 @@ void replaceStringChars(char* string, char* replaceChars, unsigned int n_rows)
   string[stringLength] = '\0';
 }
 
-void removeChar(char* string, char garbageChar)
+void remove_char(char* string, char garbageChar)
 {
   char* src;
   char* dst;
