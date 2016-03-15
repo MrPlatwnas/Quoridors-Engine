@@ -31,7 +31,7 @@ typedef struct move_info {
 }move_info;
 
 //reads the stdin of the program, analyzes it and calls the apropriate function.
-void inputCommand(unsigned int* quit_game);
+void user_input_decode(unsigned int* quit_game);
 
 //prints at stdout the engine's name.
 void name();
