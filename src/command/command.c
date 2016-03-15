@@ -40,7 +40,7 @@ void user_input_decode(unsigned* quit_game)
   }
   else if(strcmp(command, "known_command") == 0)
   {
-    known_command(arguments[0], n_arguments);  /*KNOWN_COMMAND FUNCTION CALL*/  //FIXME: change known_command to take the n_arguments as an argument so it can print fault if there are more than 1 arguments.
+    known_command(arguments, n_arguments);  /*KNOWN_COMMAND FUNCTION CALL*/  //FIXME: change known_command to take the n_arguments as an argument so it can print fault if there are more than 1 arguments.
   }
   else if(strcmp(command, "list_commands") == 0)
   {
@@ -192,10 +192,17 @@ void name()
   printf("= %s\n\n", engineName);
 }
 
-void known_command(char* command)
+void known_command(char** arguments, unsigned n_arguments)
 {
-  static unsigned n_elems = 13;
-  static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
+  if(n_arguments != 1)
+  {
+    printf("? Error: you need to give one(1) argument (ex. known_command playwall)\n\n");
+    return;
+  }
+  char* command = arguments[0];
+
+  static unsigned n_elems = 9;
+  static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "showboard", "playmove"};
 
   unsigned n_rows = 0;
   for(n_rows = 0; n_rows < n_elems; n_rows++)
