@@ -37,7 +37,7 @@ void user_input_decode(unsigned int* quit_game);
 void name();
 
 //prints true if command exits otherwise prints false.
-void known_command(char* command);
+void known_command(char** arguments, unsigned n_arguments);
 
 //Prints at stdin all the commands. One per row.
 void list_commands();
