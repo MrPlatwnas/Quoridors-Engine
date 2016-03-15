@@ -129,20 +129,17 @@ int getStringlenUntil(char* string, char endChar)
 
 void replace_string_chars(char* string, char char_unwanted, char char_replacer)
 {
-  unsigned int stringLength = strlen(string);
-  unsigned int counterString = 0;
-  unsigned int counterReplaceChar = 0;
-  for(counterString = 0; counterString < stringLength; counterString++)
+  unsigned string_length = strlen(string);
+  unsigned string_counter = 0;
+
+  for(string_counter = 0; string_counter < string_length; string_counter++)
   {
-    for(counterReplaceChar = 0; counterReplaceChar < n_rows - 1; counterReplaceChar += 2) //n_rows - 1 because counterReplaceChar is increased by 2 each time(segmentation fault).
+    if(string[string_counter] == char_unwanted)
     {
-      if(string[counterString] == replaceChars[counterReplaceChar])
-      {
-        string[counterString] = replaceChars[counterReplaceChar + 1];
-      }
+      string[string_counter] = char_replacer;
     }
   }
-  string[stringLength] = '\0';
+  string[string_length] = '\0';
 }
 
 void remove_char(char* string, char garbageChar)
