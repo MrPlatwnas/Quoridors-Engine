@@ -54,7 +54,7 @@ void quit(unsigned int* quit_game);
 int** boardsize(ArraySize grid_size);
 
 //Clears the board. The two pawns return to their starting position.
-void clear_board(int** grid, ArraySize grid_size);
+void clear_board(int** grid, ArraySize grid_size, Players_location* pawns_location);
 
 //Sets the number of walls each player has at the start of the game.
 void walls(Walls* available_walls, unsigned int input_n_walls);
