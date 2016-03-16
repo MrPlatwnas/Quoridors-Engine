@@ -104,18 +104,17 @@ void user_input_decode(unsigned* quit_game)
   {
     if(grid != NULL && n_arguments == 2)
     {
-      Vertex move_coordinates;
-      move_coordinates.v_coordinate = arguments[1][1];
-      move_coordinates.h_coordinate = arguments[1][0] - 'a';
+      Move_info requested_move_info;
+      requested_move_info.n_row = arguments[1][1] - '0';
+      requested_move_info.n_col = arguments[1][0] - 'a';
 
-      char player;
-      if(strcmp(arguments[0], "w") || strcmp(arguments[0], "white"))
+      if(strcmp(arguments[0], "w") == 0 || strcmp(arguments[0], "white") == 0)
       {
-        player = 'w';
+        requested_move_info.player = 'w';
       }
-      else if(strcmp(arguments[0], "b") || strcmp(arguments[0], "black"))
+      else if(strcmp(arguments[0], "b") == 0 || strcmp(arguments[0], "black") == 0)
       {
-        player = 'b';
+        requested_move_info.player = 'b';
       }
 
       playmove(grid, grid_size, player, move_coordinates); /*PLAYMOVE FUNCTION CALL*/
