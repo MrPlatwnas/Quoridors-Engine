@@ -66,6 +66,7 @@ void user_input_decode(unsigned* quit_game)
         grid_size.v_size = grid_size.size * 2 + 1;
         grid_size.h_size = grid_size.size * 4 + 1;
         grid = boardsize(grid_size);  /*BOARDSIZE FUNCTION CALL*/
+        clear_board(grid, grid_size, &pawns_location);
 
         if(is_set_walls == 0)
         {
@@ -241,7 +242,6 @@ int** boardsize(ArraySize grid_size)
 {
   int** grid = NULL;
   grid = build_grid(grid_size);
-  clear_board(grid, grid_size);
   printf("= board's size set to %dx%d\n\n", grid_size.size, grid_size.size);
   return grid;
 }
