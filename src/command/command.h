@@ -60,7 +60,7 @@ void clear_board(int** grid, ArraySize grid_size, Players_location* pawns_locati
 void walls(Walls* available_walls, unsigned int input_n_walls);
 
 //the player of the requested color is played at the requested vertex.
-void playmove(int** grid, ArraySize grid_size, char player, Vertex move_coordinates);
+void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,Move_info move_coordinates);
 
 //a wall place at the requested vertex and orientation. Decrease the number of walls.
 void playwall(int** grid, ArraySize grid_size, unsigned* n_walls, char player, Vertex wall_coordinates, unsigned orientation);
