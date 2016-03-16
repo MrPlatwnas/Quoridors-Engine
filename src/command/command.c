@@ -117,7 +117,7 @@ void user_input_decode(unsigned* quit_game)
         requested_move_info.player = 'b';
       }
 
-      playmove(grid, grid_size, player, move_coordinates); /*PLAYMOVE FUNCTION CALL*/
+      playmove(grid, grid_size, &pawns_location,requested_move_info); /*PLAYMOVE FUNCTION CALL*/
     }
     else if(grid == NULL)
     {
@@ -265,7 +265,7 @@ void walls(Walls* available_walls, unsigned input_n_walls)
   printf("= number of walls set to %d for each player\n\n", input_n_walls);
 }
 
-void playmove(int** grid, ArraySize grid_size, char player, Vertex move_coordinates)
+void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location, Move_info move_coordinates)
 {
   //FIXME: Add functionality to this function.
 }
