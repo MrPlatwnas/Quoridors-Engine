@@ -267,7 +267,14 @@ void walls(Walls* available_walls, unsigned input_n_walls)
 
 void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location, Move_info move_coordinates)
 {
-  //FIXME: Add functionality to this function.
+  unsigned v_coordinate = grid_size.size - move_coordinates.n_row;
+  unsigned h_coordinate = move_coordinates.n_col;
+  if(v_coordinate >= grid_size.size || h_coordinate >= grid_size.size)
+  {
+    printf("? Error: requested move is out of board's bountaries\n\n");
+    return;
+  }
+
 }
 
 void playwall(int** grid, ArraySize grid_size, unsigned* n_walls, char player, Vertex wall_coordinates, unsigned orientation)
