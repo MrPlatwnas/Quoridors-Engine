@@ -30,6 +30,11 @@ typedef struct move_info {
   unsigned n_col;
 }Move_info;
 
+typedef struct players_location {
+  Vertex white_location;
+  Vertex black_location;
+}Players_location;
+
 //reads the stdin of the program, analyzes it and calls the apropriate function.
 void user_input_decode(unsigned int* quit_game);
 
