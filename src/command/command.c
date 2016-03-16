@@ -31,6 +31,7 @@ void user_input_decode(unsigned* quit_game)
 
   static ArraySize grid_size;
   static Walls available_walls;
+  static Players_location pawns_location;
   static unsigned is_set_walls;
   static int** grid = NULL;
 
