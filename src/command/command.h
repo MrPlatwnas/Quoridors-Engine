@@ -28,16 +28,21 @@ typedef struct move_info {
   char player;
   unsigned n_row;
   unsigned n_col;
-}move_info;
+}Move_info;
+
+typedef struct players_location {
+  Vertex white_location;
+  Vertex black_location;
+}Players_location;
 
 //reads the stdin of the program, analyzes it and calls the apropriate function.
-void inputCommand(unsigned int* quit_game);
+void user_input_decode(unsigned int* quit_game);
 
 //prints at stdout the engine's name.
 void name();
 
 //prints true if command exits otherwise prints false.
-void known_command(char* command);
+void known_command(char** arguments, unsigned n_arguments);
 
 //Prints at stdin all the commands. One per row.
 void list_commands();
@@ -49,13 +54,13 @@ void quit(unsigned int* quit_game);
 int** boardsize(ArraySize grid_size);
 
 //Clears the board. The two pawns return to their starting position.
-void clear_board(int** grid, ArraySize grid_size);
+void clear_board(int** grid, ArraySize grid_size, Players_location* pawns_location);
 
 //Sets the number of walls each player has at the start of the game.
 void walls(Walls* available_walls, unsigned int input_n_walls);
 
 //the player of the requested color is played at the requested vertex.
-void playmove(int** grid, ArraySize grid_size, char player, Vertex move_coordinates);
+void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,Move_info move_coordinates);
 
 //a wall place at the requested vertex and orientation. Decrease the number of walls.
 void playwall(int** grid, ArraySize grid_size, unsigned* n_walls, char player, Vertex wall_coordinates, unsigned orientation);

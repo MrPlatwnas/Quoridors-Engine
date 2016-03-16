@@ -60,16 +60,18 @@ replaceStringChars(bla, bla2, 4);
 printf("%s\n", bla);
 
 This will print PlbtwnbsXKiorpelidis*/
-void replaceStringChars(char* string, char* replaceChars, unsigned n_rows);
+void replace_string_chars(char* string, char char_unwanted, char char_replacer);
 
 //removes garbageChar from string.
-void removeChar(char* string, char garbageChar);
+void remove_char(char* string, char garbageChar);
 
 //removes extra spaces.
-void removeExtraSpaces(char* string);
+void remove_extra_spaces(char* string);
 
 //returns the user's command from stdin to getCommand's name.
 char* get_line();
+
+void uncapitalize(char* string);
 
 /**************************
 STRING GENERAL FUNCTIONS
@@ -89,7 +91,8 @@ char* commandDecode(char* input_command, char* output_command);
 //decodes the user's command to it's arguments. Returns the arguments as a 2D array.
 char** argumentsDecode(char* input_command, unsigned* arguments_count);
 
-void removeComments(char* string);
+//removes comments from a given string. (a comment is a text that starts with a # character ex. playmove w a5 #i want to play a move)
+void remove_comments(char* string);
 
 /**************************
 QUORIDOR MISC FUNCTIONS

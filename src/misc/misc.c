@@ -12,6 +12,7 @@ Date                : 28-1-2015
 
 #include "../command/command.h"
 
+//TODO: organize the functions to match the misc.h functions' order.
 int** initGridInt(unsigned int n_rows, unsigned n_cols)
 {
   int** grid;
@@ -126,25 +127,22 @@ int getStringlenUntil(char* string, char endChar)
   return -1;  //returns -1 if endChar does not exist inside string.
 }
 
-void replaceStringChars(char* string, char* replaceChars, unsigned int n_rows)
+void replace_string_chars(char* string, char char_unwanted, char char_replacer)
 {
-  unsigned int stringLength = strlen(string);
-  unsigned int counterString = 0;
-  unsigned int counterReplaceChar = 0;
-  for(counterString = 0; counterString < stringLength; counterString++)
+  unsigned string_length = strlen(string);
+  unsigned string_counter = 0;
+
+  for(string_counter = 0; string_counter < string_length; string_counter++)
   {
-    for(counterReplaceChar = 0; counterReplaceChar < n_rows - 1; counterReplaceChar += 2) //n_rows - 1 because counterReplaceChar is increased by 2 each time(segmentation fault).
+    if(string[string_counter] == char_unwanted)
     {
-      if(string[counterString] == replaceChars[counterReplaceChar])
-      {
-        string[counterString] = replaceChars[counterReplaceChar + 1];
-      }
+      string[string_counter] = char_replacer;
     }
   }
-  string[stringLength] = '\0';
+  string[string_length] = '\0';
 }
 
-void removeChar(char* string, char garbageChar)
+void remove_char(char* string, char garbageChar)
 {
   char* src;
   char* dst;
@@ -159,7 +157,7 @@ void removeChar(char* string, char garbageChar)
   *dst = '\0';
 }
 
-void removeExtraSpaces(char* string)
+void remove_extra_spaces(char* string)
 {
   char* src = string;
   char* dst = string;
@@ -324,7 +322,7 @@ int** build_grid(ArraySize grid_size)
   return grid;
 }
 
-void removeComments(char* string)
+void remove_comments(char* string)
 {
   unsigned index = 0;
   while(string[index] != '\0' && string[index] != '#')
@@ -334,5 +332,18 @@ void removeComments(char* string)
   if(string[index] == '#')
   {
     string[index] = '\0';
+  }
+}
+
+void uncapitalize(char* string)
+{
+  unsigned index = 0;
+  while(string[index] != '\0')
+  {
+    if(string[index] >= 65 && string[index] <= 90)
+    {
+      string[index] += 32;
+    }
+    index++;
   }
 }

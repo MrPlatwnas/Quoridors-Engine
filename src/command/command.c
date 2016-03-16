@@ -12,25 +12,26 @@ Date                : 28-1-2015
 #include "../misc/misc.h"
 #include "../command/command.h"
 
-void inputCommand(unsigned* quit_game)
+void user_input_decode(unsigned* quit_game)
 {
-  char* inputCommand = get_line();
+  char* inputed_command = get_line();
 
-  char replaceChars[2] = {9, ' '};
-  replaceStringChars(inputCommand, replaceChars, 2);
-  removeChar(inputCommand, 13);
-  removeComments(inputCommand);
-  removeExtraSpaces(inputCommand);
+  replace_string_chars(inputed_command, 9, ' ');
+  remove_char(inputed_command, 13);
+  remove_comments(inputed_command);
+  remove_extra_spaces(inputed_command);
+  uncapitalize(inputed_command);
 
   char* command = NULL;
-  command = commandDecode(inputCommand, command);
+  command = commandDecode(inputed_command, command);
 
   unsigned n_arguments;
   char** arguments = NULL;
-  arguments = argumentsDecode(inputCommand, &n_arguments);
+  arguments = argumentsDecode(inputed_command, &n_arguments);
 
   static ArraySize grid_size;
   static Walls available_walls;
+  static Players_location pawns_location;
   static unsigned is_set_walls;
   static int** grid = NULL;
 
@@ -40,14 +41,7 @@ void inputCommand(unsigned* quit_game)
   }
   else if(strcmp(command, "known_command") == 0)
   {
-    if(n_arguments == 1)
-    {
-      known_command(arguments[0]);  /*KNOWN_COMMAND FUNCTION CALL*/
-    }
-    else
-    {
-      printf("= false\n\n");
-    }
+    known_command(arguments, n_arguments);  /*KNOWN_COMMAND FUNCTION CALL*/  //FIXME: change known_command to take the n_arguments as an argument so it can print fault if there are more than 1 arguments.
   }
   else if(strcmp(command, "list_commands") == 0)
   {
@@ -72,6 +66,7 @@ void inputCommand(unsigned* quit_game)
         grid_size.v_size = grid_size.size * 2 + 1;
         grid_size.h_size = grid_size.size * 4 + 1;
         grid = boardsize(grid_size);  /*BOARDSIZE FUNCTION CALL*/
+        clear_board(grid, grid_size, &pawns_location);
 
         if(is_set_walls == 0)
         {
@@ -91,7 +86,7 @@ void inputCommand(unsigned* quit_game)
   }
   else if(strcmp(command, "clear_board") == 0)
   {
-    clear_board(grid, grid_size); /*CLEAR_BOARD FUNCTION CALL*/
+    clear_board(grid, grid_size, &pawns_location); /*CLEAR_BOARD FUNCTION CALL*/
   }
   else if(strcmp(command, "walls") == 0)
   {
@@ -109,7 +104,20 @@ void inputCommand(unsigned* quit_game)
   {
     if(grid != NULL && n_arguments == 2)
     {
-      //playmove(grid, arguments[0], arguments[1]); /*PLAYMOVE FUNCTION CALL*/
+      Move_info requested_move_info;
+      requested_move_info.n_row = arguments[1][1] - '0';
+      requested_move_info.n_col = arguments[1][0] - 'a';
+
+      if(strcmp(arguments[0], "w") == 0 || strcmp(arguments[0], "white") == 0)
+      {
+        requested_move_info.player = 'w';
+      }
+      else if(strcmp(arguments[0], "b") == 0 || strcmp(arguments[0], "black") == 0)
+      {
+        requested_move_info.player = 'b';
+      }
+
+      playmove(grid, grid_size, &pawns_location,requested_move_info); /*PLAYMOVE FUNCTION CALL*/
     }
     else if(grid == NULL)
     {
@@ -178,16 +186,24 @@ void inputCommand(unsigned* quit_game)
 -------------------------COMMANDS-------------------------
 *********************************************************/
 
+//TODO: add comments to each function. organize the code structure.
 void name()
 {
   char* engineName = "Deep Orange";
   printf("= %s\n\n", engineName);
 }
 
-void known_command(char* command)
+void known_command(char** arguments, unsigned n_arguments)
 {
-  static unsigned n_elems = 13;
-  static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
+  if(n_arguments != 1)
+  {
+    printf("? Error: you need to give one(1) argument (ex. known_command playwall)\n\n");
+    return;
+  }
+  char* command = arguments[0];
+
+  static unsigned n_elems = 9;
+  static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "showboard", "playmove"};
 
   unsigned n_rows = 0;
   for(n_rows = 0; n_rows < n_elems; n_rows++)
@@ -225,15 +241,20 @@ int** boardsize(ArraySize grid_size)
 {
   int** grid = NULL;
   grid = build_grid(grid_size);
-  clear_board(grid, grid_size);
   printf("= board's size set to %dx%d\n\n", grid_size.size, grid_size.size);
   return grid;
 }
 
-void clear_board(int** grid, ArraySize grid_size)
+void clear_board(int** grid, ArraySize grid_size, Players_location* pawns_location)
 {
   grid[1][grid_size.h_size / 2] = 'B';
   grid[grid_size.v_size - 2][grid_size.h_size / 2] = 'W';
+
+  pawns_location->white_location.v_coordinate = grid_size.v_size - 2;
+  pawns_location->white_location.h_coordinate = grid_size.h_size / 2;
+
+  pawns_location->black_location.v_coordinate = 1;
+  pawns_location->black_location.h_coordinate = grid_size.h_size / 2;
 }
 
 void walls(Walls* available_walls, unsigned input_n_walls)
@@ -244,9 +265,16 @@ void walls(Walls* available_walls, unsigned input_n_walls)
   printf("= number of walls set to %d for each player\n\n", input_n_walls);
 }
 
-void playmove(int** grid, ArraySize grid_size, char player, Vertex move_coordinates)
+void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location, Move_info move_coordinates)
 {
-  //FIXME: Add functionality to this function.
+  unsigned v_coordinate = grid_size.size - move_coordinates.n_row;
+  unsigned h_coordinate = move_coordinates.n_col;
+  if(v_coordinate >= grid_size.size || h_coordinate >= grid_size.size)
+  {
+    printf("? Error: requested move is out of board's bountaries\n\n");
+    return;
+  }
+
 }
 
 void playwall(int** grid, ArraySize grid_size, unsigned* n_walls, char player, Vertex wall_coordinates, unsigned orientation)
