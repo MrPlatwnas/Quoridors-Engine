@@ -86,7 +86,7 @@ void user_input_decode(unsigned* quit_game)
   }
   else if(strcmp(command, "clear_board") == 0)
   {
-    clear_board(grid, grid_size); /*CLEAR_BOARD FUNCTION CALL*/
+    clear_board(grid, grid_size, &pawns_location); /*CLEAR_BOARD FUNCTION CALL*/
   }
   else if(strcmp(command, "walls") == 0)
   {
@@ -246,10 +246,16 @@ int** boardsize(ArraySize grid_size)
   return grid;
 }
 
-void clear_board(int** grid, ArraySize grid_size)
+void clear_board(int** grid, ArraySize grid_size, Players_location* pawns_location)
 {
   grid[1][grid_size.h_size / 2] = 'B';
   grid[grid_size.v_size - 2][grid_size.h_size / 2] = 'W';
+
+  pawns_location->white_location.v_coordinate = grid_size.v_size - 2;
+  pawns_location->white_location.h_coordinate = grid_size.h_size / 2;
+
+  pawns_location->black_location.v_coordinate = 1;
+  pawns_location->black_location.h_coordinate = grid_size.h_size / 2;
 }
 
 void walls(Walls* available_walls, unsigned input_n_walls)
