@@ -28,7 +28,7 @@ typedef struct move_info {
   char player;
   unsigned n_row;
   unsigned n_col;
-}move_info;
+}Move_info;
 
 //reads the stdin of the program, analyzes it and calls the apropriate function.
 void user_input_decode(unsigned int* quit_game);
