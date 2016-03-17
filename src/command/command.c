@@ -265,16 +265,172 @@ void walls(Walls* available_walls, unsigned input_n_walls)
   printf("= number of walls set to %d for each player\n\n", input_n_walls);
 }
 
-void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location, Move_info move_coordinates)
+void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location, Move_info requested_move_info)
 {
-  unsigned v_coordinate = grid_size.size - move_coordinates.n_row;
-  unsigned h_coordinate = move_coordinates.n_col;
-  if(v_coordinate >= grid_size.size || h_coordinate >= grid_size.size)
+  unsigned v_coordinate = grid_size.size - requested_move_info.n_row;
+  unsigned h_coordinate = requested_move_info.n_col;
+  if(v_coordinate >= grid_size.size ||
+  h_coordinate >= grid_size.size)
   {
     printf("? Error: requested move is out of board's bountaries\n\n");
     return;
   }
 
+  //converting v_coordinate into array understandable coordinates.
+  v_coordinate = v_coordinate * 2 + 1;
+  //converting h_coordinate into array understandable coordinates.
+  h_coordinate = h_coordinate * 4 + 2;
+
+  printf("v_coordinate after conversion is: %u\n", v_coordinate);
+  printf("h_coordinate after conversion is: %u\n", h_coordinate);
+
+  printf("h_size: %d\n", grid_size.h_size);
+  printf("v_size: %d\n", grid_size.v_size);
+
+  grid[v_coordinate][h_coordinate] = 'K';
+
+  if(requested_move_info.player == 'w')
+  {
+    if((v_coordinate == 1 || v_coordinate == grid_size.v_size - 2) ||
+    (h_coordinate == 2 || h_coordinate == grid_size.h_size - 3))
+    {
+      if(v_coordinate == 1 && h_coordinate == 2)  //top left corner.
+      {
+        printf("when playing a move at the top left corner\n");
+        if(grid[v_coordinate + 2][h_coordinate] == 'W' ||
+        grid[v_coordinate][h_coordinate + 4] == 'W')
+        {
+          //TODO: play the move.
+        }
+        else
+        {
+          printf("? Error: you can only move one square horizontaly or verticaly\n\n");
+          return;
+        }
+      }
+      else if(v_coordinate == grid_size.v_size - 2 && h_coordinate == 2)  //bottom left corner.
+      {
+        printf("when playing a move at the bottom left corner\n");
+        if(grid[v_coordinate - 2][h_coordinate] == 'W' ||
+        grid[v_coordinate][h_coordinate + 4] == 'W')
+        {
+          //TODO: play the move.
+        }
+        else
+        {
+          printf("? Error: you can only move one square horizontaly or verticaly\n\n");
+          return;
+        }
+      }
+      else if(v_coordinate == 1 && h_coordinate == grid_size.h_size - 3)  //top right corner.
+      {
+        printf("when playing a move at the top right corner\n");
+        if(grid[v_coordinate + 2][h_coordinate] == 'W' ||
+        grid[v_coordinate][h_coordinate - 4] == 'W')
+        {
+          //TODO: play the move.
+        }
+        else
+        {
+          printf("TEST? Error: you can only move to one adjacent square horizontaly or verticaly\n\n");
+          return;
+        }
+      }
+      else if(v_coordinate == grid_size.v_size - 2 && h_coordinate == grid_size.h_size - 3) //bottom right corner.
+      {
+        printf("when playing a move at the bottom right corner\n");
+        if(grid[v_coordinate - 2][h_coordinate] == 'W' &&
+        grid[v_coordinate][h_coordinate - 4] == 'W')
+        {
+          //TODO: play the move.
+        }
+        else
+        {
+          printf("? Error: you can only move to one adjacent square horizontaly or verticaly\n\n");
+          return;
+        }
+      }
+      else if(v_coordinate == grid_size.v_size - 2) //TODO: when n_rows is v_size - 1.
+      {
+        printf("when playing a move at the far bottom side\n");
+        if(grid[v_coordinate][h_coordinate - 4] == 'W' ||
+        grid[v_coordinate][h_coordinate + 4] == 'W' ||
+        grid[v_coordinate - 2][h_coordinate] == 'W')
+        {
+          //TODO: play the move.
+        }
+        else
+        {
+          printf("? Error: you can only move to one adjacent square horizontaly or verticaly\n\n");
+          return;
+        }
+      }
+      else if(v_coordinate == 1) //TODO: when n_rows is v_size + 1.
+      {
+        printf("when playing a move at the far top side\n");
+        if(grid[v_coordinate][h_coordinate - 4] == 'W' ||
+        grid[v_coordinate][h_coordinate + 4] == 'W' ||
+        grid[v_coordinate + 2][h_coordinate] == 'W')
+        {
+          //TODO: play the move.
+        }
+        else
+        {
+          printf("? Error: you can only move to one adjacent square horizontaly or verticaly\n\n");
+          return;
+        }
+      }
+      else if(h_coordinate == 2) //TODO: when n_cols is h_size + 2.
+      {
+        printf("when playing a move at the far left side\n");
+        if(grid[v_coordinate - 2][h_coordinate] == 'W' ||
+        grid[v_coordinate + 2][h_coordinate] == 'W' ||
+        grid[v_coordinate][h_coordinate + 4] == 'W')
+        {
+          //TODO: play the move.
+        }
+        else
+        {
+          printf("? Error: you can only move to one adjacent square horizontaly or verticaly\n\n");
+          return;
+        }
+      }
+      else if(h_coordinate == grid_size.h_size - 3) //TODO: when n_cols is h_size - 2.
+      {
+        printf("when playing a move at the far right side\n");
+        if(grid[v_coordinate - 2][h_coordinate] == 'W' ||
+        grid[v_coordinate + 2][h_coordinate] == 'W' ||
+        grid[v_coordinate][h_coordinate - 4] == 'W')
+        {
+          //TODO: play the move.
+        }
+        else
+        {
+          printf("? Error: you can only move to one adjacent square horizontaly or verticaly\n\n");
+          return;
+        }
+      }
+    }
+    else
+    {
+      if(grid[v_coordinate][h_coordinate - 4] == 'W' ||
+      grid[v_coordinate][h_coordinate + 4] == 'W' ||
+      grid[v_coordinate - 2][h_coordinate] == 'W' ||
+      grid[v_coordinate + 2][h_coordinate] == 'W')  //then it's a valid move.
+      {
+        //TODO: play the move.
+      }
+      else
+      {
+        printf("? Error: you can only move one square horizontaly or verticaly\n\n");
+        return;
+      }
+    }
+  }
+  else if(requested_move_info.player == 'b')
+  {
+    //TODO: implement the same principle as we did for the white player.
+  }
 }
 
 void playwall(int** grid, ArraySize grid_size, unsigned* n_walls, char player, Vertex wall_coordinates, unsigned orientation)
