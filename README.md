@@ -16,7 +16,7 @@ At this point you are prompted to enter a command for the Quoridors Engine.
 Now you can run the command: **> tutorial**, inside the engine to learn how to control it. 
 
 ## The purpose of the Project
-This project is part of the course "Introduction to Programming" at the National and Kapodistrian University of Athens at the Departure of Informatics and Telecommunications. However, some of the features of the engine are not part of the course.
+This project is part of the course "Introduction to Programming" at the National and Kapodistrian University of Athens at the Departure of Informatics and Telecommunications. However, now it's a standalone project.
 
 ## How to contribute
 ###Add something new
