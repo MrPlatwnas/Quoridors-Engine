@@ -425,7 +425,6 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       }
     }
   }
-
 }
 
 void playwall(int** grid, ArraySize grid_size, unsigned* n_walls, char player, Vertex wall_coordinates, unsigned orientation)
