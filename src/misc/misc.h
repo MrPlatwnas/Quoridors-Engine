@@ -86,7 +86,7 @@ QUORIDOR MISC FUNCTIONS
 int** build_grid(ArraySize grid_size);
 
 //decodes the user's command to the command. Returns the command.
-char* commandDecode(char* input_command, char* output_command);
+char* command_decode(char* input_command);
 
 //decodes the user's command to it's arguments. Returns the arguments as a 2D array.
 char** argumentsDecode(char* input_command, unsigned* arguments_count);
