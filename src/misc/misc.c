@@ -212,11 +212,12 @@ char* get_line()
   return input_command;
 }
 
-char* commandDecode(char* input_command, char* output_command)
+char* command_decode(char* input_command)
 {
-  unsigned int no_chars = 0;
-  unsigned int index = 0;
-  while(input_command[index] != ' ' && input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF)
+  char* output_command = NULL;
+  unsigned no_chars = 1;  //this way we will have one more character for the '\0' character.
+  unsigned index = 0;
+  while(input_command[index] != ' ' && input_command[index] != '\0')
   {
     no_chars++;
     output_command = realloc(output_command, no_chars * sizeof(char));
