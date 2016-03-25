@@ -86,10 +86,10 @@ QUORIDOR MISC FUNCTIONS
 int** build_grid(ArraySize grid_size);
 
 //decodes the user's command to the command. Returns the command.
-char* commandDecode(char* input_command, char* output_command);
+char* command_decode(char* input_command);
 
 //decodes the user's command to it's arguments. Returns the arguments as a 2D array.
-char** argumentsDecode(char* input_command, unsigned* arguments_count);
+char** arguments_decode(char* input_command, unsigned* arguments_count);
 
 //removes comments from a given string. (a comment is a text that starts with a # character ex. playmove w a5 #i want to play a move)
 void remove_comments(char* string);

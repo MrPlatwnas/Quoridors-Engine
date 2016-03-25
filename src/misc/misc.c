@@ -197,26 +197,27 @@ void freeGrid(int** grid, unsigned n_rows)
 char* get_line()
 {
   char c;
-  unsigned int no_chars = 1;
-  char* input_command = malloc(no_chars * sizeof(char));
+  unsigned n_chars = 1; //this way we will have one more character for the '\0' character.
+  char* input_command = NULL;
 
-  while((c = getchar()) == '\n');
+  while((c = getchar()) == '\n'); //discard all the LF characters at the start of the command.
   while(c != '\n' && c != EOF)
   {
-    input_command[no_chars - 1] = c;
-    no_chars++;
-    input_command = realloc(input_command, no_chars * sizeof(char));
+    n_chars++;
+    input_command = realloc(input_command, n_chars * sizeof(char));
+    input_command[n_chars - 2] = c;
     c = getchar();
   }
-  input_command[no_chars - 1] = '\0';
+  input_command[n_chars - 1] = '\0';
   return input_command;
 }
 
-char* commandDecode(char* input_command, char* output_command)
+char* command_decode(char* input_command)
 {
-  unsigned int no_chars = 0;
-  unsigned int index = 0;
-  while(input_command[index] != ' ' && input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF)
+  char* output_command = NULL;
+  unsigned no_chars = 1;  //this way we will have one more character for the '\0' character.
+  unsigned index = 0;
+  while(input_command[index] != ' ' && input_command[index] != '\0')
   {
     no_chars++;
     output_command = realloc(output_command, no_chars * sizeof(char));
@@ -227,41 +228,48 @@ char* commandDecode(char* input_command, char* output_command)
   return output_command;
 }
 
-char** argumentsDecode(char* input_command, unsigned int* arguments_count)
+char** arguments_decode(char* input_command, unsigned* arguments_count)
 {
   char** output_arguments = NULL;
-  unsigned int index = 0;
-  while(input_command[index] != ' ' && input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF) index++;
-  if(input_command[index] != '\n' && input_command[index] != EOF && input_command != '\0')
+  unsigned index = 0;
+  while(input_command[index] != ' ' && input_command[index] != '\0') index++;
+  if(input_command != '\0')
   {
-    unsigned int current_chars = 0;
-    unsigned int max_chars = 0;
-    unsigned int no_arguments = 0;
-    while(input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF)
+    /*COUNTING THE NUMBER OF ARGUMENTS AND THEIR SIZE IN CHARACTERS*/
+    unsigned current_chars = 0;
+    unsigned max_chars = 0;
+    unsigned n_arguments = 0;
+    while(input_command[index] != '\0')
     {
       if(input_command[index] != ' ')
-      {
         current_chars++;
-      }
       else
       {
-        if(current_chars > max_chars) max_chars = current_chars;
+        if(current_chars > max_chars)
+          max_chars = current_chars;
         current_chars = 0;
-        no_arguments++;
+        n_arguments++;
       }
       index++;
     }
-    if(current_chars > max_chars) max_chars = current_chars;
+    if(current_chars > max_chars)
+      max_chars = current_chars;
+    /*END OF COUNTING THE NUMBER OF ARGUMENTS AND THEIR SIZE IN CHARACTERS*/
 
-    output_arguments = initGridChar(no_arguments, max_chars + 1);
+    *arguments_count = n_arguments;
+
+    if(n_arguments == 0)
+      return NULL;
+
+    output_arguments = initGridChar(n_arguments, max_chars + 1); //allocating 2D char array with space for the '\0' character.
 
     index = 0;
-    while(input_command[index] != ' ' && input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF) index++;
+    while(input_command[index] != ' ' && input_command[index] != '\0') index++;
+    index++; //to go from ' ' to the next character.
 
-    index++;
-    unsigned int n_rows = 0;
-    unsigned int n_cols = 0;
-    while(input_command[index] != '\n' && input_command[index] != '\0' && input_command[index] != EOF)
+    unsigned n_rows = 0;
+    unsigned n_cols = 0;
+    while(input_command[index] != '\0')
     {
       if(input_command[index] != ' ')
       {
@@ -277,7 +285,7 @@ char** argumentsDecode(char* input_command, unsigned int* arguments_count)
         index++;
       }
     }
-    *arguments_count = no_arguments;
+    *arguments_count = n_arguments;
     return output_arguments;
   }
 }
