@@ -265,10 +265,10 @@ void walls(Walls* available_walls, unsigned input_n_walls)
   printf("= number of walls set to %d for each player\n\n", input_n_walls);
 }
 
-void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location, Move_info move_coordinates)
+void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location, Move_info requested_move_info)
 {
-  unsigned v_coordinate = grid_size.size - move_coordinates.n_row;
-  unsigned h_coordinate = move_coordinates.n_col;
+  unsigned v_coordinate = grid_size.size - requested_move_info.n_row;
+  unsigned h_coordinate = requested_move_info.n_col;
   if(v_coordinate >= grid_size.size || h_coordinate >= grid_size.size)
   {
     printf("? Error: requested move is out of board's bountaries\n\n");
