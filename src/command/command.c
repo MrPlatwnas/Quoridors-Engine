@@ -16,18 +16,18 @@ void user_input_decode(unsigned* quit_game)
 {
   char* inputed_command = get_line();
 
+  /*STRING EDITING FUNCTIONS*/
   replace_string_chars(inputed_command, 9, ' ');
   remove_char(inputed_command, 13);
   remove_comments(inputed_command);
   remove_extra_spaces(inputed_command);
   uncapitalize(inputed_command);
+  /*END OF STRING EDITING FUNCTIONS*/
 
-  char* command = NULL;
-  command = commandDecode(inputed_command, command);
+  char* command = command_decode(inputed_command);
 
   unsigned n_arguments;
-  char** arguments = NULL;
-  arguments = argumentsDecode(inputed_command, &n_arguments);
+  char** arguments = arguments_decode(inputed_command, &n_arguments);
 
   static ArraySize grid_size;
   static Walls available_walls;
