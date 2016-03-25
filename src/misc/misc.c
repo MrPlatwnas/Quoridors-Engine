@@ -197,18 +197,18 @@ void freeGrid(int** grid, unsigned n_rows)
 char* get_line()
 {
   char c;
-  unsigned int no_chars = 1;
-  char* input_command = malloc(no_chars * sizeof(char));
+  unsigned n_chars = 1; //this way we will have one more character for the '\0' character.
+  char* input_command = NULL;
 
-  while((c = getchar()) == '\n');
+  while((c = getchar()) == '\n'); //discard all the LF characters at the start of the command.
   while(c != '\n' && c != EOF)
   {
-    input_command[no_chars - 1] = c;
-    no_chars++;
-    input_command = realloc(input_command, no_chars * sizeof(char));
+    n_chars++;
+    input_command = realloc(input_command, n_chars * sizeof(char));
+    input_command[n_chars - 2] = c;
     c = getchar();
   }
-  input_command[no_chars - 1] = '\0';
+  input_command[n_chars - 1] = '\0';
   return input_command;
 }
 
