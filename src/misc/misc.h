@@ -5,8 +5,8 @@ Purpose             : miscellaneous functions declarations
 Date                : 2-1-2015
 *******************************************************/
 
-#ifndef _MISC_H_
-#define _MISC_H_
+#ifndef MISC_H
+#define MISC_H
 
 #include "../command/command.h"
 
@@ -98,4 +98,4 @@ void remove_comments(char* string);
 QUORIDOR MISC FUNCTIONS
 **************************/
 
-#endif //#ifndef _MISC_H_
+#endif //#ifndef MISC_H
