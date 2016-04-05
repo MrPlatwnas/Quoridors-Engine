@@ -13,16 +13,16 @@ Date                : 28-1-2015
 #include "../command/command.h"
 
 //TODO: organize the functions to match the misc.h functions' order.
-int** initGridInt(unsigned int n_rows, unsigned n_cols)
+int** initGridInt(unsigned n_rows, unsigned n_cols)
 {
-  int** grid;
+  int** grid = NULL;
   grid = malloc(n_rows * sizeof(int*));
   if(grid == NULL)
   {
     fprintf(stderr, "Error when malloc'ing grid's memory!");
   }
 
-  unsigned int counter = 0;
+  unsigned counter = 0;
   for(counter = 0; counter < n_rows; counter++)
   {
     grid[counter] = malloc(n_cols * sizeof(int));
