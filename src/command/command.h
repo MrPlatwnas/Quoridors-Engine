@@ -5,8 +5,8 @@ Purpose             : command functions declarations
 Date                : 28-1-2015
 *******************************************************/
 
-#ifndef _COMMAND_H_
-#define _COMMAND_H_
+#ifndef COMMAND_H
+#define COMMAND_H
 
 typedef struct gridsize {
   unsigned v_size;
@@ -77,4 +77,4 @@ void winner(int** grid, ArraySize grid_size);
 //Prints the whole board as is.
 void showboard(int** grid, Walls available_walls, ArraySize grid_size);
 
-#endif  //ifndef _COMMAND_H_
+#endif  //ifndef COMMAND_H
