@@ -195,28 +195,35 @@ void user_input_decode()
 *********************************************************/
 
 //TODO: add comments to each function. organize the code structure.
+
+//name function prints the engine's name at stdout.
 void name()
 {
-  char* engineName = "Deep Orange";
-  printf("= %s\n\n", engineName);
+  printf("= DeepOrange\n\n");
 }
 
+//known_command function takes as argument one command and returns true if the command exists otherwise returns false.
 void known_command(char** arguments, unsigned n_arguments)
 {
+  //checks if the user's arguments is one argument. if it is not one argument then the function returns.
   if(n_arguments != 1)
   {
     printf("? Error: you need to give one(1) argument (ex. known_command playwall)\n\n");
     return;
   }
+
+  //stores the user's argument.
   char* command = arguments[0];
 
-  static unsigned n_elems = 9;
-  static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "showboard", "playmove"};
+  //the number of available commands is 9.
+  unsigned n_commands = 9;
+  char* known_commands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "showboard", "playmove"};
 
   unsigned n_rows = 0;
-  for(n_rows = 0; n_rows < n_elems; n_rows++)
+  for(n_rows = 0; n_rows < n_commands; n_rows++)
   {
-    if(strcmp(command, allCommands[n_rows]) == 0)
+    //checks if the user's argument one of the available commands. prinst true if it is, otherwise false.
+    if(strcmp(command, known_commands[n_rows]) == 0)
     {
       printf("= true\n\n");
       return;
@@ -225,73 +232,95 @@ void known_command(char** arguments, unsigned n_arguments)
   printf("= false\n\n");
 }
 
+//list_commands function lists all the available commands.
 void list_commands()
 {
-  static unsigned n_elems = 13;
-  static char* allCommands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
+  //the number of available commands is 13.
+  unsigned n_commands = 13;
+  char* known_commands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
 
   printf("=\n");
-  unsigned counter;
-  for(counter = 0; counter < n_elems; counter++)
+  unsigned counter = 0;
+  for(counter = 0; counter < n_commands; counter++)
   {
-    printf("%s\n", allCommands[counter]);
+    printf("%s\n", known_commands[counter]);
   }
   printf("\n");
 }
 
-void quit(unsigned* quit_game)
+//quit function stops the game.
+void quit(bool *quit_game)
 {
-  *quit_game = 1;
+  *quit_game = true;
   printf("= quitting game\n");
 }
 
+//boardsize creates the grid's base structure using build_grid.
 int** boardsize(ArraySize grid_size)
 {
-  int** grid = NULL;
+  int **grid = NULL;
+
+  //build_grid creates the grid's basic structure.
   grid = build_grid(grid_size);
   printf("= board's size set to %dx%d\n\n", grid_size.size, grid_size.size);
   return grid;
 }
 
+//clear board populates the grid's basic structure by placing the pawns at the correct positions.
 void clear_board(int** grid, ArraySize grid_size, Players_location* pawns_location)
 {
+  //using the board's actual size the black pawn is placed at the visual first row.
   grid[1][grid_size.h_size / 2] = 'B';
+  //using the board's actual size the white pawn is placed at the visual last row.
   grid[grid_size.v_size - 2][grid_size.h_size / 2] = 'W';
 
+  //the pawns' location is updated. the pawns_location struct is used by the winner function.
   pawns_location->white_location.v_coordinate = grid_size.v_size - 2;
   pawns_location->white_location.h_coordinate = grid_size.h_size / 2;
 
   pawns_location->black_location.v_coordinate = 1;
   pawns_location->black_location.h_coordinate = grid_size.h_size / 2;
+  return;
 }
 
+//walls function updates each player's available walls, using Walls struct.
 void walls(Walls* available_walls, unsigned input_n_walls)
 {
   available_walls->white_walls = input_n_walls;
   available_walls->black_walls = input_n_walls;
 
   printf("= number of walls set to %d for each player\n\n", input_n_walls);
+  return;
 }
 
+//playmove function takes the requested move and calculates if it's valid or not. if it is valid then it is played otherwise a descriptive error is printed.
 void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location, Move_info requested_move_info)
 {
+  //convert the users given coordinates to grid_size.size coordinates in order to check if the requested move is out of bounds, because the user's given coordinates are flipped because showboard shows the numbers in reverse.
   unsigned v_coordinate = grid_size.size - requested_move_info.n_row;
+  //stores the users given coordinates in order to check if the requested move is out of bounds.
   unsigned h_coordinate = requested_move_info.n_col;
 
+  //checks if the requested move is out of bounds. Note: there is no need to check if v_coordinate < 0 or if h_coordinate < 0 because the variables are unsigned so when v_coordinate is -1 then it's a very large positive number so the check is still triggered.
   if(v_coordinate >= grid_size.size || h_coordinate >= grid_size.size)
   {
     printf("? Error: requested move is out of board's bountaries\n\n");
     return;
   }
 
+  //converts the v_coordinate into the actual board's coordinates.
   v_coordinate = v_coordinate * 2 + 1;
+  //converts the h_coordinate into the actual board's coordinates.
   h_coordinate = h_coordinate * 4 + 2;
 
   printf("v_coordinate is: %d\n", v_coordinate);
   printf("h_coordinate is: %d\n", h_coordinate);
 
+  //we will work with two different cases. the first when the white player wants to move and the second case when the black player wants to move.
+  //this is the first case, for the white player.
   if(requested_move_info.player == 'w')
   {
+    //checks if there is another opponent at the requested coordinates. if there is, prints a descriptive error.
     if(grid[v_coordinate][h_coordinate] == 'W')
     {
       printf("? Error: you have already played there\n");
@@ -299,29 +328,36 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
     }
     else if(grid[v_coordinate][h_coordinate] == 'B')
     {
-      printf("? Error: the BLACK player has played there\n");
+      printf("? Error: the black player has played there\n");
       return;
     }
 
+    //checks if the requested coordinates are at one of the four sides of the board.
     if(v_coordinate == 1 || v_coordinate == grid_size.v_size - 2 ||
     h_coordinate == 2 || h_coordinate == grid_size.h_size - 3)
     {
+      //checks the top side but not the corners.
       if(v_coordinate == 1 &&
-      (h_coordinate != 2 && h_coordinate != grid_size.h_size - 3)) //top but not corners.
+      (h_coordinate != 2 && h_coordinate != grid_size.h_size - 3))
       {
         printf("YOU ARE PLAYING AT THE TOP BUT NOT AT THE CORNERS\n");
+        //checks if there is the pawn that requested the move below the requested coordinates. if it is then the move is valid and the old pawn is removed.
         if(grid[v_coordinate + 2][h_coordinate] == 'W')
           grid[v_coordinate + 2][h_coordinate] = ' ';
+        //checks if there is the pawn that requested the move left of the requested coordinates. if it is then the move is valid and the old pawn is removed.
         else if(grid[v_coordinate][h_coordinate - 4] == 'W')
           grid[v_coordinate][h_coordinate - 4] = ' ';
+        //checks if there is the pawn that requested the move right of the requested coordinates. if it is then the move is valid and the old pawn is removed.
         else if(grid[v_coordinate][h_coordinate + 4] == 'W')
           grid[v_coordinate][h_coordinate + 4] = ' ';
+        //else if there is not the pawn that requested the move, right, left or below the requested coordinates then the move is invalid and a descriptive error is printed. The function returns.
         else
         {
           printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
           return;
         }
 
+        //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'W';
       }
       else if((v_coordinate != 1 && v_coordinate != grid_size.v_size - 2) &&
@@ -460,6 +496,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
   }
   else if(requested_move_info.player == 'b')
   {
+    //checks if there is another opponent at the requested coordinates. if there is, prints a descriptive error.
     if(grid[v_coordinate][h_coordinate] == 'B')
     {
       printf("? Error: you have already played there\n");
@@ -467,29 +504,36 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
     }
     else if(grid[v_coordinate][h_coordinate] == 'W')
     {
-      printf("? Error: the BLACK player has played there\n");
+      printf("? Error: the white player has played there\n");
       return;
     }
 
+    //checks if the requested coordinates are at one of the four sides of the board.
     if(v_coordinate == 1 || v_coordinate == grid_size.v_size - 2 ||
     h_coordinate == 2 || h_coordinate == grid_size.h_size - 3)
     {
+      //checks the top side but not the corners.
       if(v_coordinate == 1 &&
-      (h_coordinate != 2 && h_coordinate != grid_size.h_size - 3)) //top but not corners.
+      (h_coordinate != 2 && h_coordinate != grid_size.h_size - 3))
       {
         printf("YOU ARE PLAYING AT THE TOP BUT NOT AT THE CORNERS\n");
+        //checks if there is the pawn that requested the move below the requested coordinates. if it is then the move is valid and the old pawn is removed.
         if(grid[v_coordinate + 2][h_coordinate] == 'B')
           grid[v_coordinate + 2][h_coordinate] = ' ';
+        //checks if there is the pawn that requested the move left of the requested coordinates. if it is then the move is valid and the old pawn is removed.
         else if(grid[v_coordinate][h_coordinate - 4] == 'B')
           grid[v_coordinate][h_coordinate - 4] = ' ';
+        //checks if there is the pawn that requested the move right of the requested coordinates. if it is then the move is valid and the old pawn is removed.
         else if(grid[v_coordinate][h_coordinate + 4] == 'B')
           grid[v_coordinate][h_coordinate + 4] = ' ';
+        //else if there is not the pawn that requested the move, right, left or below the requested coordinates then the move is invalid and a descriptive error is printed. The function returns.
         else
         {
           printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
           return;
         }
 
+        //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'B';
       }
       else if((v_coordinate != 1 && v_coordinate != grid_size.v_size - 2) &&
