@@ -5,180 +5,188 @@ Purpose             : command functions definitions
 Date                : 28-1-2015
 *******************************************************/
 
+/* C89 std */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+/* C99 std */
+#include <stdint.h>
+#include <stdbool.h>
+
+/* custom headers */
 #include "../misc/misc.h"
 #include "../command/command.h"
 
-void user_input_decode(unsigned* quit_game)
+//this function runs while quit_game is false and prossecess the commands that the user enters and then calls the right function to execute the requested command.
+void user_input_decode()
 {
-  char* inputed_command = get_line();
+  char *inputed_command = NULL; //get_lines the user's input from the stdin.
 
-  /*STRING EDITING FUNCTIONS*/
-  replace_string_chars(inputed_command, 9, ' ');
-  remove_char(inputed_command, 13);
-  remove_comments(inputed_command);
-  remove_extra_spaces(inputed_command);
-  uncapitalize(inputed_command);
-  /*END OF STRING EDITING FUNCTIONS*/
+  char *command = NULL; //here actual command gets stored ex. playmove w c3, the command here is playmove.
+  char **arguments = NULL; //the actual arguments get stored ex playmove w c3, the arguments here are w and c3.
+  unsigned n_arguments; //the number of arguments the user inputed. this variable is used to catch errors ex. playmove w, this command is missing one argument, the coordinates.
 
-  char* command = command_decode(inputed_command);
+  //struct to store the board's visual size, grid_size.size, the board's actual v_size and h_size, grid_size.v_size and grid_size.h_size respectively.
+  ArraySize grid_size;
+  grid_size.size = 9;
+  grid_size.v_size = 9 * 2 + 1;
+  grid_size.h_size = 9 * 4 + 1;
 
-  unsigned n_arguments;
-  char** arguments = arguments_decode(inputed_command, &n_arguments);
+  //struct to store the available walls for each player.
+  Walls available_walls;
+  available_walls.white_walls = 10;
+  available_walls.black_walls = 10;
 
-  static ArraySize grid_size;
-  static Walls available_walls;
-  static Players_location pawns_location;
-  static unsigned is_set_walls;
-  static int** grid = NULL;
+  //struct to store the current location of each player.
+  Players_location pawns_location;
 
-  if(strcmp(command, "name") == 0)
+  //struct to store the board configuration.
+  int **grid = NULL;
+
+  //boolean variable so you can quit the game when quit function is called.
+  bool quit_game = false;
+  while(!quit_game)
   {
-    name(); /*NAME FUNCTION CALL*/
-  }
-  else if(strcmp(command, "known_command") == 0)
-  {
-    known_command(arguments, n_arguments);  /*KNOWN_COMMAND FUNCTION CALL*/  //FIXME: change known_command to take the n_arguments as an argument so it can print fault if there are more than 1 arguments.
-  }
-  else if(strcmp(command, "list_commands") == 0)
-  {
-    list_commands();  /*LIST_COMMANDS FUNCTION CALL*/
-  }
-  else if(strcmp(command, "quit") == 0)
-  {
-    quit(quit_game);  /*QUIT FUNCTION CALL*/
-  }
-  else if(strcmp(command, "boardsize") == 0)
-  {
-    if(n_arguments == 1)
+    inputed_command = get_line(); //gets the user's input line from the stdin.
+
+    //we edit the user's input as needed according to qtp rules.
+    /*STRING EDITING FUNCTIONS*/
+    replace_string_chars(inputed_command, 9, ' ');
+    remove_char(inputed_command, 13);
+    remove_comments(inputed_command);
+    remove_extra_spaces(inputed_command);
+    uncapitalize(inputed_command);
+    /*END OF STRING EDITING FUNCTIONS*/
+
+    //the command gets seperated from the user's input ex. playmove w c3, here the command is playmove.
+    command = command_decode(inputed_command);
+    //the arguments are seperated from the user's input in an 2D array ex. playmove w c3, here the arguments are w and c3.
+    arguments = arguments_decode(inputed_command, &n_arguments);
+
+    //the user specified command is executed by matching the user's command with the engine's available commands. if the user's command is not one of the engine's known commands then a descriptive error is printed.
+    if(strcmp(command, "name") == 0)
+      name();
+    else if(strcmp(command, "known_command") == 0)
+      known_command(arguments, n_arguments);
+    else if(strcmp(command, "list_commands") == 0)
+      list_commands();
+    else if(strcmp(command, "quit") == 0)
+      quit(&quit_game);
+    else if(strcmp(command, "boardsize") == 0)
     {
-      grid_size.size = atoi(arguments[0]);
-      if(grid_size.size >= 3 && grid_size.size <= 25 && grid_size.size % 2 == 1)
+      if(n_arguments == 1)
       {
-        if(grid != NULL)
+        grid_size.size = atoi(arguments[0]);
+        if(grid_size.size >= 3 && grid_size.size <= 25 && grid_size.size % 2 == 1)
         {
-          freeGrid(grid, grid_size.v_size);
-          grid = NULL;
+          if(grid != NULL)
+          {
+            freeGrid(grid, grid_size.size);
+            grid = NULL;
+          }
+          grid_size.v_size = grid_size.size * 2 + 1;
+          grid_size.h_size = grid_size.size * 4 + 1;
+          grid = boardsize(grid_size);
+          clear_board(grid, grid_size, &pawns_location);
         }
-        grid_size.v_size = grid_size.size * 2 + 1;
-        grid_size.h_size = grid_size.size * 4 + 1;
-        grid = boardsize(grid_size);  /*BOARDSIZE FUNCTION CALL*/
-        clear_board(grid, grid_size, &pawns_location);
-
-        if(is_set_walls == 0)
+        else
         {
-          available_walls.white_walls = 10;
-          available_walls.black_walls = 10;
+          printf("? Error: you need to input an odd size between 3 and 26\n\n");
         }
       }
       else
       {
-        printf("? Error: you need to input an odd size between 3 and 26\n\n");
+        printf("? Error: you need to give one(1) argument (ex. boardsize 9)\n\n");
       }
     }
-    else
+    else if(strcmp(command, "clear_board") == 0)
+      clear_board(grid, grid_size, &pawns_location);
+    else if(strcmp(command, "walls") == 0)
+      if(n_arguments == 1)
+        walls(&available_walls, atoi(arguments[0]));
+      else
+        printf("? Error: you need to give one(1) argument (ex. walls 10)\n\n");
+    else if(strcmp(command, "playmove") == 0)
     {
-      printf("? Error: you need to give one(1) argument (ex. boardsize 9)\n\n");
-    }
-  }
-  else if(strcmp(command, "clear_board") == 0)
-  {
-    clear_board(grid, grid_size, &pawns_location); /*CLEAR_BOARD FUNCTION CALL*/
-  }
-  else if(strcmp(command, "walls") == 0)
-  {
-    if(n_arguments == 1)
-    {
-      walls(&available_walls, atoi(arguments[0]));  /*WALLS FUNCTION CALL*/
-      is_set_walls = 1;
-    }
-    else
-    {
-      printf("? Error: you need to give one(1) argument (ex. walls 10)\n\n");
-    }
-  }
-  else if(strcmp(command, "playmove") == 0)
-  {
-    if(grid != NULL && n_arguments == 2)
-    {
-      Move_info requested_move_info;
-      requested_move_info.n_row = arguments[1][1] - '0';
-      requested_move_info.n_col = arguments[1][0] - 'a';
-
-      if(strcmp(arguments[0], "w") == 0 || strcmp(arguments[0], "white") == 0)
+      if(grid != NULL && n_arguments == 2)
       {
-        requested_move_info.player = 'w';
-      }
-      else if(strcmp(arguments[0], "b") == 0 || strcmp(arguments[0], "black") == 0)
-      {
-        requested_move_info.player = 'b';
-      }
+        Move_info requested_move_info;
+        requested_move_info.n_row = arguments[1][1] - '0';
+        requested_move_info.n_col = arguments[1][0] - 'a';
 
-      playmove(grid, grid_size, &pawns_location,requested_move_info); /*PLAYMOVE FUNCTION CALL*/
+        if(strcmp(arguments[0], "w") == 0 || strcmp(arguments[0], "white") == 0)
+        {
+          requested_move_info.player = 'w';
+        }
+        else if(strcmp(arguments[0], "b") == 0 || strcmp(arguments[0], "black") == 0)
+        {
+          requested_move_info.player = 'b';
+        }
+
+        playmove(grid, grid_size, &pawns_location,requested_move_info); /*PLAYMOVE FUNCTION CALL*/
+      }
+      else if(grid == NULL)
+      {
+        printf("? Error: you need to create a board first (run: boardsize <desired_size>)\n\n");
+      }
+      else if(n_arguments != 2)
+      {
+        printf("? Error: you need to give two(2) arguments (ex. playmove w a1)\n\n");
+      }
     }
-    else if(grid == NULL)
+    else if(strcmp(command, "playwall") == 0)
     {
-      printf("? Error: you need to create a board first (run: boardsize <desired_size>)\n\n");
+      if(n_arguments == 3)
+      {
+        //playwall(grid, &n_walls, arguments[0], arguments[1], arguments[2]); /*PLAYWALL FUNCTION CALL*/
+      }
+      else
+      {
+        printf("? Error: you need to give 3 arguments (ex. playwall w a5 v)\n\n");
+      }
     }
-    else if(n_arguments != 2)
+    else if(strcmp(command, "genmove") == 0)
     {
-      printf("? Error: you need to give two(2) arguments (ex. playmove w a1)\n\n");
+      if(n_arguments == 1)
+      {
+        //genmove(grid, grid_size, arguments[0]); /*GENMOVE FUNCTION CALL*/
+      }
+      else
+      {
+        printf("? Error: you need to give one(1) argument (ex. genmove w)\n\n");
+      }
     }
-  }
-  else if(strcmp(command, "playwall") == 0)
-  {
-    if(n_arguments == 3)
+    else if(strcmp(command, "undo") == 0)
     {
-      //playwall(grid, &n_walls, arguments[0], arguments[1], arguments[2]); /*PLAYWALL FUNCTION CALL*/
+      if(n_arguments == 1)
+      {
+        //undo(grid, arguments[0]); /*UNDO FUNCTION CALL*/
+      }
+      else
+      {
+        printf("? Error: you need to give one(1) argument (ex. undo 4)\n\n");
+      }
+    }
+    else if(strcmp(command, "winner") == 0)
+    {
+      //winner(grid, grid_size);  /*WINNER FUNCTION CALL*/
+    }
+    else if(strcmp(command, "showboard") == 0)
+    {
+      if(grid != NULL)
+      {
+        showboard(grid, available_walls, grid_size);  /*SHOWBOARD FUNCTION CALL*/
+      }
+      else
+      {
+        printf("? Error: you need to create a board first (run: boardsize <desired_size>)\n\n");
+      }
     }
     else
     {
-      printf("? Error: you need to give 3 arguments (ex. playwall w a5 v)\n\n");
+      printf("? Error: unknown command (run: list_commands)\n\n");
     }
-  }
-  else if(strcmp(command, "genmove") == 0)
-  {
-    if(n_arguments == 1)
-    {
-      //genmove(grid, grid_size, arguments[0]); /*GENMOVE FUNCTION CALL*/
-    }
-    else
-    {
-      printf("? Error: you need to give one(1) argument (ex. genmove w)\n\n");
-    }
-  }
-  else if(strcmp(command, "undo") == 0)
-  {
-    if(n_arguments == 1)
-    {
-      //undo(grid, arguments[0]); /*UNDO FUNCTION CALL*/
-    }
-    else
-    {
-      printf("? Error: you need to give one(1) argument (ex. undo 4)\n\n");
-    }
-  }
-  else if(strcmp(command, "winner") == 0)
-  {
-    //winner(grid, grid_size);  /*WINNER FUNCTION CALL*/
-  }
-  else if(strcmp(command, "showboard") == 0)
-  {
-    if(grid != NULL)
-    {
-      showboard(grid, available_walls, grid_size);  /*SHOWBOARD FUNCTION CALL*/
-    }
-    else
-    {
-      printf("? Error: you need to create a board first (run: boardsize <desired_size>)\n\n");
-    }
-  }
-  else
-  {
-    printf("? Error: unknown command (run: list_commands)\n\n");
   }
 }
 
