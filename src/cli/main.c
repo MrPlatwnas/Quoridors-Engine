@@ -14,9 +14,5 @@ Date                : 28-1-2015
 
 int main(int argc, char* argv[])
 {
-  unsigned int quit_game = 0;
-  while(quit_game == 0)
-  {
-    user_input_decode(&quit_game);
-  }
+  user_input_decode();
 }

@@ -8,6 +8,8 @@ Date                : 28-1-2015
 #ifndef COMMAND_H
 #define COMMAND_H
 
+#include <stdbool.h>
+
 typedef struct gridsize {
   unsigned v_size;
   unsigned h_size;
@@ -36,7 +38,7 @@ typedef struct players_location {
 }Players_location;
 
 //reads the stdin of the program, analyzes it and calls the apropriate function.
-void user_input_decode(unsigned int* quit_game);
+void user_input_decode();
 
 //prints at stdout the engine's name.
 void name();
@@ -48,7 +50,7 @@ void known_command(char** arguments, unsigned n_arguments);
 void list_commands();
 
 //the session is terminated and the connection is closed.
-void quit(unsigned int* quit_game);
+void quit(bool * quit_game);
 
 //mallocs a 2D array with n_rows rows and n_cols columns. Changes the board size.
 int** boardsize(ArraySize grid_size);
