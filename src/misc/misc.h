@@ -1,6 +1,6 @@
 /******************************************************
 File implementation : main.c
-Authors             : P. N. Kiorpelidis & G. Koryllos
+Authors             : Platwnas-Nikolaos Kiorpelidis
 Purpose             : miscellaneous functions declarations
 Date                : 2-1-2015
 *******************************************************/
@@ -71,6 +71,7 @@ void remove_extra_spaces(char* string);
 //returns the user's command from stdin to getCommand's name.
 char* get_line();
 
+//uncapitalizes the string's characters.
 void uncapitalize(char* string);
 
 /**************************
