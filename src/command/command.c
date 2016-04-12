@@ -313,9 +313,6 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
   //converts the h_coordinate into the actual board's coordinates.
   h_coordinate = h_coordinate * 4 + 2;
 
-  printf("v_coordinate is: %d\n", v_coordinate);
-  printf("h_coordinate is: %d\n", h_coordinate);
-
   //we will work with two different cases. the first when the white player wants to move and the second case when the black player wants to move.
   //this is the first case, for the white player.
   if(requested_move_info.player == 'w')
@@ -353,15 +350,17 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         //else if there is not the pawn that requested the move, right, left or below the requested coordinates then the move is invalid and a descriptive error is printed. The function returns.
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'W';
+        printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
+      //checks the left side but not the corners.
       else if((v_coordinate != 1 && v_coordinate != grid_size.v_size - 2) &&
-      h_coordinate == 2)  //left but not corners.
+      h_coordinate == 2)
       {
         printf("YOU ARE PLAYING AT THE LEFT BUT NOT AT THE CORNERS\n");
         if(grid[v_coordinate][h_coordinate + 4] == 'W')
@@ -372,14 +371,16 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate - 2][h_coordinate] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         grid[v_coordinate][h_coordinate] = 'W';
+        printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
+      //checks the right side but not the corners.
       else if((v_coordinate != 1 && v_coordinate != grid_size.v_size -2) &&
-      h_coordinate == grid_size.h_size - 3) //right but not corners.
+      h_coordinate == grid_size.h_size - 3)
       {
         printf("YOU ARE PLAYING AT THE RIGHT BUT NOT AT THE CORNERS\n");
         if(grid[v_coordinate][h_coordinate - 4] == 'W')
@@ -390,14 +391,16 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate + 2][h_coordinate] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         grid[v_coordinate][h_coordinate] = 'W';
+        printf("= white player moved to %c%d\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
+      //checks the bottom side but not the corners.
       else if(v_coordinate == grid_size.v_size - 2 &&
-      (h_coordinate != 2 && h_coordinate != grid_size.h_size - 3))  //bottom but not corners.
+      (h_coordinate != 2 && h_coordinate != grid_size.h_size - 3))
       {
         printf("YOU ARE PLAYING AT THE BOTTOM BUT NOT AT THE CORNERS\n");
         if(grid[v_coordinate - 2][h_coordinate] == 'W')
@@ -408,13 +411,16 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate][h_coordinate - 4] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         grid[v_coordinate][h_coordinate] = 'W';
+        printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
-      else if(v_coordinate == 1 && h_coordinate == 2) //top left corner.
+      //now we are starting to check if the requested move is at one of the four corners.
+      //checks for the top left corner.
+      else if(v_coordinate == 1 && h_coordinate == 2)
       {
         printf("YOU ARE PLAYING AT THE TOP LEFT CORNER\n");
         if(grid[v_coordinate + 2][h_coordinate] == 'W')
@@ -423,13 +429,15 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate][h_coordinate + 4] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         grid[v_coordinate][h_coordinate] = 'W';
+        printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
-      else if(v_coordinate == grid_size.v_size - 2 && h_coordinate == 2) //bottom left corner.
+      //checks for the bottom left corner.
+      else if(v_coordinate == grid_size.v_size - 2 && h_coordinate == 2)
       {
         printf("YOU ARE PLAYING AT THE BOTTOM LEFT CORNER\n");
         if(grid[v_coordinate - 2][h_coordinate] == 'W')
@@ -438,13 +446,15 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate][h_coordinate + 4] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         grid[v_coordinate][h_coordinate] = 'W';
+        printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
-      else if(v_coordinate == 1 && h_coordinate == grid_size.h_size - 3) //top right corner.
+      //checks for the top right corner.
+      else if(v_coordinate == 1 && h_coordinate == grid_size.h_size - 3)
       {
         printf("YOU ARE PLAYING AT THE TOP RIGHT CORNER\n");
         if(grid[v_coordinate + 2][h_coordinate] == 'W')
@@ -453,13 +463,15 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate][h_coordinate - 4] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         grid[v_coordinate][h_coordinate] = 'W';
+        printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
-      else if(v_coordinate == grid_size.v_size - 2 && h_coordinate == grid_size.h_size - 3) //bottom right corner.
+      //checks for the bottom right corner.
+      else if(v_coordinate == grid_size.v_size - 2 && h_coordinate == grid_size.h_size - 3)
       {
         printf("YOU ARE PLAYING AT THE BOTTOM RIGHT CORNER\n");
         if(grid[v_coordinate - 2][h_coordinate] == 'W')
@@ -468,14 +480,16 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate][h_coordinate - 4] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         grid[v_coordinate][h_coordinate] = 'W';
+        printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
     }
-    else  //the requested move is at a center square.
+    //checks for the rest of the possible moves. i.e. if the requested move is not at the sides or if its a center square.
+    else
     {
       if(grid[v_coordinate + 2][h_coordinate] == 'W')
         grid[v_coordinate + 2][h_coordinate] = ' ';
@@ -487,13 +501,15 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         grid[v_coordinate][h_coordinate - 4] = ' ';
       else
       {
-        printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+        printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
         return;
       }
 
       grid[v_coordinate][h_coordinate] = 'W';
+      printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
     }
   }
+  //now we check the same things for the black as we did for the white.
   else if(requested_move_info.player == 'b')
   {
     //checks if there is another opponent at the requested coordinates. if there is, prints a descriptive error.
