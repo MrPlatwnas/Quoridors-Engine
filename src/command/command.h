@@ -32,6 +32,13 @@ typedef struct move_info {
   unsigned n_col;
 }Move_info;
 
+typedef struct wall_info {
+  char player;
+  unsigned n_row;
+  unsigned n_col;
+  char orientation;
+}Wall_info;
+
 typedef struct players_location {
   Vertex white_location;
   Vertex black_location;
@@ -65,7 +72,7 @@ void walls(Walls* available_walls, unsigned int input_n_walls);
 void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,Move_info move_coordinates);
 
 //a wall place at the requested vertex and orientation. Decrease the number of walls.
-void playwall(int** grid, ArraySize grid_size, unsigned* n_walls, char player, Vertex wall_coordinates, unsigned orientation);
+void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info requested_wall_info);
 
 //the engine makes a move or wall placement at the requested color.
 void genmove(); //FIXME: Add support for the arguments.
