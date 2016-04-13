@@ -139,7 +139,21 @@ void user_input_decode()
     {
       if(n_arguments == 3)
       {
-        //playwall(grid, &n_walls, arguments[0], arguments[1], arguments[2]); /*PLAYWALL FUNCTION CALL*/
+        Wall_info requested_wall_info;
+        requested_wall_info.n_row = arguments[1][1] - '0';
+        requested_wall_info.n_col = arguments[1][0] - 'a';
+
+        if(strcmp(arguments[0], "w") == 0 || strcmp(arguments[0], "white") == 0)
+          requested_wall_info.player = 'w';
+        else if(strcmp(arguments[0], "b") == 0 || strcmp(arguments[0], "black") == 0)
+          requested_wall_info.player = 'b';
+
+        if(strcmp(arguments[2], "v") == 0 || strcmp(arguments[2], "vertical") == 0)
+          requested_wall_info.orientation = 'v';
+        else if(strcmp(arguments[2], "h") == 0 || strcmp(arguments[2], "horizontal") == 0)
+          requested_wall_info.orientation = 'h';
+
+        playwall(grid, grid_size, &available_walls, requested_wall_info); /*PLAYWALL FUNCTION CALL*/
       }
       else
       {
@@ -545,12 +559,13 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         //else if there is not the pawn that requested the move, right, left or below the requested coordinates then the move is invalid and a descriptive error is printed. The function returns.
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'B';
+        printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if((v_coordinate != 1 && v_coordinate != grid_size.v_size - 2) &&
       h_coordinate == 2)  //left but not corners.
@@ -564,11 +579,13 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate - 2][h_coordinate] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
+        //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'B';
+        printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if((v_coordinate != 1 && v_coordinate != grid_size.v_size -2) &&
       h_coordinate == grid_size.h_size - 3) //right but not corners.
@@ -582,11 +599,12 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate + 2][h_coordinate] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         grid[v_coordinate][h_coordinate] = 'B';
+        printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if(v_coordinate == grid_size.v_size - 2 &&
       (h_coordinate != 2 && h_coordinate != grid_size.h_size - 3))  //bottom but not corners.
@@ -600,11 +618,12 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate + 2][h_coordinate] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         grid[v_coordinate][h_coordinate] = 'B';
+        printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if(v_coordinate == 1 && h_coordinate == 2) //top left corner.
       {
@@ -614,11 +633,12 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate][h_coordinate + 4] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         grid[v_coordinate][h_coordinate] = 'B';
+        printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if(v_coordinate == grid_size.v_size - 2 && h_coordinate == 2) //bottom left corner.
       {
@@ -628,11 +648,12 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate][h_coordinate + 4] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         grid[v_coordinate][h_coordinate] = 'B';
+        printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if(v_coordinate == 1 && h_coordinate == grid_size.h_size - 3) //top right corner.
       {
@@ -642,11 +663,12 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate][h_coordinate - 4] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         grid[v_coordinate][h_coordinate] = 'B';
+        printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if(v_coordinate == grid_size.v_size - 2 && h_coordinate == grid_size.h_size - 3) //bottom right corner.
       {
@@ -656,11 +678,12 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           grid[v_coordinate][h_coordinate - 4] = ' ';
         else
         {
-          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+          printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
           return;
         }
 
         grid[v_coordinate][h_coordinate] = 'B';
+        printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
     }
     else  //the requested move is at a center square.
@@ -675,18 +698,97 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         grid[v_coordinate][h_coordinate - 4] = ' ';
       else
       {
-        printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n");
+        printf("? Error: you can only play to one adjacent tile either vertically or horizontally\n\n");
         return;
       }
 
       grid[v_coordinate][h_coordinate] = 'B';
+      printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
     }
   }
 }
 
-void playwall(int** grid, ArraySize grid_size, unsigned* n_walls, char player, Vertex wall_coordinates, unsigned orientation)
+void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info requested_wall_info)
 {
-  //FIXME: Add functionality to this function.
+  //convert the users given coordinates to grid_size.size coordinates in order to check if the requested wall placement is out of bounds, because the user's given coordinates are flipped because showboard shows the numbers in reverse order.
+  unsigned v_coordinate = grid_size.size - requested_wall_info.n_row;
+  //stores the users given coordinates in order to check if the requested move is out of bounds.
+  unsigned h_coordinate = requested_wall_info.n_col;
+
+  //checks if the requested move is out of bounds. Note: there is no need to check if v_coordinate < 0 or if h_coordinate < 0 because the variables are unsigned so when v_coordinate is -1 then it's a very large positive number so the check is still triggered.
+  if(v_coordinate >= grid_size.size - 1 || h_coordinate >= grid_size.size - 1)
+  {
+    printf("? Error: requested move is out of board's bountaries\n\n");
+    return;
+  }
+
+  //converts the v_coordinate into the actual board's coordinates.
+  v_coordinate = v_coordinate * 2 + 1;
+  //converts the h_coordinate into the actual board's coordinates.
+  h_coordinate = h_coordinate * 4 + 2;
+
+  printf("v_coordinate: %d\n", v_coordinate);
+  printf("h_coordinate: %d\n", h_coordinate);
+
+  //checks for vertical and horizontal wall placement seperately because v walls use character 'H' and horizontal walls use character '='.
+  if(requested_wall_info.orientation == 'v')
+  {
+    //checks if there is already a vertical wall there. if there is then a descriptive error messsage is printed.
+    if(grid[v_coordinate][h_coordinate + 2] == 'H' ||
+    grid[v_coordinate + 2][h_coordinate + 2] == 'H' ||
+    grid[v_coordinate + 1][h_coordinate + 2] == '=')
+    {
+      printf("? Error: there is already a wall there\n");
+      return;
+    }
+
+    //places the actual wall.
+    grid[v_coordinate][h_coordinate + 2] = 'H';
+    grid[v_coordinate + 1][h_coordinate + 2] = 'H';
+    grid[v_coordinate + 2][h_coordinate + 2] = 'H';
+
+    if(requested_wall_info.player == 'w')
+    {
+      printf("= white player played a vertical wall at %c%d\n\n", requested_wall_info.n_col + 'A', requested_wall_info.n_row);
+      available_walls->white_walls--;
+    }
+    else if(requested_wall_info.player == 'b')
+    {
+      printf("= black player played a vertical wall at %c%d\n\n", requested_wall_info.n_col + 'A', requested_wall_info.n_row);
+      available_walls->black_walls--;
+    }
+  }
+  else if(requested_wall_info.orientation == 'h')
+  {
+    if(grid[v_coordinate + 1][h_coordinate] == '=' ||
+    grid[v_coordinate + 1][h_coordinate + 2] == 'H' ||
+    grid[v_coordinate + 1][h_coordinate + 4] == '=')
+    {
+      printf("? Error: there is already a wall there\n");
+      return;
+    }
+
+    //places the actual wall.
+    grid[v_coordinate + 1][h_coordinate - 1] = '=';
+    grid[v_coordinate + 1][h_coordinate] = '=';
+    grid[v_coordinate + 1][h_coordinate + 1] = '=';
+    grid[v_coordinate + 1][h_coordinate + 2] = '=';
+    grid[v_coordinate + 1][h_coordinate + 3] = '=';
+    grid[v_coordinate + 1][h_coordinate + 4] = '=';
+    grid[v_coordinate + 1][h_coordinate + 5] = '=';
+
+    if(requested_wall_info.player == 'w')
+    {
+      printf("= white player played a horizontal wall at %c%d\n\n", requested_wall_info.n_col + 'A', requested_wall_info.n_row);
+      available_walls->white_walls--;
+    }
+    else if(requested_wall_info.player == 'b')
+    {
+      printf("= black player played a horizontal wall at %c%d\n\n", requested_wall_info.n_col + 'A', requested_wall_info.n_row);
+      available_walls->black_walls--;
+    }
+  }
+  return;
 }
 
 void genmove()
