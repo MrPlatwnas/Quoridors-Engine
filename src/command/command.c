@@ -139,7 +139,21 @@ void user_input_decode()
     {
       if(n_arguments == 3)
       {
-        //playwall(grid, &n_walls, arguments[0], arguments[1], arguments[2]); /*PLAYWALL FUNCTION CALL*/
+        Wall_info requested_wall_info;
+        requested_wall_info.n_row = arguments[1][1] - '0';
+        requested_wall_info.n_col = arguments[1][0] - 'a';
+
+        if(strcmp(arguments[0], "w") == 0 || strcmp(arguments[0], "white") == 0)
+          requested_wall_info.player = 'w';
+        else if(strcmp(arguments[0], "b") == 0 || strcmp(arguments[0], "black") == 0)
+          requested_wall_info.player = 'b';
+
+        if(strcmp(arguments[2], "v") == 0 || strcmp(arguments[2], "vertical") == 0)
+          requested_wall_info.orientation = 'v';
+        else if(strcmp(arguments[2], "h") == 0 || strcmp(arguments[2], "horizontal") == 0)
+          requested_wall_info.orientation = 'h';
+
+        playwall(grid, grid_size, &available_walls, requested_wall_info); /*PLAYWALL FUNCTION CALL*/
       }
       else
       {
