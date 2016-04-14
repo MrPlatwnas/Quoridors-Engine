@@ -264,7 +264,7 @@ char** arguments_decode(char* input_command, unsigned* arguments_count)
     output_arguments = initGridChar(n_arguments, max_chars + 1); //allocating 2D char array with space for the '\0' character.
 
     index = 0;
-    while(input_command[index] != ' ' && input_command[index] != '\0') index++;
+    while(input_command[index] != ' ') index++;
     index++; //to go from ' ' to the next character.
 
     unsigned n_rows = 0;
@@ -285,6 +285,8 @@ char** arguments_decode(char* input_command, unsigned* arguments_count)
         index++;
       }
     }
+    output_arguments[n_rows][n_cols] = '\0';
+
     *arguments_count = n_arguments;
     return output_arguments;
   }
