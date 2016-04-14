@@ -87,8 +87,7 @@ void user_input_decode()
           }
           grid_size.v_size = grid_size.size * 2 + 1;
           grid_size.h_size = grid_size.size * 4 + 1;
-          grid = boardsize(grid_size);
-          clear_board(grid, grid_size, &pawns_location);
+          grid = boardsize(grid_size, &pawns_location);
         }
         else
         {
@@ -266,23 +265,17 @@ void list_commands()
 void quit(bool *quit_game)
 {
   *quit_game = true;
-  printf("= quitting game\n");
+  printf("= quitting game\n\n");
 }
 
 //boardsize creates the grid's base structure using build_grid.
-int** boardsize(ArraySize grid_size)
+int** boardsize(ArraySize grid_size, Players_location* pawns_location)
 {
   int **grid = NULL;
 
   //build_grid creates the grid's basic structure.
   grid = build_grid(grid_size);
-  printf("= board's size set to %dx%d\n\n", grid_size.size, grid_size.size);
-  return grid;
-}
 
-//clear board populates the grid's basic structure by placing the pawns at the correct positions.
-void clear_board(int** grid, ArraySize grid_size, Players_location* pawns_location)
-{
   //using the board's actual size the black pawn is placed at the visual first row.
   grid[1][grid_size.h_size / 2] = 'B';
   //using the board's actual size the white pawn is placed at the visual last row.
@@ -294,6 +287,30 @@ void clear_board(int** grid, ArraySize grid_size, Players_location* pawns_locati
 
   pawns_location->black_location.v_coordinate = 1;
   pawns_location->black_location.h_coordinate = grid_size.h_size / 2;
+
+  printf("= board's size set to %dx%d\n\n", grid_size.size, grid_size.size);
+  return grid;
+}
+
+//clear board populates the grid's basic structure by placing the pawns at the correct positions.
+void clear_board(int** grid, ArraySize grid_size, Players_location* pawns_location)
+{
+  grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = ' ';
+  grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = ' ';
+
+  //using the board's actual size the black pawn is placed at the visual first row.
+  grid[1][grid_size.h_size / 2] = 'B';
+  //using the board's actual size the white pawn is placed at the visual last row.
+  grid[grid_size.v_size - 2][grid_size.h_size / 2] = 'W';
+
+  //the pawns' location is updated. the pawns_location struct is used by the winner function.
+  pawns_location->white_location.v_coordinate = grid_size.v_size - 2;
+  pawns_location->white_location.h_coordinate = grid_size.h_size / 2;
+
+  pawns_location->black_location.v_coordinate = 1;
+  pawns_location->black_location.h_coordinate = grid_size.h_size / 2;
+
+  printf("= pawns and walls got removed\n\n");
   return;
 }
 
@@ -370,6 +387,11 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
 
         //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'W';
+
+        //update the white pawn's location for clear_board and winner functions.
+        pawns_location->white_location.v_coordinate = v_coordinate;
+        pawns_location->white_location.h_coordinate = h_coordinate;
+
         printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       //checks the left side but not the corners.
@@ -389,7 +411,13 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           return;
         }
 
+        //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'W';
+
+        //update the white pawn's location for clear_board and winner functions.
+        pawns_location->white_location.v_coordinate = v_coordinate;
+        pawns_location->white_location.h_coordinate = h_coordinate;
+
         printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       //checks the right side but not the corners.
@@ -409,7 +437,13 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           return;
         }
 
+        //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'W';
+
+        //update the white pawn's location for clear_board and winner functions.
+        pawns_location->white_location.v_coordinate = v_coordinate;
+        pawns_location->white_location.h_coordinate = h_coordinate;
+
         printf("= white player moved to %c%d\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       //checks the bottom side but not the corners.
@@ -429,7 +463,13 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           return;
         }
 
+        //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'W';
+
+        //update the white pawn's location for clear_board and winner functions.
+        pawns_location->white_location.v_coordinate = v_coordinate;
+        pawns_location->white_location.h_coordinate = h_coordinate;
+
         printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       //now we are starting to check if the requested move is at one of the four corners.
@@ -447,7 +487,13 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           return;
         }
 
+        //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'W';
+
+        //update the white pawn's location for clear_board and winner functions.
+        pawns_location->white_location.v_coordinate = v_coordinate;
+        pawns_location->white_location.h_coordinate = h_coordinate;
+
         printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       //checks for the bottom left corner.
@@ -464,7 +510,13 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           return;
         }
 
+        //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'W';
+
+        //update the white pawn's location for clear_board and winner functions.
+        pawns_location->white_location.v_coordinate = v_coordinate;
+        pawns_location->white_location.h_coordinate = h_coordinate;
+
         printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       //checks for the top right corner.
@@ -481,7 +533,13 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           return;
         }
 
+        //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'W';
+
+        //update the white pawn's location for clear_board and winner functions.
+        pawns_location->white_location.v_coordinate = v_coordinate;
+        pawns_location->white_location.h_coordinate = h_coordinate;
+
         printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       //checks for the bottom right corner.
@@ -498,7 +556,13 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           return;
         }
 
+        //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'W';
+
+        //update the white pawn's location for clear_board and winner functions.
+        pawns_location->white_location.v_coordinate = v_coordinate;
+        pawns_location->white_location.h_coordinate = h_coordinate;
+
         printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
     }
@@ -519,7 +583,13 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         return;
       }
 
+      //the new pawn is placed.
       grid[v_coordinate][h_coordinate] = 'W';
+
+      //update the white pawn's location for clear_board and winner functions.
+      pawns_location->white_location.v_coordinate = v_coordinate;
+      pawns_location->white_location.h_coordinate = h_coordinate;
+
       printf("= white player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
     }
   }
@@ -565,6 +635,11 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
 
         //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'B';
+
+        //update the black pawn's location for clear_board and winner functions.
+        pawns_location->black_location.v_coordinate = v_coordinate;
+        pawns_location->black_location.h_coordinate = h_coordinate;
+
         printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if((v_coordinate != 1 && v_coordinate != grid_size.v_size - 2) &&
@@ -585,6 +660,11 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
 
         //the new pawn is placed.
         grid[v_coordinate][h_coordinate] = 'B';
+
+        //update the black pawn's location for clear_board and winner functions.
+        pawns_location->black_location.v_coordinate = v_coordinate;
+        pawns_location->black_location.h_coordinate = h_coordinate;
+
         printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if((v_coordinate != 1 && v_coordinate != grid_size.v_size -2) &&
@@ -604,6 +684,11 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         }
 
         grid[v_coordinate][h_coordinate] = 'B';
+
+        //update the black pawn's location for clear_board and winner functions.
+        pawns_location->black_location.v_coordinate = v_coordinate;
+        pawns_location->black_location.h_coordinate = h_coordinate;
+
         printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if(v_coordinate == grid_size.v_size - 2 &&
@@ -623,6 +708,11 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         }
 
         grid[v_coordinate][h_coordinate] = 'B';
+
+        //update the black pawn's location for clear_board and winner functions.
+        pawns_location->black_location.v_coordinate = v_coordinate;
+        pawns_location->black_location.h_coordinate = h_coordinate;
+
         printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if(v_coordinate == 1 && h_coordinate == 2) //top left corner.
@@ -638,6 +728,11 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         }
 
         grid[v_coordinate][h_coordinate] = 'B';
+
+        //update the black pawn's location for clear_board and winner functions.
+        pawns_location->black_location.v_coordinate = v_coordinate;
+        pawns_location->black_location.h_coordinate = h_coordinate;
+
         printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if(v_coordinate == grid_size.v_size - 2 && h_coordinate == 2) //bottom left corner.
@@ -653,6 +748,11 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         }
 
         grid[v_coordinate][h_coordinate] = 'B';
+
+        //update the black pawn's location for clear_board and winner functions.
+        pawns_location->black_location.v_coordinate = v_coordinate;
+        pawns_location->black_location.h_coordinate = h_coordinate;
+
         printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if(v_coordinate == 1 && h_coordinate == grid_size.h_size - 3) //top right corner.
@@ -668,6 +768,11 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         }
 
         grid[v_coordinate][h_coordinate] = 'B';
+
+        //update the black pawn's location for clear_board and winner functions.
+        pawns_location->black_location.v_coordinate = v_coordinate;
+        pawns_location->black_location.h_coordinate = h_coordinate;
+
         printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
       else if(v_coordinate == grid_size.v_size - 2 && h_coordinate == grid_size.h_size - 3) //bottom right corner.
@@ -683,6 +788,11 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         }
 
         grid[v_coordinate][h_coordinate] = 'B';
+
+        //update the black pawn's location for clear_board and winner functions.
+        pawns_location->black_location.v_coordinate = v_coordinate;
+        pawns_location->black_location.h_coordinate = h_coordinate;
+
         printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
       }
     }
@@ -703,6 +813,11 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       }
 
       grid[v_coordinate][h_coordinate] = 'B';
+
+      //update the black pawn's location for clear_board and winner functions.
+      pawns_location->black_location.v_coordinate = v_coordinate;
+      pawns_location->black_location.h_coordinate = h_coordinate;
+
       printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
     }
   }

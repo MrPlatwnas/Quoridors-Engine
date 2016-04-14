@@ -60,7 +60,7 @@ void list_commands();
 void quit(bool * quit_game);
 
 //mallocs a 2D array with n_rows rows and n_cols columns. Changes the board size.
-int** boardsize(ArraySize grid_size);
+int** boardsize(ArraySize grid_size, Players_location* pawns_location);
 
 //Clears the board. The two pawns return to their starting position.
 void clear_board(int** grid, ArraySize grid_size, Players_location* pawns_location);
