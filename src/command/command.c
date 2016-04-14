@@ -298,6 +298,27 @@ void clear_board(int** grid, ArraySize grid_size, Players_location* pawns_locati
   grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = ' ';
   grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = ' ';
 
+  for(size_t counter_rows = 1; counter_rows < grid_size.v_size - 1; counter_rows++)
+  {
+    for(size_t counter_cols = 1; counter_cols < grid_size.h_size - 1; counter_cols++)
+    {
+      if(grid[counter_rows][counter_cols] == 'H')
+      {
+        if(counter_rows % 2 == 0)
+          grid[counter_rows][counter_cols] = '+';
+        else
+          grid[counter_rows][counter_cols] = '|';
+      }
+      else if(grid[counter_rows][counter_cols] == '=')
+      {
+        if(counter_cols % 4 == 0)
+          grid[counter_rows][counter_cols] = '+';
+        else
+          grid[counter_rows][counter_cols] = '-';
+      }
+    }
+  }
+
   //using the board's actual size the black pawn is placed at the visual first row.
   grid[1][grid_size.h_size / 2] = 'B';
   //using the board's actual size the white pawn is placed at the visual last row.
