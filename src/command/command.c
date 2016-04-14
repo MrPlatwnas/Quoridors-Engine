@@ -1980,6 +1980,24 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
 
 void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info requested_wall_info)
 {
+  //@purpose: checks if there are available walls to be placed.
+  if(requested_wall_info.player == 'w')
+  {
+    if(available_walls->white_walls == 0)
+    {
+      printf("? Error: the white player has not any walls left\n");
+      return;
+    }
+  }
+  else if(requested_wall_info.player == 'b')
+  {
+    if(available_walls->black_walls == 0)
+    {
+      printf("? Error: the black player has not any walls left\n");
+      return;
+    }
+  }
+
   //convert the users given coordinates to grid_size.size coordinates in order to check if the requested wall placement is out of bounds, because the user's given coordinates are flipped because showboard shows the numbers in reverse order.
   unsigned v_coordinate = grid_size.size - requested_wall_info.n_row;
   //stores the users given coordinates in order to check if the requested move is out of bounds.
