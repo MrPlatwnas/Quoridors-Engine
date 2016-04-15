@@ -111,7 +111,16 @@ void user_input_decode()
       if(grid != NULL && n_arguments == 2)
       {
         Move_info requested_move_info;
-        requested_move_info.n_row = arguments[1][1] - '0';
+        if(arguments[1][2] != '\0')
+        {
+          requested_move_info.n_row = arguments[1][1] - '0';
+          requested_move_info.n_row *= 10;
+          requested_move_info.n_row += arguments[1][2] - '0';
+        }
+        else
+        {
+          requested_move_info.n_row = arguments[1][1] - '0';
+        }
         requested_move_info.n_col = arguments[1][0] - 'a';
 
         if(strcmp(arguments[0], "w") == 0 || strcmp(arguments[0], "white") == 0)
@@ -139,7 +148,16 @@ void user_input_decode()
       if(n_arguments == 3)
       {
         Wall_info requested_wall_info;
-        requested_wall_info.n_row = arguments[1][1] - '0';
+        if(arguments[1][2] != '\0')
+        {
+          requested_wall_info.n_row = arguments[1][1] - '0';
+          requested_wall_info.n_row *= 10;
+          requested_wall_info.n_row += arguments[1][2] - '0';
+        }
+        else
+        {
+          requested_wall_info.n_row = arguments[1][1] - '0';
+        }
         requested_wall_info.n_col = arguments[1][0] - 'a';
 
         if(strcmp(arguments[0], "w") == 0 || strcmp(arguments[0], "white") == 0)
