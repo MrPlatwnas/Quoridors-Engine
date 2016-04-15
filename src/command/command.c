@@ -82,7 +82,7 @@ void user_input_decode()
         {
           if(grid != NULL)
           {
-            freeGrid(grid, grid_size.size);
+            freeGrid(grid, grid_size.v_size);
             grid = NULL;
           }
           grid_size.v_size = grid_size.size * 2 + 1;
