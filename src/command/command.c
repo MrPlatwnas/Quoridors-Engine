@@ -201,7 +201,7 @@ void user_input_decode()
     }
     else if(strcmp(command, "winner") == 0)
     {
-      //winner(grid, grid_size);  /*WINNER FUNCTION CALL*/
+      //winner(grid, grid_size, pawns_location);  /*WINNER FUNCTION CALL*/
     }
     else if(strcmp(command, "showboard") == 0)
     {
@@ -2107,9 +2107,9 @@ void undo(int** grid)
   //FIXME: Add functionality to this function.
 }
 
-void winner(int** grid, ArraySize grid_size)
+void winner(int** grid, ArraySize grid_size, Players_location* pawns_location)
 {
-  //FIXME: Add functionality to this function.
+  //TODO: Implement winner function.
 }
 
 void showboard(int** grid, Walls available_walls, ArraySize grid_size)
