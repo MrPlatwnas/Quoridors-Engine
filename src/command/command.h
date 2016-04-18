@@ -1,6 +1,6 @@
 /******************************************************
 File implementation : command.h
-Authors             : P. N. Kiorpelidis & G. Koryllos
+Authors             : Platwnas-Nikolaos Kiorpelidis
 Purpose             : command functions declarations
 Date                : 28-1-2015
 *******************************************************/
@@ -81,7 +81,7 @@ void genmove(); //FIXME: Add support for the arguments.
 void undo(int** grid);  //FIXME: Add support for the arguments.
 
 //outputs true and winner's color if the game ended, otherwise false.
-void winner(int** grid, ArraySize grid_size);
+void winner(ArraySize grid_size, Players_location* pawns_location);
 
 //Prints the whole board as is.
 void showboard(int** grid, Walls available_walls, ArraySize grid_size);

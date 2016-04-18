@@ -1,6 +1,6 @@
 /******************************************************
 File implementation : command.c
-Authors             : P. N. Kiorpelidis & G. Koryllos
+Authors             : Platwnas-Nikolaos Kiorpelidis
 Purpose             : command functions definitions
 Date                : 28-1-2015
 *******************************************************/
@@ -40,6 +40,10 @@ void user_input_decode()
 
   //struct to store the current location of each player.
   Players_location pawns_location;
+  //@command: so winner function won't print = true color by accident.
+  pawns_location.black_location.v_coordinate = 0;
+  //@command: so winner function won't print = true color by accident.
+  pawns_location.white_location.v_coordinate = 0;
 
   //struct to store the board configuration.
   int **grid = NULL;
@@ -82,7 +86,7 @@ void user_input_decode()
         {
           if(grid != NULL)
           {
-            freeGrid(grid, grid_size.size);
+            freeGrid(grid, grid_size.v_size);
             grid = NULL;
           }
           grid_size.v_size = grid_size.size * 2 + 1;
@@ -111,7 +115,16 @@ void user_input_decode()
       if(grid != NULL && n_arguments == 2)
       {
         Move_info requested_move_info;
-        requested_move_info.n_row = arguments[1][1] - '0';
+        if(arguments[1][2] != '\0')
+        {
+          requested_move_info.n_row = arguments[1][1] - '0';
+          requested_move_info.n_row *= 10;
+          requested_move_info.n_row += arguments[1][2] - '0';
+        }
+        else
+        {
+          requested_move_info.n_row = arguments[1][1] - '0';
+        }
         requested_move_info.n_col = arguments[1][0] - 'a';
 
         if(strcmp(arguments[0], "w") == 0 || strcmp(arguments[0], "white") == 0)
@@ -139,7 +152,16 @@ void user_input_decode()
       if(n_arguments == 3)
       {
         Wall_info requested_wall_info;
-        requested_wall_info.n_row = arguments[1][1] - '0';
+        if(arguments[1][2] != '\0')
+        {
+          requested_wall_info.n_row = arguments[1][1] - '0';
+          requested_wall_info.n_row *= 10;
+          requested_wall_info.n_row += arguments[1][2] - '0';
+        }
+        else
+        {
+          requested_wall_info.n_row = arguments[1][1] - '0';
+        }
         requested_wall_info.n_col = arguments[1][0] - 'a';
 
         if(strcmp(arguments[0], "w") == 0 || strcmp(arguments[0], "white") == 0)
@@ -183,7 +205,7 @@ void user_input_decode()
     }
     else if(strcmp(command, "winner") == 0)
     {
-      //winner(grid, grid_size);  /*WINNER FUNCTION CALL*/
+      winner(grid_size, &pawns_location);  /*WINNER FUNCTION CALL*/
     }
     else if(strcmp(command, "showboard") == 0)
     {
@@ -2089,9 +2111,22 @@ void undo(int** grid)
   //FIXME: Add functionality to this function.
 }
 
-void winner(int** grid, ArraySize grid_size)
+void winner(ArraySize grid_size, Players_location* pawns_location)
 {
-  //FIXME: Add functionality to this function.
+  //@purpose: to check if white or black pawn is at the top or last row respectively.
+  if(pawns_location->white_location.v_coordinate == 1)
+  {
+    printf("= true white\n\n");
+    return;
+  }
+  else if(pawns_location->black_location.v_coordinate == grid_size.v_size - 2)
+  {
+    printf("= true black\n\n");
+    return;
+  }
+  //@command: since neither white or black is at the top or last row then we have no winner yet, therefore = false is printed.
+  printf("= false\n\n");
+  return;
 }
 
 void showboard(int** grid, Walls available_walls, ArraySize grid_size)

@@ -1,6 +1,6 @@
 /******************************************************
 File implementation : main.c
-Authors             : P. N. Kiorpelidis & G. Koryllos
+Authors             : Platwnas-Nikolaos Kiorpelidis
 Purpose             : User Interface
 Date                : 28-1-2015
 *******************************************************/
