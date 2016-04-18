@@ -211,7 +211,8 @@ void user_input_decode()
     {
       if(n_arguments == 1)
       {
-        //undo(grid, arguments[0]); /*UNDO FUNCTION CALL*/
+        unsigned n_undo = arguments[0][0] - '0';
+        undo(grid, n_undo, my_stack, &pawns_location); /*UNDO FUNCTION CALL*/
       }
       else
       {
@@ -2121,9 +2122,50 @@ void genmove()
   //FIXME: Add functionality to this function.
 }
 
-void undo(int** grid)
+void undo(int** grid, unsigned n_undo, Queue* my_queue, Players_location* pawns_location)
 {
-  //FIXME: Add functionality to this function.
+  Queue_elem element;
+  //@command: removing the unrequired Queue_elems.
+  while(n_undo > 1)
+  {
+    element = stack_pop(my_queue);
+    if(element.isset == false)
+    {
+      printf("? Error: you can not undo anymore\n\n");
+      return;
+    }
+  }
+
+  //@command: fetching the required Queue_elem.
+  element = stack_pop(my_queue);
+
+  if(element.isset == false)
+  {
+    printf("? Error: you can not undo anymore\n\n");
+    return;
+  }
+
+  //@purpose: copying the information to the current grid conf.
+  //@command: copying the black information to the current grid conf.
+  pawns_location->black_location.h_coordinate = element.pawns_location.black_location.h_coordinate;
+  pawns_location->black_location.v_coordinate = element.pawns_location.black_location.v_coordinate;
+  //@command: copying the white information to the current grid conf.
+  pawns_location->white_location.h_coordinate = element.pawns_location.white_location.h_coordinate;
+  pawns_location->white_location.v_coordinate = element.pawns_location.white_location.v_coordinate;
+
+  grid = element.grid;
+
+  Walls available_walls;
+  available_walls.black_walls = 10;
+  available_walls.white_walls = 10;
+  ArraySize grid_size;
+  grid_size.h_size = 21;
+  grid_size.v_size = 11;
+  grid_size.size = 10;
+  showboard(element.grid, available_walls, grid_size);
+  showboard(grid, available_walls, grid_size);
+
+  return;
 }
 
 void winner(ArraySize grid_size, Players_location* pawns_location)
