@@ -1,4 +1,4 @@
-LIBS = src/cli src/command src/controls src/misc
+LIBS = src/cli src/command src/controls src/misc src/queue
 
 default: libraries
 	gcc $(wildcard libs/*) -o DeepOrange;
