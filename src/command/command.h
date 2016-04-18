@@ -1,6 +1,6 @@
 /******************************************************
 File implementation : command.h
-Authors             : P. N. Kiorpelidis & G. Koryllos
+Authors             : Platwnas-Nikolaos Kiorpelidis
 Purpose             : command functions declarations
 Date                : 28-1-2015
 *******************************************************/

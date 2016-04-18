@@ -1,6 +1,6 @@
 /******************************************************
 File implementation : command.c
-Authors             : P. N. Kiorpelidis & G. Koryllos
+Authors             : Platwnas-Nikolaos Kiorpelidis
 Purpose             : command functions definitions
 Date                : 28-1-2015
 *******************************************************/
