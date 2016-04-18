@@ -17,6 +17,7 @@ Date                : 28-1-2015
 /* custom headers */
 #include "../misc/misc.h"
 #include "../command/command.h"
+#include "../queue/queue.h"
 
 //this function runs while quit_game is false and prossecess the commands that the user enters and then calls the right function to execute the requested command.
 void user_input_decode()
@@ -44,6 +45,10 @@ void user_input_decode()
   pawns_location.black_location.v_coordinate = 0;
   //@command: so winner function won't print = true color by accident.
   pawns_location.white_location.v_coordinate = 0;
+
+  //@command: create the stack to save the grid configurations in order to undo.
+  Queue* my_stack = stack_construct();
+  Queue_elem element;
 
   //struct to store the board configuration.
   int **grid = NULL;
@@ -136,7 +141,12 @@ void user_input_decode()
           requested_move_info.player = 'b';
         }
 
-        playmove(grid, grid_size, &pawns_location,requested_move_info); /*PLAYMOVE FUNCTION CALL*/
+        playmove(grid, grid_size, &pawns_location, requested_move_info); /*PLAYMOVE FUNCTION CALL*/
+
+        //@purpose: add the new grid conf to the stack so we can undo into it.
+        element.grid = grid;
+        element.pawns_location = pawns_location;
+        stack_push(element, my_stack, grid_size);
       }
       else if(grid == NULL)
       {
@@ -175,6 +185,11 @@ void user_input_decode()
           requested_wall_info.orientation = 'h';
 
         playwall(grid, grid_size, &available_walls, requested_wall_info); /*PLAYWALL FUNCTION CALL*/
+
+        //@purpose: add the new grid conf to the stack so we can undo into it.
+        element.grid = grid;
+        element.pawns_location = pawns_location;
+        stack_push(element, my_stack, grid_size);
       }
       else
       {

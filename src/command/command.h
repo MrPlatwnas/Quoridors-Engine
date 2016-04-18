@@ -44,6 +44,18 @@ typedef struct players_location {
   Vertex black_location;
 }Players_location;
 
+typedef struct queue_elem {
+  Players_location pawns_location;
+  int** grid;
+  bool isset;
+}Queue_elem;
+
+typedef struct queue {
+  Queue_elem* elements;
+  unsigned top;
+  unsigned maxsize;
+}Queue;
+
 //reads the stdin of the program, analyzes it and calls the apropriate function.
 void user_input_decode();
 
