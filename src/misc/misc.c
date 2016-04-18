@@ -290,6 +290,7 @@ char** arguments_decode(char* input_command, unsigned* arguments_count)
     *arguments_count = n_arguments;
     return output_arguments;
   }
+  return NULL;
 }
 
 int** build_grid(ArraySize grid_size)
