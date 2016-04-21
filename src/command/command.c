@@ -2165,6 +2165,9 @@ void undo(int** grid, unsigned n_undo, Queue* my_queue, Players_location* pawns_
     memcpy(grid[counter], element.grid[counter], grid_size.h_size * sizeof(int));
   }
 
+  //@command: frees the stored grid configuration.
+  freeGrid(element.grid, grid_size.v_size);
+
   return;
 }
 
