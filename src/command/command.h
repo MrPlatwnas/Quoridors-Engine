@@ -90,7 +90,7 @@ void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info
 void genmove(); //FIXME: Add support for the arguments.
 
 //the game goes 'times' moves back.
-void undo(int** grid, unsigned n_undo, Queue* my_queue, Players_location* pawns_location, ArraySize grid_size);
+void undo(int*** grid, unsigned n_undo, Queue* my_queue, Players_location* pawns_location, ArraySize grid_size);
 
 //outputs true and winner's color if the game ended, otherwise false.
 void winner(ArraySize grid_size, Players_location* pawns_location);
