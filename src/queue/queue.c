@@ -59,11 +59,11 @@ void stack_push(Queue_elem element, Queue* my_queue, ArraySize grid_size)
   my_queue->elements[my_queue->top].pawns_location.white_location.h_coordinate = element.pawns_location.white_location.h_coordinate;
 
   //@command: copying the grid configuration to the queue.
-   my_queue->elements[my_queue->top].grid = malloc(grid_size.v_size * sizeof(int*));
-   for(size_t counter = 0; counter < grid_size.v_size; counter++)
-   {
-     my_queue->elements[my_queue->top].grid[counter] = malloc(grid_size.h_size * sizeof(int));
-     memcpy(my_queue->elements[my_queue->top].grid[counter], element.grid[counter], grid_size.h_size * sizeof(int));
+  my_queue->elements[my_queue->top].grid = malloc(grid_size.v_size * sizeof(int*));
+  for(size_t counter = 0; counter < grid_size.v_size; counter++)
+  {
+    my_queue->elements[my_queue->top].grid[counter] = malloc(grid_size.h_size * sizeof(int));
+    memcpy(my_queue->elements[my_queue->top].grid[counter], element.grid[counter], grid_size.h_size * sizeof(int));
   }
   // my_queue->elements[my_queue->top].grid = element.grid;
 
