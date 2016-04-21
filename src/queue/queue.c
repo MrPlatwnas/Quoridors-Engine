@@ -46,7 +46,7 @@ void stack_push(Queue_elem element, Queue* my_queue, ArraySize grid_size)
 {
   if(my_queue->top == my_queue->maxsize)
   {
-    printf("? Error: stack overflow\n\n");
+    //printf("? Error: stack overflow\n\n");
     return;
   }
 
@@ -65,7 +65,6 @@ void stack_push(Queue_elem element, Queue* my_queue, ArraySize grid_size)
     my_queue->elements[my_queue->top].grid[counter] = malloc(grid_size.h_size * sizeof(int));
     memcpy(my_queue->elements[my_queue->top].grid[counter], element.grid[counter], grid_size.h_size * sizeof(int));
   }
-  // my_queue->elements[my_queue->top].grid = element.grid;
 
   my_queue->top++;
 
