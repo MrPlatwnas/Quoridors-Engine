@@ -141,12 +141,13 @@ void user_input_decode()
           requested_move_info.player = 'b';
         }
 
-        playmove(grid, grid_size, &pawns_location, requested_move_info); /*PLAYMOVE FUNCTION CALL*/
-
         //@purpose: add the new grid conf to the stack so we can undo into it.
         element.grid = grid;
         element.pawns_location = pawns_location;
         stack_push(element, my_stack, grid_size);
+
+        playmove(grid, grid_size, &pawns_location, requested_move_info); /*PLAYMOVE FUNCTION CALL*/
+
       }
       else if(grid == NULL)
       {
@@ -184,12 +185,13 @@ void user_input_decode()
         else if(strcmp(arguments[2], "h") == 0 || strcmp(arguments[2], "horizontal") == 0)
           requested_wall_info.orientation = 'h';
 
-        playwall(grid, grid_size, &available_walls, requested_wall_info); /*PLAYWALL FUNCTION CALL*/
-
         //@purpose: add the new grid conf to the stack so we can undo into it.
         element.grid = grid;
         element.pawns_location = pawns_location;
         stack_push(element, my_stack, grid_size);
+
+        playwall(grid, grid_size, &available_walls, requested_wall_info); /*PLAYWALL FUNCTION CALL*/
+
       }
       else
       {
