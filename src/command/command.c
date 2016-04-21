@@ -214,7 +214,6 @@ void user_input_decode()
       if(n_arguments == 1)
       {
         unsigned n_undo = arguments[0][0] - '0';
-        printf("n_undo is %d\n", n_undo);
         undo(&grid, n_undo, my_stack, &pawns_location, grid_size); /*UNDO FUNCTION CALL*/
       }
       else
@@ -430,7 +429,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       if(v_coordinate == 1 &&
       (h_coordinate != 2 && h_coordinate != grid_size.h_size - 3))
       {
-        printf("YOU ARE PLAYING AT THE TOP BUT NOT AT THE CORNERS\n");
+        //debug : printf("YOU ARE PLAYING AT THE TOP BUT NOT AT THE CORNERS\n");
         //checks if there is the pawn that requested the move below the requested coordinates. if it is then the move is valid and the old pawn is removed.
         if(grid[v_coordinate + 2][h_coordinate] == 'W')
           grid[v_coordinate + 2][h_coordinate] = ' ';
@@ -455,10 +454,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -468,10 +467,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -485,10 +484,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -498,10 +497,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -523,7 +522,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       else if((v_coordinate != 1 && v_coordinate != grid_size.v_size - 2) &&
       h_coordinate == 2)
       {
-        printf("YOU ARE PLAYING AT THE LEFT BUT NOT AT THE CORNERS\n");
+        //debug : printf("YOU ARE PLAYING AT THE LEFT BUT NOT AT THE CORNERS\n");
         if(grid[v_coordinate][h_coordinate + 4] == 'W')
           grid[v_coordinate][h_coordinate + 4] = ' ';
         else if(grid[v_coordinate + 2][h_coordinate] == 'W')
@@ -544,10 +543,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -557,10 +556,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -574,10 +573,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -587,10 +586,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -612,7 +611,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       else if((v_coordinate != 1 && v_coordinate != grid_size.v_size -2) &&
       h_coordinate == grid_size.h_size - 3)
       {
-        printf("YOU ARE PLAYING AT THE RIGHT BUT NOT AT THE CORNERS\n");
+        //debug : printf("YOU ARE PLAYING AT THE RIGHT BUT NOT AT THE CORNERS\n");
         if(grid[v_coordinate][h_coordinate - 4] == 'W')
           grid[v_coordinate][h_coordinate - 4] = ' ';
         else if(grid[v_coordinate - 2][h_coordinate] == 'W')
@@ -633,10 +632,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -646,10 +645,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -663,10 +662,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -676,10 +675,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -701,7 +700,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       else if(v_coordinate == grid_size.v_size - 2 &&
       (h_coordinate != 2 && h_coordinate != grid_size.h_size - 3))
       {
-        printf("YOU ARE PLAYING AT THE BOTTOM BUT NOT AT THE CORNERS\n");
+        //debug : printf("YOU ARE PLAYING AT THE BOTTOM BUT NOT AT THE CORNERS\n");
         if(grid[v_coordinate - 2][h_coordinate] == 'W')
           grid[v_coordinate - 2][h_coordinate] = ' ';
         else if(grid[v_coordinate][h_coordinate + 4] == 'W')
@@ -722,10 +721,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -735,10 +734,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -752,10 +751,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -765,10 +764,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -790,7 +789,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       //checks for the top left corner.
       else if(v_coordinate == 1 && h_coordinate == 2)
       {
-        printf("YOU ARE PLAYING AT THE TOP LEFT CORNER\n");
+        //debug : printf("YOU ARE PLAYING AT THE TOP LEFT CORNER\n");
         if(grid[v_coordinate + 2][h_coordinate] == 'W')
           grid[v_coordinate + 2][h_coordinate] = ' ';
         else if(grid[v_coordinate][h_coordinate + 4] == 'W')
@@ -809,10 +808,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -822,10 +821,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -839,10 +838,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -852,10 +851,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -876,7 +875,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       //checks for the bottom left corner.
       else if(v_coordinate == grid_size.v_size - 2 && h_coordinate == 2)
       {
-        printf("YOU ARE PLAYING AT THE BOTTOM LEFT CORNER\n");
+        //debug : printf("YOU ARE PLAYING AT THE BOTTOM LEFT CORNER\n");
         if(grid[v_coordinate - 2][h_coordinate] == 'W')
           grid[v_coordinate - 2][h_coordinate] = ' ';
         else if(grid[v_coordinate][h_coordinate + 4] == 'W')
@@ -895,10 +894,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -908,10 +907,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -925,10 +924,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -938,10 +937,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -962,7 +961,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       //checks for the top right corner.
       else if(v_coordinate == 1 && h_coordinate == grid_size.h_size - 3)
       {
-        printf("YOU ARE PLAYING AT THE TOP RIGHT CORNER\n");
+        //debug : printf("YOU ARE PLAYING AT THE TOP RIGHT CORNER\n");
         if(grid[v_coordinate + 2][h_coordinate] == 'W')
           grid[v_coordinate + 2][h_coordinate] = ' ';
         else if(grid[v_coordinate][h_coordinate - 4] == 'W')
@@ -981,10 +980,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -994,10 +993,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1011,10 +1010,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1024,10 +1023,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1048,7 +1047,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       //checks for the bottom right corner.
       else if(v_coordinate == grid_size.v_size - 2 && h_coordinate == grid_size.h_size - 3)
       {
-        printf("YOU ARE PLAYING AT THE BOTTOM RIGHT CORNER\n");
+        //debug : printf("YOU ARE PLAYING AT THE BOTTOM RIGHT CORNER\n");
         if(grid[v_coordinate - 2][h_coordinate] == 'W')
           grid[v_coordinate - 2][h_coordinate] = ' ';
         else if(grid[v_coordinate][h_coordinate - 4] == 'W')
@@ -1067,10 +1066,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1080,10 +1079,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1097,10 +1096,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1110,10 +1109,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1157,10 +1156,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         //@command: if evaluates to true then the move is to the left.
         if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate > 0)
         {
-          printf("this is a left move\n");
+          //debug : printf("this is a left move\n");
           if(grid[v_coordinate][h_coordinate + 2] == 'H')
           {
-            printf("found a wall!\n");
+            //debug : printf("found a wall!\n");
             //@command: replaces the old pawn.
             grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
             printf("? Error: there is a wall blocking the path\n\n");
@@ -1170,10 +1169,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         //@command: if evaluates to true then the move is to the right.
         else if((int)pawns_location->white_location.h_coordinate - (int)h_coordinate < 0)
         {
-          printf("this is a right move\n");
+          //debug : printf("this is a right move\n");
           if(grid[v_coordinate][h_coordinate - 2] == 'H')
           {
-            printf("found a wall!\n");
+            //debug : printf("found a wall!\n");
             //@command: replaces the old pawn.
             grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
             printf("? Error: there is a wall blocking the path\n\n");
@@ -1187,10 +1186,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         //@command: if evaluates to true then the move is upwards.
         if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate > 0)
         {
-          printf("this is a up move\n");
+          //debug : printf("this is a up move\n");
           if(grid[v_coordinate + 1][h_coordinate] == '=')
           {
-            printf("found a wall!\n");
+            //debug : printf("found a wall!\n");
             //@command: replaces the old pawn.
             grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
             printf("? Error: there is a wall blocking the path\n\n");
@@ -1200,10 +1199,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         //@command: if evaluates to true the move is downwards.
         else if((int)pawns_location->white_location.v_coordinate - (int)v_coordinate < 0)
         {
-          printf("this is a down move\n");
+          //debug : printf("this is a down move\n");
           if(grid[v_coordinate - 1][h_coordinate] == '=')
           {
-            printf("found a wall!\n");
+            //debug : printf("found a wall!\n");
             //@command: replaces the old pawn.
             grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = 'W';
             printf("? Error: there is a wall blocking the path\n\n");
@@ -1245,7 +1244,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       if(v_coordinate == 1 &&
       (h_coordinate != 2 && h_coordinate != grid_size.h_size - 3))
       {
-        printf("YOU ARE PLAYING AT THE TOP BUT NOT AT THE CORNERS\n");
+        //debug : printf("YOU ARE PLAYING AT THE TOP BUT NOT AT THE CORNERS\n");
         //checks if there is the pawn that requested the move below the requested coordinates. if it is then the move is valid and the old pawn is removed.
         if(grid[v_coordinate + 2][h_coordinate] == 'B')
           grid[v_coordinate + 2][h_coordinate] = ' ';
@@ -1270,10 +1269,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1283,10 +1282,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1300,10 +1299,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1313,10 +1312,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1337,7 +1336,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       else if((v_coordinate != 1 && v_coordinate != grid_size.v_size - 2) &&
       h_coordinate == 2)  //left but not corners.
       {
-        printf("YOU ARE PLAYING AT THE LEFT BUT NOT AT THE CORNERS\n");
+        //debug : printf("YOU ARE PLAYING AT THE LEFT BUT NOT AT THE CORNERS\n");
         if(grid[v_coordinate][h_coordinate + 4] == 'B')
           grid[v_coordinate][h_coordinate + 4] = ' ';
         else if(grid[v_coordinate + 2][h_coordinate] == 'B')
@@ -1358,10 +1357,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1371,10 +1370,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1388,10 +1387,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1401,10 +1400,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1425,7 +1424,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       else if((v_coordinate != 1 && v_coordinate != grid_size.v_size -2) &&
       h_coordinate == grid_size.h_size - 3) //right but not corners.
       {
-        printf("YOU ARE PLAYING AT THE RIGHT BUT NOT AT THE CORNERS\n");
+        //debug : printf("YOU ARE PLAYING AT THE RIGHT BUT NOT AT THE CORNERS\n");
         if(grid[v_coordinate][h_coordinate - 4] == 'B')
           grid[v_coordinate][h_coordinate - 4] = ' ';
         else if(grid[v_coordinate - 2][h_coordinate] == 'B')
@@ -1446,10 +1445,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1459,10 +1458,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1476,10 +1475,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1489,10 +1488,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1512,7 +1511,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
       else if(v_coordinate == grid_size.v_size - 2 &&
       (h_coordinate != 2 && h_coordinate != grid_size.h_size - 3))  //bottom but not corners.
       {
-        printf("YOU ARE PLAYING AT THE BOTTOM BUT NOT AT THE CORNERS\n");
+        //debug : printf("YOU ARE PLAYING AT THE BOTTOM BUT NOT AT THE CORNERS\n");
         if(grid[v_coordinate][h_coordinate - 4] == 'B')
           grid[v_coordinate][h_coordinate - 4] = ' ';
         else if(grid[v_coordinate - 2][h_coordinate] == 'B')
@@ -1533,10 +1532,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1546,10 +1545,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1563,10 +1562,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1576,10 +1575,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1616,10 +1615,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1629,10 +1628,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1646,10 +1645,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1659,10 +1658,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1699,10 +1698,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1712,10 +1711,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1729,10 +1728,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1742,10 +1741,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1782,10 +1781,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1795,10 +1794,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1812,10 +1811,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1825,10 +1824,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1865,10 +1864,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the left.
           if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate > 0)
           {
-            printf("this is a left move\n");
+            //debug : printf("this is a left move\n");
             if(grid[v_coordinate][h_coordinate + 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1878,10 +1877,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is to the right.
           else if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate < 0)
           {
-            printf("this is a right move\n");
+            //debug : printf("this is a right move\n");
             if(grid[v_coordinate][h_coordinate - 2] == 'H')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1895,10 +1894,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true then the move is upwards.
           if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate > 0)
           {
-            printf("this is a up move\n");
+            //debug : printf("this is a up move\n");
             if(grid[v_coordinate + 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1908,10 +1907,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
           //@command: if evaluates to true the move is downwards.
           else if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate < 0)
           {
-            printf("this is a down move\n");
+            //debug : printf("this is a down move\n");
             if(grid[v_coordinate - 1][h_coordinate] == '=')
             {
-              printf("found a wall!\n");
+              //debug : printf("found a wall!\n");
               //@command: replaces the old pawn.
               grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
               printf("? Error: there is a wall blocking the path\n\n");
@@ -1953,10 +1952,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         //@command: if evaluates to true then the move is to the left.
         if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate > 0)
         {
-          printf("this is a left move\n");
+          //debug : printf("this is a left move\n");
           if(grid[v_coordinate][h_coordinate + 2] == 'H')
           {
-            printf("found a wall!\n");
+            //debug : printf("found a wall!\n");
             //@command: replaces the old pawn.
             grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
             printf("? Error: there is a wall blocking the path\n\n");
@@ -1966,10 +1965,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         //@command: if evaluates to true then the move is to the right.
         else if((int)pawns_location->black_location.h_coordinate - (int)h_coordinate < 0)
         {
-          printf("this is a right move\n");
+          //debug : printf("this is a right move\n");
           if(grid[v_coordinate][h_coordinate - 2] == 'H')
           {
-            printf("found a wall!\n");
+            //debug : printf("found a wall!\n");
             //@command: replaces the old pawn.
             grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
             printf("? Error: there is a wall blocking the path\n\n");
@@ -1983,10 +1982,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         //@command: if evaluates to true then the move is upwards.
         if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate > 0)
         {
-          printf("this is a up move\n");
+          //debug : printf("this is a up move\n");
           if(grid[v_coordinate + 1][h_coordinate] == '=')
           {
-            printf("found a wall!\n");
+            //debug : printf("found a wall!\n");
             //@command: replaces the old pawn.
             grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
             printf("? Error: there is a wall blocking the path\n\n");
@@ -1996,10 +1995,10 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
         //@command: if evaluates to true the move is downwards.
         else if((int)pawns_location->black_location.v_coordinate - (int)v_coordinate < 0)
         {
-          printf("this is a down move\n");
+          //debug : printf("this is a down move\n");
           if(grid[v_coordinate - 1][h_coordinate] == '=')
           {
-            printf("found a wall!\n");
+            //debug : printf("found a wall!\n");
             //@command: replaces the old pawn.
             grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = 'B';
             printf("? Error: there is a wall blocking the path\n\n");
@@ -2056,8 +2055,8 @@ void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info
   //converts the h_coordinate into the actual board's coordinates.
   h_coordinate = h_coordinate * 4 + 2;
 
-  printf("v_coordinate: %d\n", v_coordinate);
-  printf("h_coordinate: %d\n", h_coordinate);
+  //debug : printf("v_coordinate: %d\n", v_coordinate);
+  //debug : printf("h_coordinate: %d\n", h_coordinate);
 
   //checks for vertical and horizontal wall placement seperately because v walls use character 'H' and horizontal walls use character '='.
   if(requested_wall_info.orientation == 'v')
