@@ -1,6 +1,6 @@
 LIBS = src/cli src/command src/controls src/misc src/queue
 
-default: libraries
+install: libraries
 	gcc $(wildcard libs/*) -o DeepOrange;
 
 debug: librariesdebug
