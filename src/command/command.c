@@ -212,7 +212,7 @@ void user_input_decode()
       if(n_arguments == 1)
       {
         unsigned n_undo = arguments[0][0] - '0';
-        undo(grid, n_undo, my_stack, &pawns_location); /*UNDO FUNCTION CALL*/
+        undo(grid, n_undo, my_stack, &pawns_location, grid_size); /*UNDO FUNCTION CALL*/
       }
       else
       {
@@ -2122,7 +2122,7 @@ void genmove()
   //FIXME: Add functionality to this function.
 }
 
-void undo(int** grid, unsigned n_undo, Queue* my_queue, Players_location* pawns_location)
+void undo(int** grid, unsigned n_undo, Queue* my_queue, Players_location* pawns_location, ArraySize grid_size)
 {
   Queue_elem element;
   //@command: removing the unrequired Queue_elems.
@@ -2153,17 +2153,15 @@ void undo(int** grid, unsigned n_undo, Queue* my_queue, Players_location* pawns_
   pawns_location->white_location.h_coordinate = element.pawns_location.white_location.h_coordinate;
   pawns_location->white_location.v_coordinate = element.pawns_location.white_location.v_coordinate;
 
-  grid = element.grid;
+  freeGrid(grid, grid_size.v_size);
 
-  Walls available_walls;
-  available_walls.black_walls = 10;
-  available_walls.white_walls = 10;
-  ArraySize grid_size;
-  grid_size.h_size = 21;
-  grid_size.v_size = 11;
-  grid_size.size = 10;
-  showboard(element.grid, available_walls, grid_size);
-  showboard(grid, available_walls, grid_size);
+  //@command: copying the grid configuration to the grid.
+  grid = malloc(grid_size.v_size * sizeof(int*));
+  for(size_t counter = 0; counter < grid_size.v_size; counter++)
+  {
+    grid[counter] = malloc(grid_size.h_size * sizeof(int));
+    memcpy(grid[counter], element.grid[counter], grid_size.h_size * sizeof(int));
+  }
 
   return;
 }
