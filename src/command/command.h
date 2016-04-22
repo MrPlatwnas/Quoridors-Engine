@@ -84,7 +84,7 @@ void walls(Walls* available_walls, unsigned int input_n_walls);
 void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,Move_info move_coordinates);
 
 //a wall place at the requested vertex and orientation. Decrease the number of walls.
-void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info requested_wall_info);
+void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info requested_wall_info, Players_location pawns_location);
 
 //the engine makes a move or wall placement at the requested color.
 void genmove(); //FIXME: Add support for the arguments.

@@ -190,7 +190,7 @@ void user_input_decode()
         element.pawns_location = pawns_location;
         stack_push(element, my_stack, grid_size);
 
-        playwall(grid, grid_size, &available_walls, requested_wall_info); /*PLAYWALL FUNCTION CALL*/
+        playwall(grid, grid_size, &available_walls, requested_wall_info, pawns_location); /*PLAYWALL FUNCTION CALL*/
 
       }
       else
@@ -2018,7 +2018,7 @@ void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,
   }
 }
 
-void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info requested_wall_info)
+void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info requested_wall_info, Players_location pawns_location)
 {
   //@purpose: checks if there are available walls to be placed.
   if(requested_wall_info.player == 'w')
@@ -2074,6 +2074,19 @@ void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info
     grid[v_coordinate][h_coordinate + 2] = 'H';
     grid[v_coordinate + 1][h_coordinate + 2] = 'H';
     grid[v_coordinate + 2][h_coordinate + 2] = 'H';
+
+    //@purpose: checks if there is an available path to win for both players.
+    bool available_path_white = false;
+    available_path(grid, grid_size, pawns_location.white_location.v_coordinate, pawns_location.white_location.h_coordinate, &available_path_white, 'c');
+    bool available_path_black = false;
+    available_path(grid, grid_size, pawns_location.black_location.v_coordinate, pawns_location.black_location.h_coordinate, &available_path_black, 'b');
+    //@command: resets the placed wall since it is against the game's rules.
+    if(available_path_white == false || available_path_black == false)
+    {
+      grid[v_coordinate][h_coordinate + 2] = '|';
+      grid[v_coordinate + 1][h_coordinate + 2] = '+';
+      grid[v_coordinate + 2][h_coordinate + 2] = '|';
+    }
 
     if(requested_wall_info.player == 'w')
     {

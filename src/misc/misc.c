@@ -358,3 +358,42 @@ void uncapitalize(char* string)
     index++;
   }
 }
+
+void available_path(int** grid, ArraySize grid_size, unsigned v_start, unsigned h_start, bool* available_path_exists, char player)
+{
+  if(player == 'w')
+  {
+    if(v_start == 1)
+    {
+      *available_path_exists = true;
+      return;
+    }
+  }
+  else if(player == 'b')
+  {
+    if(v_start == grid_size.v_size - 2)
+    {
+      *available_path_exists = true;
+      return;
+    }
+  }
+
+  printf("we are at %d %d\n", v_start, h_start);
+  if(grid[v_start - 1][h_start] != '=')
+    available_path(grid, grid_size, v_start - 2, h_start, available_path_exists, player);
+
+  printf("we are at %d %d\n", v_start, h_start);
+  if(*available_path_exists == false &&
+  grid[v_start][h_start - 2] != 'H')
+    available_path(grid, grid_size, v_start, h_start - 4, available_path_exists, player);
+
+  printf("we are at %d %d\n", v_start, h_start);
+  if(*available_path_exists == false &&
+  grid[v_start][h_start + 2] != 'H')
+    available_path(grid, grid_size, v_start, h_start + 4, available_path_exists, player);
+
+  printf("we are at %d %d\n", v_start, h_start);
+  if(*available_path_exists == false &&
+  grid[v_start + 1][h_start] != '=')
+    available_path(grid, grid_size, v_start + 2, h_start, available_path_exists, player);
+}
