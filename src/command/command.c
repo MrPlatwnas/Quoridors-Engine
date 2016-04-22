@@ -2121,7 +2121,7 @@ void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info
 
 void genmove()
 {
-  //FIXME: Add functionality to this function.
+  //TODO: Add functionality to this function.
 }
 
 void undo(int*** grid, unsigned n_undo, Queue* my_queue, Players_location* pawns_location, ArraySize grid_size)
