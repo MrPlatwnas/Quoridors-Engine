@@ -2077,7 +2077,7 @@ void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info
 
     //@purpose: checks if there is an available path to win for both players.
     bool available_path_white = false;
-    available_path(grid, grid_size, pawns_location.white_location.v_coordinate, pawns_location.white_location.h_coordinate, &available_path_white, 'c');
+    available_path(grid, grid_size, pawns_location.white_location.v_coordinate, pawns_location.white_location.h_coordinate, &available_path_white, 'w');
     bool available_path_black = false;
     available_path(grid, grid_size, pawns_location.black_location.v_coordinate, pawns_location.black_location.h_coordinate, &available_path_black, 'b');
     //@command: resets the placed wall since it is against the game's rules.
@@ -2086,6 +2086,8 @@ void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info
       grid[v_coordinate][h_coordinate + 2] = '|';
       grid[v_coordinate + 1][h_coordinate + 2] = '+';
       grid[v_coordinate + 2][h_coordinate + 2] = '|';
+      printf("? Error: you can't block every available path\n\n");
+      return;
     }
 
     if(requested_wall_info.player == 'w')
@@ -2117,6 +2119,25 @@ void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info
     grid[v_coordinate + 1][h_coordinate + 3] = '=';
     grid[v_coordinate + 1][h_coordinate + 4] = '=';
     grid[v_coordinate + 1][h_coordinate + 5] = '=';
+
+    //@purpose: checks if there is an available path to win for both players.
+    bool available_path_white = false;
+    available_path(grid, grid_size, pawns_location.white_location.v_coordinate, pawns_location.white_location.h_coordinate, &available_path_white, 'w');
+    bool available_path_black = false;
+    available_path(grid, grid_size, pawns_location.black_location.v_coordinate, pawns_location.black_location.h_coordinate, &available_path_black, 'b');
+    //@command: resets the placed wall since it is against the game's rules.
+    if(available_path_white == false || available_path_black == false)
+    {
+      grid[v_coordinate + 1][h_coordinate - 1] = '-';
+      grid[v_coordinate + 1][h_coordinate] = '-';
+      grid[v_coordinate + 1][h_coordinate + 1] = '-';
+      grid[v_coordinate + 1][h_coordinate + 2] = '+';
+      grid[v_coordinate + 1][h_coordinate + 3] = '-';
+      grid[v_coordinate + 1][h_coordinate + 4] = '-';
+      grid[v_coordinate + 1][h_coordinate + 5] = '-';
+      printf("? Error: you can't block every available path\n\n");
+      return;
+    }
 
     if(requested_wall_info.player == 'w')
     {
