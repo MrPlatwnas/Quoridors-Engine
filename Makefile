@@ -1,20 +1,20 @@
-LIBS = src/cli src/command src/controls src/misc
+LIBS = src/cli src/command src/misc
 
 default: libraries
-	gcc $(wildcard libs/*) -o DeepOrange;
+	g++ $(wildcard libs/*) -o DeepOrange;
 
 debug: librariesdebug
-	gcc -g $(wildcard libs/*) -o DeepOrange;
+	g++ -g $(wildcard libs/*) -o DeepOrange;
 
 libraries:
 	mkdir libs;
 	for dir in $(LIBS); do \
 		cd $$dir; \
-		gcc -c *.c; \
+		g++ -c *.cpp; \
 		mv *.o ../../libs; \
 		cd -; \
 	done
-	gcc -c src/cli/main.c;
+	g++ -c src/cli/main.cpp;
 	mv main.o libs/main.o;
 
 librariesdebug:
