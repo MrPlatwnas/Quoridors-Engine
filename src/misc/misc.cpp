@@ -10,13 +10,13 @@ Date                : 28-1-2015
 #include <string.h>
 #include <ctype.h>
 
-#include "../command/command.h"
+#include "../command/command.hpp"
 
 //TODO: organize the functions to match the misc.h functions' order.
 int** initGridInt(unsigned n_rows, unsigned n_cols)
 {
   int** grid = NULL;
-  grid = malloc(n_rows * sizeof(int*));
+  grid = (int**)malloc(n_rows * sizeof(int**));
   if(grid == NULL)
   {
     fprintf(stderr, "Error when malloc'ing grid's memory!");
@@ -25,7 +25,7 @@ int** initGridInt(unsigned n_rows, unsigned n_cols)
   unsigned counter = 0;
   for(counter = 0; counter < n_rows; counter++)
   {
-    grid[counter] = malloc(n_cols * sizeof(int));
+    grid[counter] = (int*)malloc(n_cols * sizeof(int*));
     if(grid[counter] == NULL)
     {
       fprintf(stderr, "Error when malloc'ing grid's memory!");  //In case the malloc failed for some reason.
@@ -37,7 +37,7 @@ int** initGridInt(unsigned n_rows, unsigned n_cols)
 char** initGridChar(unsigned int n_rows, unsigned int n_cols)
 {
   char** grid;
-  grid = malloc(n_rows * sizeof(char*));
+  grid = (char**)malloc(n_rows * sizeof(char**));
   if(grid == NULL)
   {
     fprintf(stderr, "Error when malloc'ing grid's memory!");
@@ -46,7 +46,7 @@ char** initGridChar(unsigned int n_rows, unsigned int n_cols)
   unsigned int counter = 0;
   for(counter = 0; counter < n_rows; counter++)
   {
-    grid[counter] = malloc(n_cols * sizeof(char));
+    grid[counter] = (char*)malloc(n_cols * sizeof(char*));
     if(grid[counter] == NULL)
     {
       fprintf(stderr, "Error when malloc'ing grid's memory!");  //In case the malloc failed for some reason.
@@ -204,7 +204,7 @@ char* get_line()
   while(c != '\n' && c != EOF)
   {
     n_chars++;
-    input_command = realloc(input_command, n_chars * sizeof(char));
+    input_command = (char*)realloc(input_command, n_chars * sizeof(char*));
     input_command[n_chars - 2] = c;
     c = getchar();
   }
@@ -220,7 +220,7 @@ char* command_decode(char* input_command)
   while(input_command[index] != ' ' && input_command[index] != '\0')
   {
     no_chars++;
-    output_command = realloc(output_command, no_chars * sizeof(char));
+    output_command = (char*)realloc(output_command, no_chars * sizeof(char*));
     output_command[index] = input_command[index];
     index++;
   }
