@@ -3,16 +3,15 @@ File implementation : main.c
 Authors             : Platwnas-Nikolaos Kiorpelidis
 Purpose             : User Interface
 Date                : 28-1-2015
+Language:           : C++
 *******************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <iostream>
 
-#include "../misc/misc.h"
-#include "../command/command.h"
+#include "../misc/misc.hpp"
+#include "../command/command.hpp"
 
-int main(int argc, char* argv[])
+int main(int argc, const char* argv[])
 {
   user_input_decode();
 }

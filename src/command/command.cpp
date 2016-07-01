@@ -15,9 +15,9 @@ Date                : 28-1-2015
 #include <stdbool.h>
 
 /* custom headers */
-#include "../misc/misc.h"
-#include "../command/command.h"
-#include "../queue/queue.h"
+#include "../misc/misc.hpp"
+#include "../command/command.hpp"
+#include "../queue/queue.hpp"
 
 //this function runs while quit_game is false and prossecess the commands that the user enters and then calls the right function to execute the requested command.
 void user_input_decode()
@@ -270,7 +270,7 @@ void known_command(char** arguments, unsigned n_arguments)
 
   //the number of available commands is 9.
   unsigned n_commands = 9;
-  char* known_commands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
+  const char* known_commands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "showboard", "playmove"};
 
   unsigned n_rows = 0;
   for(n_rows = 0; n_rows < n_commands; n_rows++)
@@ -290,7 +290,7 @@ void list_commands()
 {
   //the number of available commands is 13.
   unsigned n_commands = 13;
-  char* known_commands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
+  const char* known_commands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
 
   printf("=\n");
   unsigned counter = 0;

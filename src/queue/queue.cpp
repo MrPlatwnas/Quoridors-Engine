@@ -9,7 +9,7 @@ Date                : 2-1-2015
 #include <stdlib.h>
 #include <string.h>
 
-#include "queue.h"
+#include "queue.hpp"
 
 Queue_elem stack_pop(Queue* my_queue)
 {

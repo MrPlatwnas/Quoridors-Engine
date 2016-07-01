@@ -8,7 +8,7 @@ Date                : 2-1-2015
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include "../command/command.h"
+#include "../command/command.hpp"
 
 Queue* stack_construct();
 

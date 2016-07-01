@@ -8,7 +8,7 @@ Date                : 2-1-2015
 #ifndef MISC_H
 #define MISC_H
 
-#include "../command/command.h"
+#include "../command/command.hpp"
 
 /**************************
 ARRAY GENERAL FUNCTIONS
