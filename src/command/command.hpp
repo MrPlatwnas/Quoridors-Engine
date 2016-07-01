@@ -44,6 +44,18 @@ typedef struct players_location {
   Vertex black_location;
 }Players_location;
 
+typedef struct queue_elem {
+  Players_location pawns_location;
+  int** grid;
+  bool isset;
+}Queue_elem;
+
+typedef struct queue {
+  Queue_elem* elements;
+  unsigned top;
+  unsigned maxsize;
+}Queue;
+
 //reads the stdin of the program, analyzes it and calls the apropriate function.
 void user_input_decode();
 
@@ -72,13 +84,13 @@ void walls(Walls* available_walls, unsigned int input_n_walls);
 void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,Move_info move_coordinates);
 
 //a wall place at the requested vertex and orientation. Decrease the number of walls.
-void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info requested_wall_info);
+void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info requested_wall_info, Players_location pawns_location);
 
 //the engine makes a move or wall placement at the requested color.
 void genmove(); //FIXME: Add support for the arguments.
 
 //the game goes 'times' moves back.
-void undo(int** grid);  //FIXME: Add support for the arguments.
+void undo(int*** grid, unsigned n_undo, Queue* my_queue, Players_location* pawns_location, ArraySize grid_size);
 
 //outputs true and winner's color if the game ended, otherwise false.
 void winner(ArraySize grid_size, Players_location* pawns_location);

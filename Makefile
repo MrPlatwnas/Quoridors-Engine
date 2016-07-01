@@ -1,4 +1,4 @@
-LIBS = src/cli src/command src/misc
+LIBS = src/cli src/command src/misc src/queue
 
 default: libraries
 	g++ $(wildcard libs/*) -o DeepOrange;

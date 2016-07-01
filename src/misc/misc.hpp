@@ -95,6 +95,8 @@ char** arguments_decode(char* input_command, unsigned* arguments_count);
 //removes comments from a given string. (a comment is a text that starts with a # character ex. playmove w a5 #i want to play a move)
 void remove_comments(char* string);
 
+void available_path(int** grid, ArraySize grid_size, unsigned v_start, unsigned h_start, bool* available_path_exists, char player);
+
 /**************************
 QUORIDOR MISC FUNCTIONS
 **************************/
