@@ -4,6 +4,7 @@ Authors             : Platon-Nikolaos Kiorpelidis
 Purpose             : data structures declarations
 Date created        : 28-1-2016
 Date last modified  : 04-07-2016
+Language            : C++
 */
 
 #include <iostream>
@@ -42,25 +43,26 @@ class Quoridors_game
     Board board;
 
   public:
-    Quoridors_game(uint32_t, uint32_t);
-    Quoridors_game();
+
+    Quoridors_game(uint32_t);  //sets board size to user given size.
+    Quoridors_game();          //sets board size to 9x9.
     ~Quoridos_game();
 
     bool set_board_size(uint32_t);    //sets the board's size.
     bool set_num_walls(uint32_t);     //sets the amount of available_walls for each player.
     bool set_board_config();          //sets the board for a new game.
 
-    bool playmove(char, uint32_t, uint32_t);
-    bool playwall(char, uint32_t, uint32_t, char);
+    bool playmove(char, uint32_t, uint32_t);        //moves a player at the requested location.
+    bool playwall(char, uint32_t, uint32_t, char);  //places a wall at the requested location.
 
-    bool undo_move(uint32_t);
+    bool undo_move(uint32_t);  //undoes user given moves.
 
-    bool genmove(char);
+    bool genmove(char);  //generates an AI move.
 
-    bool showboard();
+    bool showboard(); //prints to stdout the current board configuration.
 
-    bool winner();
-    bool quit();
+    bool winner();    //checks if there is a winner.
+    bool quit();      //quits the game.
 }
 
 namespace admin_commands
