@@ -2,7 +2,7 @@
 File implementation : command.hpp
 Authors             : Platon-Nikolaos Kiorpelidis
 Purpose             : data structures declarations
-Date created        : 28-1-2016
+Date created        : 28-01-2016
 Date last modified  : 04-07-2016
 Language            : C++
 */
@@ -17,30 +17,30 @@ class Quoridors_game
     struct Player{
       private:
         struct Vertex{
-          uint32_t x;
-          uint32_t y;
+          uint32_t x;  //player's horizontal coordinate.
+          uint32_t y;  //player's vertical coordinate.
         }
       public:
-        Vertex location;
-        uint32_t num_walls;
+        Vertex location;     //player's location.
+        uint32_t num_walls;  //player's available walls.
     }
 
     struct Board{
       private:
-        struct Square{
-          bool can_move_up;
-          bool can_move_down;
-          bool can_move_right;
-          bool can_move_left;
+        struct Square{  //that's how the engine representes the walls.
+          bool can_move_up;    //setted to true if there is no wall above.
+          bool can_move_down;  //setted to true if there is no wall below.
+          bool can_move_right; //setted to true if there is no wall right.
+          bool can_move_left;  //setted to true if there is no wall left.
         }
       public:
-        uint32_t board_size;
-        Square **board_config;
+        uint32_t board_size;   //stores the board size.
+        Square **board_config; //stores the current board configuration.
     }
 
-    Player white_player;
-    Player black_player;
-    Board board;
+    Player white_player;  //stores white player's information.
+    Player black_player;  //stores black player's information.
+    Board board;          //stores board's information.
 
   public:
 
