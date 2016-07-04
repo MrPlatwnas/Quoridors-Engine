@@ -1,10 +1,11 @@
-/******************************************************
-File implementation : main.c
-Authors             : Platwnas-Nikolaos Kiorpelidis
+/*
+File implementation : main.cpp
+Authors             : Platon-Nikolaos Kiorpelidis
 Purpose             : User Interface
-Date                : 28-1-2015
+Date created        : 28-1-2016
+Date laste modified : 04-07-2016
 Language:           : C++
-*******************************************************/
+*/
 
 #include <iostream>
 
