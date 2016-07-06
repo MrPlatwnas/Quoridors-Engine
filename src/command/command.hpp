@@ -42,11 +42,15 @@ class Quoridors_game
     Player black_player;  //stores black player's information.
     Board board;          //stores board's information.
 
+    bool quit_game;       //boolean variable so you can quit from the game when the quit function is called.
+
   public:
 
     Quoridors_game(uint32_t);  //sets board size to user given size.
     Quoridors_game();          //sets board size to 9x9.
     ~Quoridos_game();
+
+    void start_game();         //starts the game execution and user command processing.
 
     bool set_board_size(uint32_t);    //sets the board's size.
     bool set_num_walls(uint32_t);     //sets the amount of available_walls for each player.
