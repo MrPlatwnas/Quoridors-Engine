@@ -6,10 +6,10 @@ Quoridors Engine project is a sandbox engine where you can change the amount of 
 
 ## How to install & run
 Open a terminal, go to your desired directory and run:
-1.  git clone https://github.com/MrPlatwnas/Quoridors-Engine
-2.  cd Quoridors-Engine
-3.  make
-4.  ./DeepOrange
+1. $ git clone https://github.com/MrPlatwnas/Quoridors-Engine
+2. $ cd Quoridors-Engine
+3. $ make
+4. $ ./DeepOrange
 
 At this point you are prompted to enter a command for the Quoridors Engine.
 Now you can run the command: **> tutorial**, inside the engine to learn how to give instructions to the engine.
