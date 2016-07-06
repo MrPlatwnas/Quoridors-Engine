@@ -1,65 +1,40 @@
 /******************************************************
-File implementation : command.c
+File implementation : command.cpp
 Authors             : Platwnas-Nikolaos Kiorpelidis
 Purpose             : command functions definitions
-Date                : 28-1-2015
+Date created        : 28-01-2016
 *******************************************************/
 
-/* C89 std */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <iostream>
+#include <cstdint>
 
-/* C99 std */
-#include <stdint.h>
-#include <stdbool.h>
-
-/* custom headers */
 #include "../misc/misc.hpp"
 #include "../command/command.hpp"
 #include "../queue/queue.hpp"
 
 //this function runs while quit_game is false and prossecess the commands that the user enters and then calls the right function to execute the requested command.
-void user_input_decode()
+
+
+Quoridors_game::start_game()
 {
-  char *inputed_command = NULL; //get_lines the user's input from the stdin.
+  //@command: stores the user's input one line each time.
+  string inputed_command = "";
 
-  char *command = NULL; //here actual command gets stored ex. playmove w c3, the command here is playmove.
-  char **arguments = NULL; //the actual arguments get stored ex playmove w c3, the arguments here are w and c3.
-  unsigned n_arguments; //the number of arguments the user inputed. this variable is used to catch errors ex. playmove w, this command is missing one argument, the coordinates.
+  //@command: stores the command only(without the arguements).
+  string command = "";
+  //@command: stores the command's arguements only.
+  string *arguments = NULL;
+  //@command: counts the number of arguements in order to check if there are missing arguements. ex. playmove w, misses the coordinates.
+  uint32_t n_arguments;
 
-  //struct to store the board's visual size, grid_size.size, the board's actual v_size and h_size, grid_size.v_size and grid_size.h_size respectively.
-  ArraySize grid_size;
-  grid_size.size = 9;
-  grid_size.v_size = 9 * 2 + 1;
-  grid_size.h_size = 9 * 4 + 1;
+  ////@command: create the stack to save the grid configurations in order to undo.
+  //Queue* my_stack = stack_construct();
+  //Queue_elem element;
 
-  //struct to store the available walls for each player.
-  Walls available_walls;
-  available_walls.white_walls = 10;
-  available_walls.black_walls = 10;
-
-  //struct to store the current location of each player.
-  Players_location pawns_location;
-  //@command: so winner function won't print = true color by accident.
-  pawns_location.black_location.v_coordinate = 0;
-  //@command: so winner function won't print = true color by accident.
-  pawns_location.white_location.v_coordinate = 0;
-
-  //@command: create the stack to save the grid configurations in order to undo.
-  Queue* my_stack = stack_construct();
-  Queue_elem element;
-
-  //struct to store the board configuration.
-  int **grid = NULL;
-
-  //boolean variable so you can quit the game when quit function is called.
-  bool quit_game = false;
-  while(!quit_game)
+  while(quit_game == false)
   {
-    inputed_command = get_line(); //gets the user's input line from the stdin.
+    getline(cin, inputed_command);
 
-    //we edit the user's input as needed according to qtp rules.
     /*STRING EDITING FUNCTIONS*/
     replace_string_chars(inputed_command, 9, ' ');
     remove_char(inputed_command, 13);
@@ -74,16 +49,16 @@ void user_input_decode()
     arguments = arguments_decode(inputed_command, &n_arguments);
 
     //the user specified command is executed by matching the user's command with the engine's available commands. if the user's command is not one of the engine's known commands then a descriptive error is printed.
-    if(strcmp(command, "name") == 0)
-      name();
-    else if(strcmp(command, "known_command") == 0)
-      known_command(arguments, n_arguments);
-    else if(strcmp(command, "list_commands") == 0)
-      list_commands();
-    else if(strcmp(command, "quit") == 0)
-      quit(&quit_game);
+    if(command.compare("name") == 0)
+      admin_commands::name();
+    else if(command.compare("known_command") == 0)
+      admin_commands::known_command(arguments, n_arguments); //FIXME
+    else if(command.compare("list_commands") == 0)
+      admin_commands::list_commands();
+    else if(command.compare("quit") == 0)
+      Quoridors_game::quit();
     else if(strcmp(command, "boardsize") == 0)
-    {
+    { //FIXME
       if(n_arguments == 1)
       {
         grid_size.size = atoi(arguments[0]);
@@ -108,14 +83,16 @@ void user_input_decode()
         printf("? Error: you need to give one(1) argument (ex. boardsize 9)\n\n");
       }
     }
-    else if(strcmp(command, "clear_board") == 0)
-      clear_board(grid, grid_size, &pawns_location);
-    else if(strcmp(command, "walls") == 0)
+    else if(command.compare("clear_board") == 0)
+      clear_board();
+    else if(command.compare("walls") == 0)
+    {
       if(n_arguments == 1)
         walls(&available_walls, atoi(arguments[0]));
       else
         printf("? Error: you need to give one(1) argument (ex. walls 10)\n\n");
-    else if(strcmp(command, "playmove") == 0)
+    }
+    else if(command.compare("playmove") == 0)
     {
       if(grid != NULL && n_arguments == 2)
       {
@@ -158,7 +135,7 @@ void user_input_decode()
         printf("? Error: you need to give two(2) arguments (ex. playmove w a1)\n\n");
       }
     }
-    else if(strcmp(command, "playwall") == 0)
+    else if(command.compare("playwall") == 0)
     {
       if(n_arguments == 3)
       {
@@ -198,7 +175,7 @@ void user_input_decode()
         printf("? Error: you need to give 3 arguments (ex. playwall w a5 v)\n\n");
       }
     }
-    else if(strcmp(command, "genmove") == 0)
+    else if(command.compare("genmove") == 0)
     {
       if(n_arguments == 1)
       {
@@ -209,7 +186,7 @@ void user_input_decode()
         printf("? Error: you need to give one(1) argument (ex. genmove w)\n\n");
       }
     }
-    else if(strcmp(command, "undo") == 0)
+    else if(command.compare("undo") == 0)
     {
       if(n_arguments == 1)
       {
@@ -222,20 +199,9 @@ void user_input_decode()
       }
     }
     else if(strcmp(command, "winner") == 0)
-    {
-      winner(grid_size, &pawns_location);  /*WINNER FUNCTION CALL*/
-    }
+      winner();
     else if(strcmp(command, "showboard") == 0)
-    {
-      if(grid != NULL)
-      {
-        showboard(grid, available_walls, grid_size);  /*SHOWBOARD FUNCTION CALL*/
-      }
-      else
-      {
-        printf("? Error: you need to create a board first (run: boardsize <desired_size>)\n\n");
-      }
-    }
+      showboard();
     else
     {
       printf("? Error: unknown command (run: list_commands)\n\n");
