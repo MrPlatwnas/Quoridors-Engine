@@ -1,7 +1,6 @@
-# Quoridors Engine
 Introduction
 ============
-This is an engine for the board game Quoridors. Quoridors is a strategy game. More information about the game [here](https://en.wikipedia.org/wiki/Quoridor).
+Quoridors engine is an engine for the board game Quoridors. Quoridors is a strategy game. More information about the game [here](https://en.wikipedia.org/wiki/Quoridor).
 
 Quoridors Engine project is a sandbox engine where you can change the amount of walls mid-game, play AI generated moves. You can do whatever you want. Experiment!
 
