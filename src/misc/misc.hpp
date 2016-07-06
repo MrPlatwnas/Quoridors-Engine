@@ -1,9 +1,9 @@
-/******************************************************
-File implementation : main.c
-Authors             : Platwnas-Nikolaos Kiorpelidis
-Purpose             : miscellaneous functions declarations
-Date                : 2-1-2015
-*******************************************************/
+/*
+File implementation : misc.cpp
+Authors             : Platon-Nikolaos Kiorpelidis
+Purpose             : Miscellaneous functions declarations
+Date created        : 02-01-2016
+*/
 
 #ifndef MISC_H
 #define MISC_H
