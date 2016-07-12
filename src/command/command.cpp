@@ -2007,6 +2007,17 @@ void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info
     }
   }
   else if(requested_wall_info.player == 'b')
+//@function: removes leading, trailing and intercepting spaces.
+void Quoridos_game::User_command::remove_extra_spaces(string my_string)
+{
+  //@command: stores the original string into my_string.
+  string src = my_string;
+  //@command: where the string without spaces will be stored.
+  string dst = my_string;
+  //@command: removes the leading spaces.
+  while (isspace(*src)) src++;
+  //@command: removes intercepting spaces.
+  for(; *src != '\n'; src++)
   {
     *dst = *src;
     //@command: this is unnecessary, for loop checks already for this.
