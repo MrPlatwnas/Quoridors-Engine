@@ -226,6 +226,17 @@ void known_command(char** arguments, unsigned n_arguments)
 {
   //checks if the user's arguments is one argument. if it is not one argument then the function returns.
   if(n_arguments != 1)
+//@function: removes leading, trailing and intercepting spaces.
+void Quoridos_game::User_command::remove_extra_spaces(string my_string)
+{
+  //@command: stores the original string into my_string.
+  string src = my_string;
+  //@command: where the string without spaces will be stored.
+  string dst = my_string;
+  //@command: removes the leading spaces.
+  while (isspace(*src)) src++;
+  //@command: removes intercepting spaces.
+  for(; *src != '\n'; src++)
   {
     printf("? Error: you need to give one(1) argument (ex. known_command playwall)\n\n");
     return;
@@ -1997,126 +2008,24 @@ void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info
   }
   else if(requested_wall_info.player == 'b')
   {
-    if(available_walls->black_walls == 0)
+    *dst = *src;
+    //@command: this is unnecessary, for loop checks already for this.
+    if(*src != '\n')
     {
-      printf("? Error: the black player has not any walls left\n");
-      return;
+      //@command: to understand use DeMorgan's theorem.
+      if(*dst != *(src + 1) || *dst != ' ')
+        dst++;
     }
   }
-
-  //convert the users given coordinates to grid_size.size coordinates in order to check if the requested wall placement is out of bounds, because the user's given coordinates are flipped because showboard shows the numbers in reverse order.
-  unsigned v_coordinate = grid_size.size - requested_wall_info.n_row;
-  //stores the users given coordinates in order to check if the requested move is out of bounds.
-  unsigned h_coordinate = requested_wall_info.n_col;
-
-  //checks if the requested move is out of bounds. Note: there is no need to check if v_coordinate < 0 or if h_coordinate < 0 because the variables are unsigned so when v_coordinate is -1 then it's a very large positive number so the check is still triggered.
-  if(v_coordinate >= grid_size.size - 1 || h_coordinate >= grid_size.size - 1)
+  //@command: removes trailing spaces.
+  if(dst[-1] == ' ')
   {
-    printf("? Error: requested move is out of board's bountaries\n\n");
-    return;
+    dst[-1] = '\0';
   }
-
-  //converts the v_coordinate into the actual board's coordinates.
-  v_coordinate = v_coordinate * 2 + 1;
-  //converts the h_coordinate into the actual board's coordinates.
-  h_coordinate = h_coordinate * 4 + 2;
-
-  //debug : printf("v_coordinate: %d\n", v_coordinate);
-  //debug : printf("h_coordinate: %d\n", h_coordinate);
-
-  //checks for vertical and horizontal wall placement seperately because v walls use character 'H' and horizontal walls use character '='.
-  if(requested_wall_info.orientation == 'v')
+  else
   {
-    //checks if there is already a vertical wall there. if there is then a descriptive error messsage is printed.
-    if(grid[v_coordinate][h_coordinate + 2] == 'H' ||
-    grid[v_coordinate + 2][h_coordinate + 2] == 'H' ||
-    grid[v_coordinate + 1][h_coordinate + 2] == '=')
-    {
-      printf("? Error: there is already a wall there\n");
-      return;
-    }
-
-    //places the actual wall.
-    grid[v_coordinate][h_coordinate + 2] = 'H';
-    grid[v_coordinate + 1][h_coordinate + 2] = 'H';
-    grid[v_coordinate + 2][h_coordinate + 2] = 'H';
-
-    //@purpose: checks if there is an available path to win for both players.
-    bool available_path_white = false;
-    available_path(grid, grid_size, pawns_location.white_location.v_coordinate, pawns_location.white_location.h_coordinate, &available_path_white, 'w');
-    bool available_path_black = false;
-    available_path(grid, grid_size, pawns_location.black_location.v_coordinate, pawns_location.black_location.h_coordinate, &available_path_black, 'b');
-    //@command: resets the placed wall since it is against the game's rules.
-    if(available_path_white == false || available_path_black == false)
-    {
-      grid[v_coordinate][h_coordinate + 2] = '|';
-      grid[v_coordinate + 1][h_coordinate + 2] = '+';
-      grid[v_coordinate + 2][h_coordinate + 2] = '|';
-      printf("? Error: you can't block every available path\n\n");
-      return;
-    }
-
-    if(requested_wall_info.player == 'w')
-    {
-      printf("= white player played a vertical wall at %c%d\n\n", requested_wall_info.n_col + 'A', requested_wall_info.n_row);
-      available_walls->white_walls--;
-    }
-    else if(requested_wall_info.player == 'b')
-    {
-      printf("= black player played a vertical wall at %c%d\n\n", requested_wall_info.n_col + 'A', requested_wall_info.n_row);
-      available_walls->black_walls--;
-    }
+    *dst = '\0';
   }
-  else if(requested_wall_info.orientation == 'h')
-  {
-    if(grid[v_coordinate + 1][h_coordinate] == '=' ||
-    grid[v_coordinate + 1][h_coordinate + 2] == 'H' ||
-    grid[v_coordinate + 1][h_coordinate + 4] == '=')
-    {
-      printf("? Error: there is already a wall there\n");
-      return;
-    }
-
-    //places the actual wall.
-    grid[v_coordinate + 1][h_coordinate - 1] = '=';
-    grid[v_coordinate + 1][h_coordinate] = '=';
-    grid[v_coordinate + 1][h_coordinate + 1] = '=';
-    grid[v_coordinate + 1][h_coordinate + 2] = '=';
-    grid[v_coordinate + 1][h_coordinate + 3] = '=';
-    grid[v_coordinate + 1][h_coordinate + 4] = '=';
-    grid[v_coordinate + 1][h_coordinate + 5] = '=';
-
-    //@purpose: checks if there is an available path to win for both players.
-    bool available_path_white = false;
-    available_path(grid, grid_size, pawns_location.white_location.v_coordinate, pawns_location.white_location.h_coordinate, &available_path_white, 'w');
-    bool available_path_black = false;
-    available_path(grid, grid_size, pawns_location.black_location.v_coordinate, pawns_location.black_location.h_coordinate, &available_path_black, 'b');
-    //@command: resets the placed wall since it is against the game's rules.
-    if(available_path_white == false || available_path_black == false)
-    {
-      grid[v_coordinate + 1][h_coordinate - 1] = '-';
-      grid[v_coordinate + 1][h_coordinate] = '-';
-      grid[v_coordinate + 1][h_coordinate + 1] = '-';
-      grid[v_coordinate + 1][h_coordinate + 2] = '+';
-      grid[v_coordinate + 1][h_coordinate + 3] = '-';
-      grid[v_coordinate + 1][h_coordinate + 4] = '-';
-      grid[v_coordinate + 1][h_coordinate + 5] = '-';
-      printf("? Error: you can't block every available path\n\n");
-      return;
-    }
-
-    if(requested_wall_info.player == 'w')
-    {
-      printf("= white player played a horizontal wall at %c%d\n\n", requested_wall_info.n_col + 'A', requested_wall_info.n_row);
-      available_walls->white_walls--;
-    }
-    else if(requested_wall_info.player == 'b')
-    {
-      printf("= black player played a horizontal wall at %c%d\n\n", requested_wall_info.n_col + 'A', requested_wall_info.n_row);
-      available_walls->black_walls--;
-    }
-  }
-  return;
 }
 
 void genmove()
