@@ -22,14 +22,17 @@ This project is part of the course "Introduction to Programming" at the National
 
 How to contribute
 =================
+First of all, if you want to contribute you **_should_** read the documentation about the engine.
+Head to etc/About the Engine/ and read everything or click [here](https://github.com/MrPlatwnas/Quoridors-Engine/)
+
 ###Add something new
-If you want to contribute and add new features then clone the project, make the changes & provide documentation(comments). Then make a pull request.
+If you want to contribute and add new features then clone the project, make the changes & provide documentation about your code(comments and/or README). Then make a pull request. You can also choose a feature to implement from the issues tab [here]((https://github.com/MrPlatwnas/Quoridors-Engine/issues).
 
 ###Report a bug
-If you want to contribute and report a bug then be specific about the bug and create an issue explaining it.
+If you want to contribute and report a bug then be specific about it. Create an issue explaining it throughly.
 
 ###Fix a bug
-If you want to write a patch for a bug you founded or an existing one then assign yourself at the corresponding issue, write a patch & provide documentation (comments) and make a pull request. If there is no issue for your bug then create one and follow the _**Report a bug**_ section.
+If you want to write a patch for a bug you founded or an existing one from the issues tab, then assign yourself at the corresponding issue, write a patch & provide documentation (comments) and make a pull request. If there is no issue for your bug then create one and follow the _**Report a bug**_ section.
 
 Authors
 ==============
