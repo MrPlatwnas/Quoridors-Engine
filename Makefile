@@ -1,4 +1,4 @@
-LIBS = src/cli src/command src/misc src/queue
+LIBS = src/cli src/command
 
 default: libraries
 	g++ $(wildcard libs/*) -std=c++11 -o DeepOrange;
@@ -21,11 +21,11 @@ librariesdebug:
 	mkdir libs;
 	for dir in $(LIBS); do \
 		cd $$dir; \
-		gcc -c -g *.c; \
+		g++ -std=c++11 -c -g *.cpp; \
 		mv *.o ../../libs; \
 		cd -; \
 	done
-	gcc -c -g src/cli/main.c;
+	g++ -std=c++11 -c -g src/cli/main.cpp;
 	mv main.o libs/main.o;
 
 clean:
