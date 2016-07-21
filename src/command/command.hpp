@@ -1,9 +1,8 @@
 /*
 File implementation : command.hpp
 Authors             : Platon-Nikolaos Kiorpelidis
-Purpose             : data structures declarations
+Purpose             : Data structures declarations
 Date created        : 28-01-2016
-Date last modified  : 04-07-2016
 Language            : C++
 */
 
