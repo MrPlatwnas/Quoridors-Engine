@@ -91,24 +91,8 @@ class Quoridors_game
     bool quit();      //quits the game.
 }
 
-namespace admin_commands
-{
-  namespace valid
-  {
-    bool valid_engine_name();
-    bool valid_known_command();  //checks if the command has the correct.
-    bool valid_list_commands();
-  }
-
-  namespace execute
-  {
+    /*ADMINISTRATIVE COMMANDS*/
     void engine_name();          //prints the engine's name at stdout.
-    void known_command(string);  //checks if the given command exists.
-    void list_commands();        //prints all the available commands to stdout.
-  }
-}
-
-namespace user_input_control
-{
-  void user_input_decode();  //reads from the stdin and calls the correct engine's function.
-}
+    void known_command();        //checks if the given command exists.
+    void list_commands();        //prints all the available commands.
+};
