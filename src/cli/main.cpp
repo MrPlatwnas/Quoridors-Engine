@@ -12,5 +12,6 @@ Language:           : C++
 
 int main(int argc, const char* argv[])
 {
-  user_input_decode();
+  Quoridors_game my_game;
+  my_game.start_game();
 }
