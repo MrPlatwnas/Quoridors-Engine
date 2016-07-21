@@ -72,7 +72,7 @@ class Quoridors_game
     Quoridors_game();                    //sets board size to 9x9 (default size).
     // ~Quoridors_game();
 
-    void start_game();         //starts the game execution and user command processing.
+    void start_game();       //starts the game execution and user command processing.
 
     bool set_board_size(uint32_t);    //sets the board's size.
     bool set_num_walls(uint32_t);     //sets the amount of available_walls for each player.
@@ -89,7 +89,6 @@ class Quoridors_game
 
     bool winner();    //checks if there is a winner.
     bool quit();      //quits the game.
-}
 
     /*ADMINISTRATIVE COMMANDS*/
     void engine_name();          //prints the engine's name at stdout.
