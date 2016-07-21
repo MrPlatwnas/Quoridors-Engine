@@ -40,11 +40,11 @@ class Quoridors_game
         struct Vertex{
           uint32_t x;  //player's horizontal coordinate.
           uint32_t y;  //player's vertical coordinate.
-        }
+        };
       public:
         Vertex location;     //player's location.
         uint32_t num_walls;  //player's available walls.
-    }
+    };
 
     struct Board{
       private:
@@ -53,11 +53,11 @@ class Quoridors_game
           bool can_move_down;  //setted to true if there is no wall below.
           bool can_move_right; //setted to true if there is no wall right.
           bool can_move_left;  //setted to true if there is no wall left.
-        }
+        };
       public:
         uint32_t board_size;   //stores the board size.
         Square **board_config; //stores the current board configuration.
-    }
+    };
 
     Player white_player;  //stores white player's information.
     Player black_player;  //stores black player's information.
