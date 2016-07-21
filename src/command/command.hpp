@@ -69,9 +69,8 @@ class Quoridors_game
 
   public:
 
-    Quoridors_game(uint32_t);  //sets board size to user given size.
-    Quoridors_game();          //sets board size to 9x9.
-    ~Quoridos_game();
+    Quoridors_game();                    //sets board size to 9x9 (default size).
+    // ~Quoridors_game();
 
     void start_game();         //starts the game execution and user command processing.
 
