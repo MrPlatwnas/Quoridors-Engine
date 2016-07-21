@@ -16,6 +16,25 @@ class Quoridors_game
 {
   private:
 
+    class User_command
+    {
+      public:
+        uint32_t num_arguments;  //counts the number of arguments in order to check if there are missing arguments. ex. playmove w, misses the coordinates.
+        string inputed_command;  //stores the user's input one line each time.
+        string command;          //stores the command only(without the arguments).
+        string *arguments;       //stores the command's arguments only.
+
+        void replace_string_chars(string& inputed_command, char unwanted_char, char replacement_char); //replaces a character with another one in a string.
+        void remove_char(string& my_string, char garbage_char); //removes a character from a string.
+        void remove_extra_spaces(string& my_string);            //removes the leading, trailing and middle extra spaces.
+        void uncapitalize(string& my_string);         //turns all the characters in a string to lower-case.
+
+        string command_decode();       //stores the command only from the user's input into command.
+        string *arguments_decode();    //stores the arguments only from the user's input into arguments.
+
+        void remove_comments();      //removes the characters after the character #.
+    };
+
     struct Player{
       private:
         struct Vertex{
