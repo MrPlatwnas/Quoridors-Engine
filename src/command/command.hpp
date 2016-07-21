@@ -7,7 +7,10 @@ Language            : C++
 */
 
 #include <iostream>
+#include <cstdint>
 #include <string>
+
+using namespace std;
 
 class Quoridors_game
 {
