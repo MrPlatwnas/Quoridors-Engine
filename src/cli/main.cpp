@@ -2,8 +2,7 @@
 File implementation : main.cpp
 Authors             : Platon-Nikolaos Kiorpelidis
 Purpose             : User Interface
-Date created        : 28-1-2016
-Date laste modified : 04-07-2016
+Date created        : 28-01-2016
 Language:           : C++
 */
 
