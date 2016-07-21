@@ -63,6 +63,8 @@ class Quoridors_game
     Player black_player;  //stores black player's information.
     Board board;          //stores board's information.
 
+    User_command user_commands;
+
     bool quit_game;       //boolean variable so you can quit from the game when the quit function is called.
 
   public:
