@@ -1,9 +1,11 @@
-/******************************************************
+/*
 File implementation : command.cpp
-Authors             : Platwnas-Nikolaos Kiorpelidis
-Purpose             : command functions definitions
+Authors             : Platon-Nikolaos Kiorpelidis
+Purpose             : Data structures definitions
 Date created        : 28-01-2016
-*******************************************************/
+Language            : C++
+*/
+
 
 #include <iostream>
 #include <cstdint>
