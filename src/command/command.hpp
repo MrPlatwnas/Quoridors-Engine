@@ -78,8 +78,8 @@ class Quoridors_game
     bool set_num_walls(uint32_t);     //sets the amount of available_walls for each player.
     bool set_board_config();          //sets the board for a new game.
 
-    bool playmove(char, uint32_t, uint32_t);        //moves a player at the requested location.
-    bool playwall(char, uint32_t, uint32_t, char);  //places a wall at the requested location.
+    bool playmove();     //moves a player at the requested location.
+    bool playwall();     //places a wall at the requested location.
 
     bool undo_move(uint32_t);  //undoes user given moves.
 
