@@ -46,14 +46,14 @@ class Quoridors_game
         uint32_t num_walls;  //player's available walls.
     };
 
+    struct Square{  //that's how the engine representes the walls.
+      bool can_move_up;    //setted to true if there is no wall above.
+      bool can_move_down;  //setted to true if there is no wall below.
+      bool can_move_right; //setted to true if there is no wall right.
+      bool can_move_left;  //setted to true if there is no wall left.
+    };
+
     struct Board{
-      private:
-        struct Square{  //that's how the engine representes the walls.
-          bool can_move_up;    //setted to true if there is no wall above.
-          bool can_move_down;  //setted to true if there is no wall below.
-          bool can_move_right; //setted to true if there is no wall right.
-          bool can_move_left;  //setted to true if there is no wall left.
-        };
       public:
         uint32_t board_size;   //stores the board size.
         Square **board_config; //stores the current board configuration.
