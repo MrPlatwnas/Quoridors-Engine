@@ -74,20 +74,20 @@ class Quoridors_game
 
     void start_game();       //starts the game execution and user command processing.
 
-    bool set_board_size(uint32_t);    //sets the board's size.
-    bool set_num_walls(uint32_t);     //sets the amount of available_walls for each player.
-    bool set_board_config();          //sets the board for a new game.
+    bool set_board_size();    //sets the board's size.
+    bool set_num_walls();     //sets the amount of available_walls for each player.
+    bool set_board_config();  //sets the board for a new game.
 
-    bool playmove();     //moves a player at the requested location.
-    bool playwall();     //places a wall at the requested location.
+    //bool playmove();     //moves a player at the requested location.
+    //bool playwall();     //places a wall at the requested location.
 
-    bool undo_move(uint32_t);  //undoes user given moves.
+    //bool undo_move(uint32_t);  //undoes user given moves.
 
-    bool genmove(char);  //generates an AI move.
+    //bool genmove();  //generates an AI move.
 
     bool showboard(); //prints to stdout the current board configuration.
 
-    bool winner();    //checks if there is a winner.
+    //bool winner();    //checks if there is a winner.
     bool quit();      //quits the game.
 
     /*ADMINISTRATIVE COMMANDS*/
