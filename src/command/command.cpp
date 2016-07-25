@@ -21,9 +21,7 @@ sunt in culpa qui officia deserunt mollit anim id est laborum.
 #include <string>
 #include <cstdint>
 
-#include "../misc/misc.hpp"
-#include "../command/command.hpp"
-#include "../queue/queue.hpp"
+using namespace std;
 
 //this function runs while quit_game is false and prossecess the commands that the user enters and then calls the right function to execute the requested command.
 
