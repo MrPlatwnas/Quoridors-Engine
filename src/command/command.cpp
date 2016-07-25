@@ -25,18 +25,44 @@ using namespace std;
 
 #include "command.hpp"
 
-
-Quoridors_game::start_game()
+/*
+@function: creates a board 9x9 and sets the variables to the default starting state.
+The default starting state is explained in the documentation.
+@date tested:
+*/
+Quoridors_game::Quoridors_game()
 {
-  //@command: stores the user's input one line each time.
-  string inputed_command = "";
+  //@commands: sets the white player's available walls and position in the board.
+  white_player.num_walls = 10;
+  white_player.location.x = 8;
+  white_player.location.y = 5;
 
-  //@command: stores the command only(without the arguements).
-  string command = "";
-  //@command: stores the command's arguements only.
-  string *arguments = NULL;
-  //@command: counts the number of arguements in order to check if there are missing arguements. ex. playmove w, misses the coordinates.
-  uint32_t n_arguments;
+  //@commands: sets the black player's available walls and position in the board.
+  black_player.num_walls = 10;
+  black_player.location.x = 0;
+  black_player.location.y = 5;
+
+  //@command: the quit_game variable in control for when the game quits.
+  //take a look at start_game function if you want to know more about this variable.
+  //it's value can only change by the quit function.
+  quit_game = false;
+
+  board.board_config = NULL;
+  board.board_size = 9;
+
+  board.board_config = new Square*[9];
+  for(size_t i = 0; i < 9; i++)
+    board.board_config[i] = new Square[9];
+
+  //@command: sets the pawns at their correct squares and clears the walls.
+  set_board_config();
+
+  //@commands: sets the user_commands' variables to NULL, empty or 0.
+  user_commands.num_arguments = 0;
+  user_commands.arguments = NULL;
+  user_commands.command = "";
+  user_commands.inputed_command = "";
+}
 
   ////@command: create the stack to save the grid configurations in order to undo.
   //Queue* my_stack = stack_construct();
