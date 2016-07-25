@@ -18,6 +18,7 @@ sunt in culpa qui officia deserunt mollit anim id est laborum.
 */
 
 #include <iostream>
+#include <string>
 #include <cstdint>
 
 #include "../misc/misc.hpp"
