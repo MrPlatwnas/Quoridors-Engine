@@ -23,7 +23,7 @@ sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 using namespace std;
 
-//this function runs while quit_game is false and prossecess the commands that the user enters and then calls the right function to execute the requested command.
+#include "command.hpp"
 
 
 Quoridors_game::start_game()
