@@ -629,8 +629,22 @@ void Quoridors_game::User_command::remove_comments()
   inputed_command = inputed_command_edited;
 }
 
-    printf("\n");
+/*
+@function: makes capital letters to lower-case.
+@tested: yes
+*/
+void Quoridors_game::User_command::uncapitalize(string& my_string)
+{
+  size_t index = 0;
+  while(my_string[index] != '\0')
+  {
+    //@command: checks if the character is a capital one.
+    //If it is then it makes it a lowercase one.
+    if(my_string[index] >= 65 && my_string[index] <= 90)
+      my_string[index] += 32;
+    index++;
   }
+}
 
   /*print letters at the bottom*/
   letters = 'A';
