@@ -186,27 +186,115 @@ bool Quoridors_game::set_board_size()
   return true;
 }
 
-//list_commands function lists all the available commands.
-void list_commands()
-{
-  //the number of available commands is 13.
-  unsigned n_commands = 13;
-  const char* known_commands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
 
-  printf("=\n");
-  unsigned counter = 0;
-  for(counter = 0; counter < n_commands; counter++)
+/*
+@funtion: places/resets the pawns to the correct positions and removes any placed walls.
+@tested:
+*/
+bool Quoridors_game::set_board_config()
+{
+  //@command: check if there is no memory allocated for the board configuration.
+  //It should always be not NULL since we allocated memory in the constructor.
+  //Therefore it should never get inside the if body.
+  //But to be safe I keep this check, just in case.
+  if(board.board_config == NULL)
   {
-    printf("%s\n", known_commands[counter]);
+    cout << "? Error: run boardsize <size> first (ex. boardsize 9)" << endl << endl;
+    return false;
   }
-  printf("\n");
-}
 
-//quit function stops the game.
-void quit(bool *quit_game)
-{
-  *quit_game = true;
-  printf("= quitting game\n\n");
+  //@commands: sets the white player's info.
+  //when counting from 0.
+  white_player.location.x = board.board_size - 1;
+  white_player.location.y = board.board_size / 2;
+
+  //@commands: sets the black player's info.
+  //when counting from 0.
+  black_player.location.x = 0;
+  black_player.location.y = board.board_size / 2;
+
+
+  //@commands: sets the board's limits for the upper left square.
+  //@command: since it's the upper left square then the players can't move to the up or to the left.
+  board.board_config[0][0].can_move_up = false;
+  board.board_config[0][0].can_move_left = false;
+  board.board_config[0][0].can_move_down = true;
+  board.board_config[0][0].can_move_right = true;
+
+  //@command: sets the left side of the board's limits.
+  for(size_t i = 1; i < board.board_size - 1; i++)
+  {
+    //@command: since it's the left side of the board then players can't move to the left.
+    board.board_config[i][0].can_move_left = false;
+    board.board_config[i][0].can_move_right = true;
+    board.board_config[i][0].can_move_up = true;
+    board.board_config[i][0].can_move_down = true;
+  }
+
+  //@commands: sets the board's limits for the bottom left square.
+  //@command: since it's the bottom left square then the players can't move to the down or to the left.
+  board.board_config[board.board_size - 1][0].can_move_left = false;
+  board.board_config[board.board_size - 1][0].can_move_down = false;
+  board.board_config[board.board_size - 1][0].can_move_right = true;
+  board.board_config[board.board_size - 1][0].can_move_up = true;
+
+  //@command: sets the top side of the board's limits.
+  for(size_t i = 1; i < board.board_size - 1; i++)
+  {
+    //@command: since it's the left side of the board then players can't move to the up.
+    board.board_config[0][i].can_move_up = false;
+    board.board_config[0][i].can_move_down = true;
+    board.board_config[0][i].can_move_right = true;
+    board.board_config[0][i].can_move_left = true;
+  }
+
+  //@commands: sets the board's limits for the top right square.
+  //@command: since it's the top right square then the players can't move to the up or to the right.
+  board.board_config[0][board.board_size - 1].can_move_up = false;
+  board.board_config[0][board.board_size - 1].can_move_right = false;
+  board.board_config[0][board.board_size - 1].can_move_down = true;
+  board.board_config[0][board.board_size - 1].can_move_left = true;
+
+  //@command: sets the right side of the board's limits.
+  for(size_t i = 1; i < board.board_size - 1; i++)
+  {
+    //@command: since it's the right side of the board then players can't move to the right.
+    board.board_config[i][board.board_size - 1].can_move_right = false;
+    board.board_config[i][board.board_size - 1].can_move_left = true;
+    board.board_config[i][board.board_size - 1].can_move_up = true;
+    board.board_config[i][board.board_size - 1].can_move_down = true;
+  }
+
+  //@commands: sets the board's limits for the bottom right square.
+  //@command: since it's the bottom right square then players can't move to the right or to the down.
+  board.board_config[board.board_size - 1][board.board_size - 1].can_move_down = false;
+  board.board_config[board.board_size - 1][board.board_size - 1].can_move_right = false;
+  board.board_config[board.board_size - 1][board.board_size - 1].can_move_up = true;
+  board.board_config[board.board_size - 1][board.board_size - 1].can_move_left = true;
+
+  //@command: set's the bottom side of the board's limits.
+  for(size_t i = 1; i < board.board_size - 1; i++)
+  {
+    //@command: since it's the bottom side of the board then players can't move to the down.
+    board.board_config[board.board_size - 1][i].can_move_down = false;
+    board.board_config[board.board_size - 1][i].can_move_up = true;
+    board.board_config[board.board_size - 1][i].can_move_left = true;
+    board.board_config[board.board_size - 1][i].can_move_right = true;
+  }
+
+  //@command: sets the middle squares to have no restrictions when moving players.
+  for(size_t i = 1; i < board.board_size - 1; i++)
+  {
+    for(size_t j = 1; j < board.board_size - 1; j++)
+    {
+      board.board_config[i][j].can_move_up = true;
+      board.board_config[i][j].can_move_down = true;
+      board.board_config[i][j].can_move_right = true;
+      board.board_config[i][j].can_move_left = true;
+    }
+  }
+
+  return true;
 }
 
 //boardsize creates the grid's base structure using build_grid.
