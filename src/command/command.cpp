@@ -323,65 +323,38 @@ bool Quoridors_game::set_num_walls()
   return true;
 }
 
-  pawns_location->black_location.v_coordinate = 1;
-  pawns_location->black_location.h_coordinate = grid_size.h_size / 2;
-
-  printf("= board's size set to %dx%d\n\n", grid_size.size, grid_size.size);
-  return grid;
-}
-
-//clear board populates the grid's basic structure by placing the pawns at the correct positions.
-void clear_board(int** grid, ArraySize grid_size, Players_location* pawns_location)
+/*
+//@function: plays the user's requestes move.
+//If it is an invalid move prints a message.
+Quoridors_game::playmove(char player, uint32_t x, uint32_t y)
 {
-  grid[pawns_location->white_location.v_coordinate][pawns_location->white_location.h_coordinate] = ' ';
-  grid[pawns_location->black_location.v_coordinate][pawns_location->black_location.h_coordinate] = ' ';
 
-  for(size_t counter_rows = 1; counter_rows < grid_size.v_size - 1; counter_rows++)
-  {
-    for(size_t counter_cols = 1; counter_cols < grid_size.h_size - 1; counter_cols++)
-    {
-      if(grid[counter_rows][counter_cols] == 'H')
-      {
-        if(counter_rows % 2 == 0)
-          grid[counter_rows][counter_cols] = '+';
-        else
-          grid[counter_rows][counter_cols] = '|';
-      }
-      else if(grid[counter_rows][counter_cols] == '=')
-      {
-        if(counter_cols % 4 == 0)
-          grid[counter_rows][counter_cols] = '+';
-        else
-          grid[counter_rows][counter_cols] = '-';
-      }
-    }
-  }
-
-  //using the board's actual size the black pawn is placed at the visual first row.
-  grid[1][grid_size.h_size / 2] = 'B';
-  //using the board's actual size the white pawn is placed at the visual last row.
-  grid[grid_size.v_size - 2][grid_size.h_size / 2] = 'W';
-
-  //the pawns' location is updated. the pawns_location struct is used by the winner function.
-  pawns_location->white_location.v_coordinate = grid_size.v_size - 2;
-  pawns_location->white_location.h_coordinate = grid_size.h_size / 2;
-
-  pawns_location->black_location.v_coordinate = 1;
-  pawns_location->black_location.h_coordinate = grid_size.h_size / 2;
-
-  printf("= pawns and walls got removed\n\n");
-  return;
 }
 
-//walls function updates each player's available walls, using Walls struct.
-void walls(Walls* available_walls, unsigned input_n_walls)
+//@function:
+Quoridors_game::playwall(char player, uint32_t x, uint32_t y, char orientation)
 {
-  available_walls->white_walls = input_n_walls;
-  available_walls->black_walls = input_n_walls;
 
-  printf("= number of walls set to %d for each player\n\n", input_n_walls);
-  return;
 }
+
+//@function:
+Quoridors_game::genmove(char player)
+{
+
+}
+
+//@function:
+Quoridors_game::undo(uint32_t num_undo)
+{
+
+}
+
+//@function:
+Quoridors_game::winner()
+{
+
+}
+*/
 
 //playmove function takes the requested move and calculates if it's valid or not. if it is valid then it is played otherwise a descriptive error is printed.
 void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location, Move_info requested_move_info)
