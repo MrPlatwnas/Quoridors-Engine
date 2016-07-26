@@ -455,20 +455,31 @@ void Quoridors_game::User_command::replace_string_chars(string& my_string, char 
   my_string[string_length] = '\0';
 }
 
-void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info requested_wall_info, Players_location pawns_location)
+/*
+@funtion: removes the garbage_char from my_string.
+@date tested:
+*/
+void Quoridors_game::User_command::remove_char(string& my_string, char garbage_char)
 {
-  //@purpose: checks if there are available walls to be placed.
-  if(requested_wall_info.player == 'w')
+  //@command: where the edited string will be stored.
+  string my_string_edited;
+
+  size_t i;
+
+  for(i = 0; my_string[i] != '\0'; i++)
   {
-    if(available_walls->white_walls == 0)
-    {
-      printf("? Error: the white player has not any walls left\n");
-      return;
-    }
+    //@command: copies the string character by character, exept garbage_char.
+    if(my_string[i] != garbage_char)
+      my_string_edited.append(1, my_string[i]);
   }
-  else if(requested_wall_info.player == 'b')
-//@function: removes leading, trailing and intercepting spaces.
-void Quoridos_game::User_command::remove_extra_spaces(string my_string)
+  my_string = my_string_edited;
+}
+
+/*
+@function: removes leading, trailing and intercepting spaces.
+@date tested:
+*/
+void Quoridors_game::User_command::remove_extra_spaces(string& my_string)
 {
   //@command: stores the original string into my_string.
   string src = my_string;
