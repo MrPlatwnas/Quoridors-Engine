@@ -436,9 +436,23 @@ bool Quoridors_game::showboard()
   cout << endl;
 }
 
-      printf("= black player moved to %c%d\n\n", requested_move_info.n_col + 'A', requested_move_info.n_row);
-    }
+/*
+@function: replaces the unwanted_char in my_string with the replacement_char.
+@date tested:
+*/
+void Quoridors_game::User_command::replace_string_chars(string& my_string, char unwanted_char, char replacement_char)
+{
+  uint32_t string_length = my_string.length();
+  uint32_t string_counter = 0;
+  //TODO: change the for loop to stop when it finds a null character, instead when it reaches string_length.
+  for(string_counter = 0; string_counter < string_length; string_counter++)
+  {
+    if(my_string[string_counter] == unwanted_char)
+      my_string[string_counter] = replacement_char;
   }
+  //@command: TODO: probably unnecessery. Invastigate if we can remove it.
+  //if it is necessery then add comments explaining why it is necessery.
+  my_string[string_length] = '\0';
 }
 
 void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info requested_wall_info, Players_location pawns_location)
