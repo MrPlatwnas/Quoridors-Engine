@@ -107,11 +107,21 @@ void Quoridors_game::known_command()
   cout << "= false" << endl << endl;
 }
 
-/*********************************************************
--------------------------COMMANDS-------------------------
-*********************************************************/
+/*
+@funtion: lists all the available commands.
+@date tested: yes
+*/
+void Quoridors_game::list_commands()
+{
+  //@command: the number of available commands is 13.
+  uint32_t num_commands = 13;
+  string known_commands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
 
-//TODO: add comments to each function. organize the code structure.
+  cout << "=" << endl;
+  for(size_t counter = 0; counter < num_commands; counter++)
+    cout << known_commands[counter] << endl;
+  cout << endl;
+}
 
 //name function prints the engine's name at stdout.
 void name()
