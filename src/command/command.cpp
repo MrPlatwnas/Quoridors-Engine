@@ -123,10 +123,15 @@ void Quoridors_game::list_commands()
   cout << endl;
 }
 
-//name function prints the engine's name at stdout.
-void name()
+/*
+@function: quits from the game.
+@tested: yes
+*/
+bool Quoridors_game::quit()
 {
-  printf("= DeepOrange\n\n");
+  //@command: sets the quit_game flag to true so the start_game function will stop.
+  quit_game = true;
+  cout << "= quitting the game" << endl << endl;
 }
 
 //known_command function takes as argument one command and returns true if the command exists otherwise returns false.
