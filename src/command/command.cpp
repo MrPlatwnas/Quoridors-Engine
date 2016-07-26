@@ -540,105 +540,69 @@ string Quoridors_game::User_command::command_decode()
   return command;
 }
 
-  //@command: fetching the required Queue_elem.
-  element = stack_pop(my_queue);
-
-  if(element.isset == false)
-  {
-    printf("? Error: you can not undo anymore\n\n");
-    return;
-  }
-
-  //@purpose: copying the information to the current grid conf.
-  //@command: copying the black information to the current grid conf.
-  pawns_location->black_location.h_coordinate = element.pawns_location.black_location.h_coordinate;
-  pawns_location->black_location.v_coordinate = element.pawns_location.black_location.v_coordinate;
-  //@command: copying the white information to the current grid conf.
-  pawns_location->white_location.h_coordinate = element.pawns_location.white_location.h_coordinate;
-  pawns_location->white_location.v_coordinate = element.pawns_location.white_location.v_coordinate;
-
-  freeGrid((*grid), grid_size.v_size);
-  (*grid) = NULL;
-
-  (*grid) = initGridInt(grid_size.v_size, grid_size.h_size);
-
-  //@command: copying the grid configuration to the grid.
-  for(size_t counter = 0; counter < grid_size.v_size; counter++)
-  {
-    memcpy((*grid)[counter], element.grid[counter], grid_size.h_size * sizeof(int));
-  }
-
-  //@command: frees the stored grid configuration.
-  freeGrid(element.grid, grid_size.v_size);
-
-  return;
-}
-
-void winner(ArraySize grid_size, Players_location* pawns_location)
+/*
+@funtion: seperates the arguments from the user's input.
+@date tested: yes
+*/
+string *Quoridors_game::User_command::arguments_decode()
 {
-  //@purpose: to check if white or black pawn is at the top or last row respectively.
-  if(pawns_location->white_location.v_coordinate == 1)
+  //@command: 2D string array, where the arguments will be saved.
+  string *output_arguments = NULL;
+
+  uint32_t index = 0;
+
+  //@command: skips characters until we reach LF or a ' ' character.
+  while(inputed_command[index] != ' ' && inputed_command[index] != '\0') index++;
+
+  //@command: checks if the while loop before reached a ' ' character instead of a LF character.
+  if(inputed_command[index] != '\n')
   {
-    printf("= true white\n\n");
-    return;
+    num_arguments = 0;
+
+    //@command: starts counting the number of the arguments until it reaches a LF character.
+    while(inputed_command[index] != '\0')
+    {
+      if(inputed_command[index] == ' ')
+        num_arguments++;
+      index++;
+    }
+
+    //@command: if there are no arguments then the array is empty, therefore we return NULL.
+    if(num_arguments == 0)
+      return NULL;
+
+    //@command: creates the required memory to store the arguments.
+    output_arguments = new string[num_arguments];
+
+    index = 0;
+    uint32_t num_rows = 0;
+
+    while(inputed_command[index] != ' ') index++;
+
+    //@command: to go from ' ' to the next character.
+    index++;
+
+    //@commands: stores one by one each character of each argument.
+    //Then appends the NULL character.
+    while(inputed_command[index] != '\0')
+    {
+      if(inputed_command[index] != ' ')
+      {
+        output_arguments[num_rows].append(1, inputed_command[index]);
+      }
+      else
+      {
+        output_arguments[num_rows].append(1, '\0');
+        num_rows++;
+      }
+      index++;
+    }
+    output_arguments[num_rows].append(1, '\0');
+
+    return output_arguments;
   }
-  else if(pawns_location->black_location.v_coordinate == grid_size.v_size - 2)
-  {
-    printf("= true black\n\n");
-    return;
-  }
-  //@command: since neither white or black is at the top or last row then we have no winner yet, therefore = false is printed.
-  printf("= false\n\n");
-  return;
+  return NULL;
 }
-
-void showboard(int** grid, Walls available_walls, ArraySize grid_size)
-{
-  unsigned n_rows = grid_size.v_size;
-  unsigned n_cols = grid_size.h_size;
-  unsigned counter_rows = 0;
-  unsigned counter_cols = 0;
-
-  printf("=\n");
-
-  /*print letters at the bottom*/
-  char letters = 'A';
-  counter_cols = 0;
-  printf("  ");
-  while(counter_cols < (n_cols - 1) / 4)
-  {
-    printf("   %c", letters++);
-    counter_cols++;
-  }
-  printf("\n");
-  /*end of print letters at the bottom*/
-
-  for(counter_rows = 0; counter_rows < n_rows; counter_rows++)
-  {
-    /*print left side row numbers*/
-    if(counter_rows % 2 == 1)
-    {
-      if((((n_rows - 1) / 2) - (counter_rows + 1) / 2) + 1 >= 10)
-      {
-        printf("%d ", (((n_rows - 1) / 2) - (counter_rows + 1) / 2) + 1);
-      }
-      else if((((n_rows - 1) / 2) - (counter_rows + 1) / 2) < 10)
-      {
-        printf(" %d ", (((n_rows - 1) / 2) - (counter_rows + 1) / 2) + 1);
-      }
-    }
-    else if(counter_rows % 2 == 0)
-    {
-      printf("   ");
-    }
-    /*end of print left side row numbers*/
-
-    /*print array content*/
-    for(counter_cols = 0; counter_cols < n_cols; counter_cols++)
-    {
-      printf("%c", grid[counter_rows][counter_cols]);
-    }
-    /*print array content*/
 
     /*print right side row numbers*/
     if(counter_rows % 2 == 1)
