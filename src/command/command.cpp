@@ -481,38 +481,45 @@ void Quoridors_game::User_command::remove_char(string& my_string, char garbage_c
 */
 void Quoridors_game::User_command::remove_extra_spaces(string& my_string)
 {
-  //@command: stores the original string into my_string.
-  string src = my_string;
   //@command: where the string without spaces will be stored.
-  string dst = my_string;
+  char *my_string_edited = NULL;
+
+  //@command: my_string counter.
+  size_t i = 0;
+  //@command: my_string_edited counter.
+  size_t j = 0;
+
+  //@command: stores the capasity of my_string_edited.
+  uint32_t edited_string_size = 1;
+
+  //@command: allocates space for the first character and indirectly for the '\0' character.
+  my_string_edited = (char*)realloc(my_string_edited, sizeof(char) * edited_string_size);
+
   //@command: removes the leading spaces.
-  while (isspace(*src)) src++;
-  //@command: removes intercepting spaces.
-  for(; *src != '\n'; src++)
+  while (isspace(my_string[i])) i++;
+
+  //@commands: removes intercepting spaces.
+  for(; my_string[i] != '\0'; i++)
   {
-    *dst = *src;
-    //@command: this is unnecessary, for loop checks already for this.
-    if(*src != '\n')
+    //@command: copies one character at a time.
+    my_string_edited[j] = my_string[i];
+    //@command: to understand use DeMorgan's theorem.
+    //if there aren't two spaces in a row then allocate space for the next character.
+    if(my_string_edited[j] != my_string[i + 1] || my_string_edited[j] != ' ')
     {
-      //@command: to understand use DeMorgan's theorem.
-      if(*dst != *(src + 1) || *dst != ' ')
-        dst++;
+      edited_string_size++;
+      my_string_edited = (char*)realloc(my_string_edited, sizeof(char) * edited_string_size);
+      j++;
     }
   }
-  //@command: removes trailing spaces.
-  if(dst[-1] == ' ')
-  {
-    dst[-1] = '\0';
-  }
-  else
-  {
-    *dst = '\0';
-  }
-}
 
-void genmove()
-{
-  //TODO: Add functionality to this function.
+  //@commands: remove trailing spaces.
+  if(my_string_edited[j - 1] == ' ')
+    my_string_edited[j - 1] = '\0';
+  else
+    my_string_edited[j] = '\0';
+
+  my_string.assign(my_string_edited);
 }
 
 void undo(int*** grid, unsigned n_undo, Queue* my_queue, Players_location* pawns_location, ArraySize grid_size)
