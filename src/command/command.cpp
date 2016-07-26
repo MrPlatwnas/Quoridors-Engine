@@ -297,22 +297,31 @@ bool Quoridors_game::set_board_config()
   return true;
 }
 
-//boardsize creates the grid's base structure using build_grid.
-int** boardsize(ArraySize grid_size, Players_location* pawns_location)
+
+/*
+@function: updates each player's available walls to num_walls.
+@tested:
+*/
+bool Quoridors_game::set_num_walls()
 {
-  int **grid = NULL;
+  //@command: checks if the user's input is valid.
+  //if it is not then the function returns.
+  if(user_commands.num_arguments != 1)
+  {
+    cout << "? Error: you need to give one(1) argument, the number of walls (ex. walls 10)" << endl << endl;
+    return false;
+  }
 
-  //build_grid creates the grid's basic structure.
-  grid = build_grid(grid_size);
+  //@command: makes the string's content a number.
+  //ex. "5" -> 5.
+  uint32_t num_walls = stoi(user_commands.arguments[0], nullptr);
 
-  //using the board's actual size the black pawn is placed at the visual first row.
-  grid[1][grid_size.h_size / 2] = 'B';
-  //using the board's actual size the white pawn is placed at the visual last row.
-  grid[grid_size.v_size - 2][grid_size.h_size / 2] = 'W';
+  //@commands: changes the amount of the available walls for both players.
+  white_player.num_walls = num_walls;
+  black_player.num_walls = num_walls;
 
-  //the pawns' location is updated. the pawns_location struct is used by the winner function.
-  pawns_location->white_location.v_coordinate = grid_size.v_size - 2;
-  pawns_location->white_location.h_coordinate = grid_size.h_size / 2;
+  return true;
+}
 
   pawns_location->black_location.v_coordinate = 1;
   pawns_location->black_location.h_coordinate = grid_size.h_size / 2;
