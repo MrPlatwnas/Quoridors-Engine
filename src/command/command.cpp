@@ -604,23 +604,30 @@ string *Quoridors_game::User_command::arguments_decode()
   return NULL;
 }
 
-    /*print right side row numbers*/
-    if(counter_rows % 2 == 1)
-    {
-      printf(" %d", (((n_rows - 1) / 2) - (counter_rows + 1) / 2) + 1);
-    }
-    /*end of print right side row numbers*/
+/*
+@function: removes the character after character #.
+@tested: yes
+*/
+void Quoridors_game::User_command::remove_comments()
+{
+  string inputed_command_edited;
 
-    /*print available walls for each player on the right*/
-    if(counter_rows == 1)
-    {
-      printf("  black walls: %d", available_walls.black_walls);
-    }
-    else if(counter_rows == 3)
-    {
-      printf("  white walls: %d", available_walls.white_walls);
-    }
-    /*end of print available walls for each player on the right*/
+  size_t index = 0;
+  //@command: finds the # character if it exists.
+  //If it does not then it will reach '\0' and it will stop.
+  while(inputed_command[index] != '\0' && inputed_command[index] != '#')
+  {
+    inputed_command_edited.append(1, inputed_command[index]);
+    index++;
+  }
+  //@command: replaces character '#' with character '\0'.
+  if(inputed_command[index] == '#')
+  {
+    //@command: this way the string will be printed until it encounters the '\0' character.
+    inputed_command[index] = '\0';
+  }
+  inputed_command = inputed_command_edited;
+}
 
     printf("\n");
   }
