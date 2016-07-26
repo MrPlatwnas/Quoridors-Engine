@@ -646,15 +646,66 @@ void Quoridors_game::User_command::uncapitalize(string& my_string)
   }
 }
 
-  /*print letters at the bottom*/
-  letters = 'A';
-  counter_cols = 0;
-  printf("  ");
-  while(counter_cols < (n_cols - 1) / 4)
+/*
+@function: This function is the controller of the game. It runs until quit function is called.
+It calls other functions to seperate the command from the arguments and the arguments from the command.
+As well as to edit the user's input(remove comments, trailing and leading spaces etc.).
+At the end it calls the correct funtion to execute the user's request.
+@date tested:
+*/
+void Quoridors_game::start_game()
+{
+  //@command: runs until the quit function is called.
+  //This while loop analizes line by line the user's input.
+  while(quit_game == false)
   {
-    printf("   %c", letters++);
-    counter_cols++;
+    //@command: reads the next user's input line.
+    getline(cin, user_commands.inputed_command);
+
+    //@commands: these functions edit the command so the rest of the program can easily analize the user's input.
+    user_commands.replace_string_chars(user_commands.inputed_command, 9, ' ');
+    user_commands.remove_char(user_commands.inputed_command, 13);
+    user_commands.remove_comments();
+    user_commands.remove_extra_spaces(user_commands.inputed_command);
+    user_commands.uncapitalize(user_commands.inputed_command);
+
+
+    //@command: the command gets seperated from the user's input ex. playmove w c3, here the command is playmove.
+    user_commands.command = user_commands.command_decode();
+    //@command: the arguments are seperated from the user's input in an 2D array
+    //ex. playmove w c3, here the arguments are w and c3.
+    user_commands.arguments = user_commands.arguments_decode();
+
+    //@command: the user's requested command is executed by matching the user's command
+    //with the engine's available commands.
+    //if the user's command is not one of the engine's known commands then a descriptive error is printed.
+    if(user_commands.command.compare("name") == 0)
+      engine_name();
+    else if(user_commands.command.compare("known_command") == 0)
+      known_command();
+    else if(user_commands.command.compare("list_commands") == 0)
+      list_commands();
+    else if(user_commands.command.compare("quit") == 0)
+      Quoridors_game::quit();
+    else if(user_commands.command.compare("boardsize") == 0)
+      Quoridors_game::set_board_size();
+    else if(user_commands.command.compare("clear_board") == 0)
+      Quoridors_game::set_board_config();
+    else if(user_commands.command.compare("walls") == 0)
+      Quoridors_game::set_num_walls();
+    // else if(command.compare("playmove") == 0)
+    //   Quoridors_game::playmove(char player, uint32_t x, uint32_t y);
+    // else if(command.compare("playwall") == 0)
+    //   Quoridors_game::playwall(char player, uint32_t x, uint32_t y, char orientation);
+    // else if(command.compare("genmove") == 0)
+    //   genmove();
+    // else if(command.compare("undo") == 0)
+    //   undo();
+    // else if(strcmp(command, "winner") == 0)
+    //   winner();
+    else if(user_commands.command.compare("showboard") == 0)
+      showboard();
+    else
+      cout << "? Error: unknown command (run: list_commands)" << endl << endl;
   }
-  printf("\n\n");
-  /*end of print letters at the bottom*/
 }
