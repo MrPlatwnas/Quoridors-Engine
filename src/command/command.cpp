@@ -64,9 +64,14 @@ Quoridors_game::Quoridors_game()
   user_commands.inputed_command = "";
 }
 
-  ////@command: create the stack to save the grid configurations in order to undo.
-  //Queue* my_stack = stack_construct();
-  //Queue_elem element;
+/*
+@function: prints the engine's name to stdout.
+@date tested: yes
+*/
+void Quoridors_game::engine_name()
+{
+  cout << "= DeepOrange" << endl << endl;
+}
 
   while(quit_game == false)
   {
