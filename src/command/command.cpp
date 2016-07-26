@@ -134,45 +134,56 @@ bool Quoridors_game::quit()
   cout << "= quitting the game" << endl << endl;
 }
 
-//known_command function takes as argument one command and returns true if the command exists otherwise returns false.
-void known_command(char** arguments, unsigned n_arguments)
+
+/*
+@funtion: creates a size*size board.
+@tested: yes
+*/
+bool Quoridors_game::set_board_size()
 {
-  //checks if the user's arguments is one argument. if it is not one argument then the function returns.
-  if(n_arguments != 1)
-//@function: removes leading, trailing and intercepting spaces.
-void Quoridos_game::User_command::remove_extra_spaces(string my_string)
-{
-  //@command: stores the original string into my_string.
-  string src = my_string;
-  //@command: where the string without spaces will be stored.
-  string dst = my_string;
-  //@command: removes the leading spaces.
-  while (isspace(*src)) src++;
-  //@command: removes intercepting spaces.
-  for(; *src != '\n'; src++)
+  //@command: checks if the user's input is valid.
+  //if it is not valid then the function returns.
+  if(user_commands.num_arguments != 1)
   {
-    printf("? Error: you need to give one(1) argument (ex. known_command playwall)\n\n");
-    return;
+    cout << "? Error: you need to give one(1) argument (ex. boardsize 9)" << endl << endl;
+    return false;
   }
 
-  //stores the user's argument.
-  char* command = arguments[0];
+  //@command: makes the string's content a number.
+  //ex. "5" -> 5.
+  uint32_t size = stoi(user_commands.arguments[0], nullptr);
 
-  //the number of available commands is 9.
-  unsigned n_commands = 9;
-  const char* known_commands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "showboard", "playmove"};
-
-  unsigned n_rows = 0;
-  for(n_rows = 0; n_rows < n_commands; n_rows++)
+  //@command: checks if the user's inputed size is valid.
+  //if it is not valid then the function returns.
+  if(size > 26 || size < 3 || size % 2 != 1)
   {
-    //checks if the user's argument one of the available commands. prinst true if it is, otherwise false.
-    if(strcmp(command, known_commands[n_rows]) == 0)
-    {
-      printf("= true\n\n");
-      return;
-    }
+    cout << "? Error: you need to give an odd size between 3 and 26 (ex. boardsize 3 or boardsize 11)" << endl << endl;
+    return false;
   }
-  printf("= false\n\n");
+
+  //@command: checks if there is no memory allocated for the board configuration.
+  //It should always be not NULL since we allocated memory in the constructor.
+  //Therefore it should never get inside the if body.
+  //But to be safe I keep this check, just in case.
+  if(board.board_config != NULL)
+  {
+    for(size_t i = 0; i < board.board_size; i++)
+      delete[] board.board_config[i];
+    delete [] board.board_config;
+    board.board_config = NULL;
+    cout << "free" << endl;
+  }
+
+  //@command: allocates memory for the board's configuration.
+  board.board_config = new Square*[size];
+  for(size_t i = 0; i < size; i++)
+    board.board_config[i] = new Square[size];
+
+  //@command: updates the board's size.
+  board.board_size = size;
+
+  cout << "= board size set to " << size << "x" << size << endl << endl;
+  return true;
 }
 
 //list_commands function lists all the available commands.
