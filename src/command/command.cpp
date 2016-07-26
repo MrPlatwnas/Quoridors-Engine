@@ -73,182 +73,38 @@ void Quoridors_game::engine_name()
   cout << "= DeepOrange" << endl << endl;
 }
 
-  while(quit_game == false)
+/*
+@function: takes as argument one command and returns true if the command exists otherwise returns false.
+@date tested: yes
+*/
+void Quoridors_game::known_command()
+{
+  cout << user_commands.num_arguments << endl;
+  //@command: checks if the user's command has one argument. if it is not one argument then the function returns.
+  if(user_commands.num_arguments != 1)
   {
-    getline(cin, inputed_command);
+    cout << "? Error: you need to give one(1) argument (ex. known_command playwall)" << endl << endl;
+    return;
+  }
 
-    /*STRING EDITING FUNCTIONS*/
-    replace_string_chars(inputed_command, 9, ' ');
-    remove_char(inputed_command, 13);
-    remove_comments(inputed_command);
-    remove_extra_spaces(inputed_command);
-    uncapitalize(inputed_command);
-    /*END OF STRING EDITING FUNCTIONS*/
+  //@command: stores the user's argument.
+  string command = user_commands.arguments[0];
 
-    //the command gets seperated from the user's input ex. playmove w c3, here the command is playmove.
-    command = command_decode(inputed_command);
-    //the arguments are seperated from the user's input in an 2D array ex. playmove w c3, here the arguments are w and c3.
-    arguments = arguments_decode(inputed_command, &n_arguments);
+  //@command: stores the number of the available engine's commands.
+  uint32_t num_commands = 13;
+  string known_commands[] = {"name", "known_command", "list_commands", "quit", "boardsize", "clear_board", "walls", "playmove", "playwall", "genmove", "undo", "winner", "showboard"};
 
-    //the user specified command is executed by matching the user's command with the engine's available commands. if the user's command is not one of the engine's known commands then a descriptive error is printed.
-    if(command.compare("name") == 0)
-      admin_commands::name();
-    else if(command.compare("known_command") == 0)
-      admin_commands::known_command(arguments, n_arguments); //FIXME
-    else if(command.compare("list_commands") == 0)
-      admin_commands::list_commands();
-    else if(command.compare("quit") == 0)
-      Quoridors_game::quit();
-    else if(strcmp(command, "boardsize") == 0)
-    { //FIXME
-      if(n_arguments == 1)
-      {
-        grid_size.size = atoi(arguments[0]);
-        if(grid_size.size >= 3 && grid_size.size <= 25 && grid_size.size % 2 == 1)
-        {
-          if(grid != NULL)
-          {
-            freeGrid(grid, grid_size.v_size);
-            grid = NULL;
-          }
-          grid_size.v_size = grid_size.size * 2 + 1;
-          grid_size.h_size = grid_size.size * 4 + 1;
-          grid = boardsize(grid_size, &pawns_location);
-        }
-        else
-        {
-          printf("? Error: you need to input an odd size between 3 and 26\n\n");
-        }
-      }
-      else
-      {
-        printf("? Error: you need to give one(1) argument (ex. boardsize 9)\n\n");
-      }
-    }
-    else if(command.compare("clear_board") == 0)
-      clear_board();
-    else if(command.compare("walls") == 0)
+  for(size_t num_rows = 0; num_rows < num_commands; num_rows++)
+  {
+    //@command: checks if the user's argument matches with one of the available commands.
+    //Prints true if it is, otherwise prints false.
+    if(known_commands[num_rows].compare(user_commands.command) == 0)
     {
-      if(n_arguments == 1)
-        walls(&available_walls, atoi(arguments[0]));
-      else
-        printf("? Error: you need to give one(1) argument (ex. walls 10)\n\n");
-    }
-    else if(command.compare("playmove") == 0)
-    {
-      if(grid != NULL && n_arguments == 2)
-      {
-        Move_info requested_move_info;
-        if(arguments[1][2] != '\0')
-        {
-          requested_move_info.n_row = arguments[1][1] - '0';
-          requested_move_info.n_row *= 10;
-          requested_move_info.n_row += arguments[1][2] - '0';
-        }
-        else
-        {
-          requested_move_info.n_row = arguments[1][1] - '0';
-        }
-        requested_move_info.n_col = arguments[1][0] - 'a';
-
-        if(strcmp(arguments[0], "w") == 0 || strcmp(arguments[0], "white") == 0)
-        {
-          requested_move_info.player = 'w';
-        }
-        else if(strcmp(arguments[0], "b") == 0 || strcmp(arguments[0], "black") == 0)
-        {
-          requested_move_info.player = 'b';
-        }
-
-        //@purpose: add the new grid conf to the stack so we can undo into it.
-        element.grid = grid;
-        element.pawns_location = pawns_location;
-        stack_push(element, my_stack, grid_size);
-
-        playmove(grid, grid_size, &pawns_location, requested_move_info); /*PLAYMOVE FUNCTION CALL*/
-
-      }
-      else if(grid == NULL)
-      {
-        printf("? Error: you need to create a board first (run: boardsize <desired_size>)\n\n");
-      }
-      else if(n_arguments != 2)
-      {
-        printf("? Error: you need to give two(2) arguments (ex. playmove w a1)\n\n");
-      }
-    }
-    else if(command.compare("playwall") == 0)
-    {
-      if(n_arguments == 3)
-      {
-        Wall_info requested_wall_info;
-        if(arguments[1][2] != '\0')
-        {
-          requested_wall_info.n_row = arguments[1][1] - '0';
-          requested_wall_info.n_row *= 10;
-          requested_wall_info.n_row += arguments[1][2] - '0';
-        }
-        else
-        {
-          requested_wall_info.n_row = arguments[1][1] - '0';
-        }
-        requested_wall_info.n_col = arguments[1][0] - 'a';
-
-        if(strcmp(arguments[0], "w") == 0 || strcmp(arguments[0], "white") == 0)
-          requested_wall_info.player = 'w';
-        else if(strcmp(arguments[0], "b") == 0 || strcmp(arguments[0], "black") == 0)
-          requested_wall_info.player = 'b';
-
-        if(strcmp(arguments[2], "v") == 0 || strcmp(arguments[2], "vertical") == 0)
-          requested_wall_info.orientation = 'v';
-        else if(strcmp(arguments[2], "h") == 0 || strcmp(arguments[2], "horizontal") == 0)
-          requested_wall_info.orientation = 'h';
-
-        //@purpose: add the new grid conf to the stack so we can undo into it.
-        element.grid = grid;
-        element.pawns_location = pawns_location;
-        stack_push(element, my_stack, grid_size);
-
-        playwall(grid, grid_size, &available_walls, requested_wall_info, pawns_location); /*PLAYWALL FUNCTION CALL*/
-
-      }
-      else
-      {
-        printf("? Error: you need to give 3 arguments (ex. playwall w a5 v)\n\n");
-      }
-    }
-    else if(command.compare("genmove") == 0)
-    {
-      if(n_arguments == 1)
-      {
-        //genmove(grid, grid_size, arguments[0]); /*GENMOVE FUNCTION CALL*/
-      }
-      else
-      {
-        printf("? Error: you need to give one(1) argument (ex. genmove w)\n\n");
-      }
-    }
-    else if(command.compare("undo") == 0)
-    {
-      if(n_arguments == 1)
-      {
-        unsigned n_undo = arguments[0][0] - '0';
-        undo(&grid, n_undo, my_stack, &pawns_location, grid_size); /*UNDO FUNCTION CALL*/
-      }
-      else
-      {
-        printf("? Error: you need to give one(1) argument (ex. undo 4)\n\n");
-      }
-    }
-    else if(strcmp(command, "winner") == 0)
-      winner();
-    else if(strcmp(command, "showboard") == 0)
-      showboard();
-    else
-    {
-      printf("? Error: unknown command (run: list_commands)\n\n");
+      cout << "= true" << endl << endl;
+      return;
     }
   }
+  cout << "= false" << endl << endl;
 }
 
 /*********************************************************
