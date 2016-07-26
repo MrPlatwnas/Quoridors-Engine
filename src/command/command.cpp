@@ -522,19 +522,23 @@ void Quoridors_game::User_command::remove_extra_spaces(string& my_string)
   my_string.assign(my_string_edited);
 }
 
-void undo(int*** grid, unsigned n_undo, Queue* my_queue, Players_location* pawns_location, ArraySize grid_size)
+/*
+@function: seperates the command from the user's input and stores it into command.
+@date tested: yes
+*/
+string Quoridors_game::User_command::command_decode()
 {
-  Queue_elem element;
-  //@command: removing the unrequired Queue_elems.
-  while(n_undo > 1)
+  string command = "";
+  uint32_t index = 0;
+  //@commands: copies the characters until it reaches a ' ' character of a LF.
+  while(inputed_command[index] != ' ' && inputed_command[index] != '\0')
   {
-    element = stack_pop(my_queue);
-    if(element.isset == false)
-    {
-      printf("? Error: you can not undo anymore\n\n");
-      return;
-    }
+    command.append(1, inputed_command[index]);
+    index++;
   }
+  command[index] = '\0';
+  return command;
+}
 
   //@command: fetching the required Queue_elem.
   element = stack_pop(my_queue);
