@@ -416,6 +416,9 @@ bool Quoridors_game::showboard()
     }
     cout << "|";
 
+    if(i == board.board_size - 1)
+      break;
+
     cout << endl;
 
     cout << "   ";
