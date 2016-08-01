@@ -364,6 +364,7 @@ Quoridors_game::winner()
 */
 bool Quoridors_game::showboard()
 {
+  cout << "=" << endl;
   //@command: it prints ' ' characters so the letters are in the correct space when they are printed.
   cout << "  ";
   //@commands: prints each column's character name.
@@ -423,19 +424,21 @@ bool Quoridors_game::showboard()
     for(size_t j = 0; j < board.board_size; j++)
     {
       if(board.board_config[i][j].can_move_down == true)
-        cout << j << "--+";
+        cout << "---+";
       else
         cout << "===+";
     }
 
     cout << endl;
   }
+  cout << endl;
   cout << "   ";
   cout << "+";
   for(size_t i = 0; i < board.board_size; i++)
     cout << "---+";
 
-  cout << endl;
+  cout << endl << endl;
+  return true;
 }
 
 /*
