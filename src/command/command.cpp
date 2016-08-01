@@ -388,6 +388,8 @@ bool Quoridors_game::showboard()
 
   //@command: stores the each row's number name.
   uint32_t row_num = board.board_size;
+  //@command: starts printing the rows two at a time.
+  //one with the players and the vertical walls and one with the horizontal walls.
   for(size_t i = 0; i < board.board_size; i++)
   {
     //@commands: print the row's name.
@@ -395,13 +397,14 @@ bool Quoridors_game::showboard()
       cout << row_num << " ";
     else
       cout << " " << row_num << " ";
-    row_num--;
 
     cout << "|";
 
-    //@commands: checks if there is a player at the current square.
+    //@commands: checks if there is a player at the current square and prints him.
     if(white_player.location.x == 0 && white_player.location.y == 0)
       cout << " W ";
+    else if(black_player.location.x == 0 && black_player.location.y == 0)
+      cout << " B ";
     else
       cout << "   ";
 
@@ -415,13 +418,24 @@ bool Quoridors_game::showboard()
         cout << "H";
 
       //@commands: prints the players.
-      if(white_player.location.x == 0 && white_player.location.y == 0)
+      if(white_player.location.x == i && white_player.location.y == j)
         cout << " W ";
+      else if(black_player.location.x == i && black_player.location.y == j)
+        cout << " B ";
       else
         cout << "   ";
 
+
     }
     cout << "|";
+
+    cout << " " << row_num;
+    row_num--;
+
+    if(i == 0)
+      cout << "  black walls: " << black_player.num_walls;
+    else if(i == 1)
+      cout << "  white walls: " << white_player.num_walls;
 
     //@command: if it is the last row then don't print the horizontal walls.
     //because it will be wrong cause of set_board_config function.
@@ -450,6 +464,15 @@ bool Quoridors_game::showboard()
   cout << "+";
   for(size_t i = 0; i < board.board_size; i++)
     cout << "---+";
+
+  //@command: LF so the column names are correctly printed.
+  cout << endl;
+  //@command: it prints ' ' characters so the letters(column names) are in the correct distance when printed.
+  cout << "  ";
+  //@commands: prints each column's name.
+  col_name = 'A';
+  for(size_t i = 0; i < board.board_size; i++)
+    cout << "   " << col_name++;
 
   //@command: qtp compatibility.
   cout << endl << endl;
