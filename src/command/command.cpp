@@ -182,6 +182,8 @@ bool Quoridors_game::set_board_size()
   //@command: updates the board's size.
   board.board_size = size;
 
+  set_board_config();
+
   cout << "= board size set to " << size << "x" << size << endl << endl;
   return true;
 }
