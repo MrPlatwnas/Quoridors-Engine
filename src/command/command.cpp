@@ -425,13 +425,14 @@ bool Quoridors_game::showboard()
       else
         cout << "   ";
 
-
     }
     cout << "|";
 
+    //@command: prints the row names at the right side of the board's configuration.
     cout << " " << row_num;
     row_num--;
 
+    //commands: prints the amount of available walls of each player.
     if(i == 0)
       cout << "  black walls: " << black_player.num_walls;
     else if(i == 1)
