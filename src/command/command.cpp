@@ -364,17 +364,18 @@ Quoridors_game::winner()
 */
 bool Quoridors_game::showboard()
 {
+  //@command: qtp compatibility.
   cout << "=" << endl;
-  //@command: it prints ' ' characters so the letters are in the correct space when they are printed.
+  //@command: it prints ' ' characters so the letters(column names) are in the correct distance when printed.
   cout << "  ";
-  //@commands: prints each column's character name.
+  //@commands: prints each column's name.
   char col_name = 'A';
   for(size_t i = 0; i < board.board_size; i++)
     cout << "   " << col_name++;
 
   //@command: goes to a new line to print the top row of the board's configuration.
   cout << endl;
-  //@command: prints ' ' characters so the board configuration's row numbers have space to be printed.
+  //@command: prints ' ' characters so the board configuration's row numbers have space to be printed afterwards.
   cout << "   ";
 
   //@commands: prints the top row of the board configuration.
@@ -389,6 +390,7 @@ bool Quoridors_game::showboard()
   uint32_t row_num = board.board_size;
   for(size_t i = 0; i < board.board_size; i++)
   {
+    //@commands: print the row's name.
     if(row_num >= 10)
       cout << row_num << " ";
     else
@@ -396,18 +398,23 @@ bool Quoridors_game::showboard()
     row_num--;
 
     cout << "|";
+
+    //@commands: checks if there is a player at the current square.
     if(white_player.location.x == 0 && white_player.location.y == 0)
       cout << " W ";
     else
       cout << "   ";
 
+    //@command: prints the row with the players and the vertical walls.
     for(size_t j = 1; j < board.board_size; j++)
     {
+      //@commands: prints the vertical walls.
       if(board.board_config[i][j].can_move_left == true)
         cout << "|";
       else
         cout << "H";
 
+      //@commands: prints the players.
       if(white_player.location.x == 0 && white_player.location.y == 0)
         cout << " W ";
       else
@@ -416,6 +423,8 @@ bool Quoridors_game::showboard()
     }
     cout << "|";
 
+    //@command: if it is the last row then don't print the horizontal walls.
+    //because it will be wrong cause of set_board_config function.
     if(i == board.board_size - 1)
       break;
 
@@ -424,6 +433,7 @@ bool Quoridors_game::showboard()
     cout << "   ";
     cout << "+";
 
+    //@command: prints the horizontal walls.
     for(size_t j = 0; j < board.board_size; j++)
     {
       if(board.board_config[i][j].can_move_down == true)
@@ -434,12 +444,14 @@ bool Quoridors_game::showboard()
 
     cout << endl;
   }
+  //@commands: print the last row of the board.
   cout << endl;
   cout << "   ";
   cout << "+";
   for(size_t i = 0; i < board.board_size; i++)
     cout << "---+";
 
+  //@command: qtp compatibility.
   cout << endl << endl;
   return true;
 }
