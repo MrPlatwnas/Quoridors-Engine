@@ -80,7 +80,8 @@ void Quoridors_game::engine_name()
 void Quoridors_game::known_command()
 {
   cout << user_commands.num_arguments << endl;
-  //@command: checks if the user's command has one argument. if it is not one argument then the function returns.
+  //@command: checks if the user's command has one argument.
+  //if it is not one argument then the function returns.
   if(user_commands.num_arguments != 1)
   {
     cout << "? Error: you need to give one(1) argument (ex. known_command playwall)" << endl << endl;
