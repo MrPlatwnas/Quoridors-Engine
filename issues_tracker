@@ -27,6 +27,7 @@ Bugs: (next bug #5)
     Bug #2:
     - Playwall: when placing a new horizontal wall check if there is already a
     vertical wall there and vice versa.
+
   Solved:
     Bug #1:
     - Showboard: when printing the board's configuration, the walls do not have
