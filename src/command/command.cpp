@@ -519,6 +519,7 @@ bool Quoridors_game::playwall()
   return true;
 }
 
+/*
 //@function:
 Quoridors_game::genmove(char player)
 {
@@ -584,7 +585,7 @@ bool Quoridors_game::showboard()
   //one with the players and the vertical walls and one with the horizontal walls.
   for(size_t i = 0; i < board.board_size; i++)
   {
-    //@commands: print the row's name.
+    //@commands: print the row's number.
     if(row_num >= 10)
       cout << row_num << " ";
     else
@@ -631,7 +632,7 @@ bool Quoridors_game::showboard()
       cout << "  white walls: " << white_player.num_walls;
 
     //@command: if it is the last row then don't print the horizontal walls.
-    //because it will be wrong cause of set_board_config function.
+    //because it will be wrong because of set_board_config function.
     if(i == board.board_size - 1)
       break;
 
