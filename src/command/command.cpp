@@ -849,8 +849,6 @@ void Quoridors_game::start_game()
       Quoridors_game::set_board_config();
     else if(user_commands.command.compare("walls") == 0)
       Quoridors_game::set_num_walls();
-    // else if(command.compare("playmove") == 0)
-    //   Quoridors_game::playmove(char player, uint32_t x, uint32_t y);
     // else if(command.compare("playwall") == 0)
     //   Quoridors_game::playwall(char player, uint32_t x, uint32_t y, char orientation);
     // else if(command.compare("genmove") == 0)
@@ -859,11 +857,11 @@ void Quoridors_game::start_game()
     //   undo();
     // else if(strcmp(command, "winner") == 0)
     //   winner();
+    else if(user_commands.command.compare("playmove") == 0)
+      Quoridors_game::playmove();
     else if(user_commands.command.compare("showboard") == 0)
       showboard();
     else
       cout << "? Error: unknown command (run: list_commands)" << endl << endl;
   }
 }
-    else if(user_commands.command.compare("playmove") == 0)
-      Quoridors_game::playmove();
