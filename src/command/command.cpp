@@ -530,13 +530,25 @@ Quoridors_game::undo(uint32_t num_undo)
 {
 
 }
-
-//@function:
-Quoridors_game::winner()
-{
-
-}
 */
+
+/*
+@function: checks if there is a winner.
+@tested:
+*/
+bool Quoridors_game::winner()
+{
+  if(white_player.location.x == 0)
+  {
+    cout << "= white" << endl << endl;
+    return true;
+  }
+  else if(black_player.location.x == board.board_size - 1)
+  {
+    cout << "= black" << endl << endl;
+    return true;
+  }
+}
 
 /*
 @function: prints the current board configuration at stdout.
@@ -925,8 +937,8 @@ void Quoridors_game::start_game()
     //  genmove();
     //else if(command.compare("undo") == 0)
     //  undo();
-    //else if(user_commands.command.compare("winner") == 0)
-    //  winner();
+    else if(user_commands.command.compare("winner") == 0)
+      winner();
     else if(user_commands.command.compare("showboard") == 0)
       showboard();
     else

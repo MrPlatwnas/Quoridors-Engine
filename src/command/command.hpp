@@ -87,7 +87,7 @@ class Quoridors_game
 
     bool showboard(); //prints to stdout the current board configuration.
 
-    //bool winner();    //checks if there is a winner.
+    bool winner();    //checks if there is a winner.
     bool quit();      //quits the game.
 
     /*ADMINISTRATIVE COMMANDS*/
