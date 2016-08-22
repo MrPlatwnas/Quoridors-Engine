@@ -645,9 +645,35 @@ bool Quoridors_game::showboard()
     for(size_t j = 0; j < board.board_size; j++)
     {
       if(board.board_config[i][j].can_move_down == true)
-        cout << "---+";
+      {
+        if(board.board_config[i][j].can_move_right == true)
+        {
+          cout << "---+";
+        }
+        else if(i != board.board_size - 1 && board.board_config[i][j].can_move_right == false)
+        {
+          if(j != board.board_size - 1 && board.board_config[i + 1][j].can_move_right == false)
+          {
+            cout << "---H";
+          }
+          else
+          {
+            cout << "---+";
+          }
+        }
+      }
       else
+      {
+        if(j != board.board_size - 1)
+        {
+          if(board.board_config[i][j + 1].can_move_down == false)
+          {
+            cout << "====";
+            j++;
+          }
+        }
         cout << "===+";
+      }
     }
 
     cout << endl;
