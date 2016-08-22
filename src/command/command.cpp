@@ -328,11 +328,121 @@ bool Quoridors_game::set_num_walls()
 }
 
 /*
-//@function: plays the user's requestes move.
-//If it is an invalid move prints a message.
-Quoridors_game::playmove(char player, uint32_t x, uint32_t y)
+@function: plays the user's requester move.
+@tested:
+*/
+bool Quoridors_game::playmove()
 {
+  //@command: checks if the user inputed the correct amount of arguments.
+  if(user_commands.num_arguments != 2)
+  {
+    cout << "? Error: you need to give two(2) arguments, the player and the square position (ex. playmove w A5)" << endl << endl;
+    return false;
+  }
 
+  char player = user_commands.arguments[0][0];
+  int32_t y = user_commands.arguments[1][0] - 'a';
+  int32_t x = board.board_size - (user_commands.arguments[1][1] - '0');
+
+  //@command: checks if the move is out of bounds.
+  if(x >= board.board_size || x <= 0 || y <= 0 || y >= board.board_size)
+  {
+    cout << "? Error: you issued a move that is out of board's bounds" << endl << endl;
+    return false;
+  }
+
+  cout << "inputed player:" << player << endl; //Debug
+  cout << "inputed x:" << x << endl; //Debug
+  cout << "inputed y:" << y << endl; //Debug
+
+  cout << "abs white_player.location.x - x:" << abs(white_player.location.x - x) << endl; //Debug
+  cout << "abs white_player.location.y - y:" << abs(white_player.location.y - y) << endl; //Debug
+  cout << "white_player.location.y - y:" << white_player.location.y - y << endl; //Debug
+
+  //TODO: check if it's a valid move using the player objects (white_player and black_player) and board object (for the walls). if it is not valid then return.
+  //TODO: remove the old pawn and place the new one. to do this just update the player objects (white_player and black_player) location.
+  //TODO: implement the diagonal move when there is a player and a wall in from of the moving player.
+
+  if(player == 'w')
+  {
+    //@command: checks if it is a horizontal move.
+    if(abs(white_player.location.x - x) == 0 && abs(white_player.location.y - y) == 1)
+    {
+      //@command: checks if there is a wall blocking the player from moving.
+      //if there is a wall then the function returns.
+      if( (white_player.location.y - y == 1 && board.board_config[white_player.location.x][white_player.location.y].can_move_left == false) ||
+      (white_player.location.y - y == -1 && board.board_config[white_player.location.x][white_player.location.y].can_move_right == false) )
+      {
+        cout << "? Error: there is a wall blocking the white player from moving to the " << y + 'a' << x + '0' << " square" << endl << endl;
+        return false;
+      }
+      cout << "Valid move (horizontal) (debug)" << endl; //Debug
+      //@commands: plays the actual move.
+      white_player.location.x = x;
+      white_player.location.y = y;
+      cout << "= moved white player to " << static_cast<char>(y + 'A') << board.board_size - x  << endl << endl;
+    }
+    //@command: checks if it is a vertical move.
+    else if(abs(white_player.location.x - x) == 1 && abs(white_player.location.y - y) == 0)
+    {
+      //@command: checks if there is a wall blocking the player from moving.
+      if( (white_player.location.x - x == 1 && board.board_config[white_player.location.x][white_player.location.y].can_move_up == false) ||
+      (white_player.location.x - x == -1 && board.board_config[white_player.location.x][white_player.location.y].can_move_down == false) )
+      {
+        cout << "? Error: There is a wall blocking the white player from moving to the " << y + 'a' << x + '0' << " square" << endl << endl;
+        return false;
+      }
+      cout << "Valid move (vertical) (debug)" << endl; //Debug
+      white_player.location.x = x;
+      white_player.location.y = y;
+    }
+    else
+    {
+      cout << "Invalid move (debug)" << endl; //Debug
+      cout << "? Error: Invalid move" << endl << endl;
+      return false;
+    }
+  }
+  else if(player == 'b')
+  {
+    //@command: checks if it is a horizontal move.
+    if(abs(black_player.location.x - x) == 0 && abs(black_player.location.y - y) == 1)
+    {
+      //@command: checks if there is a wall blocking the player from moving.
+      //if there is a wall then the function returns.
+      if( (black_player.location.y - y == 1 && board.board_config[black_player.location.x][black_player.location.y].can_move_left == false) ||
+      (black_player.location.y - y == -1 && board.board_config[black_player.location.x][black_player.location.y].can_move_right == false) )
+      {
+        cout << "? Error: there is a wall blocking the black player from moving to the " << y + 'a' << x + '0' << " square" << endl << endl;
+        return false;
+      }
+      cout << "Valid move (horizontal) (debug)" << endl; //Debug
+      //@commands: plays the actual move.
+      black_player.location.x = x;
+      black_player.location.y = y;
+    }
+    //@command: checks if it is a vertical move.
+    else if(abs(black_player.location.x - x) == 1 && abs(black_player.location.y - y) == 0)
+    {
+      //@command: checks if there is a wall blocking the player from moving.
+      if( (black_player.location.x - x == 1 && board.board_config[black_player.location.x][black_player.location.y].can_move_up == false) ||
+      (black_player.location.x - x == -1 && board.board_config[black_player.location.x][black_player.location.y].can_move_down == false) )
+      {
+        cout << "? Error: There is a wall blocking the white player from moving to the " << y + 'a' << x + '0' << " square" << endl << endl;
+        return false;
+      }
+      cout << "Valid move (vertical) (debug)" << endl; //Debug
+      black_player.location.x = x;
+      black_player.location.y = y;
+    }
+    else
+    {
+      cout << "Invalid move (debug)" << endl; //Debug
+      cout << "? Error: Invalid move" << endl << endl;
+      return false;
+    }
+  }
+  return true;
 }
 
 //@function:
@@ -755,3 +865,5 @@ void Quoridors_game::start_game()
       cout << "? Error: unknown command (run: list_commands)" << endl << endl;
   }
 }
+    else if(user_commands.command.compare("playmove") == 0)
+      Quoridors_game::playmove();

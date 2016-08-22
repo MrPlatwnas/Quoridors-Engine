@@ -38,8 +38,8 @@ class Quoridors_game
     struct Player{
       private:
         struct Vertex{
-          uint32_t x;  //player's horizontal coordinate.
-          uint32_t y;  //player's vertical coordinate.
+          int32_t x;  //player's horizontal coordinate.
+          int32_t y;  //player's vertical coordinate.
         };
       public:
         Vertex location;     //player's location.
@@ -78,8 +78,8 @@ class Quoridors_game
     bool set_num_walls();     //sets the amount of available_walls for each player.
     bool set_board_config();  //sets the board for a new game.
 
-    //bool playmove();     //moves a player at the requested location.
     //bool playwall();     //places a wall at the requested location.
+    bool playmove();     //moves a player at the requested location.
 
     //bool undo_move(uint32_t);  //undoes user given moves.
 
