@@ -19,8 +19,12 @@ Features:
 
 Bugs:
   Known:
+    - Playwall: when placing a new wall check if there is already a wall there.
+    - Playwall: when placing a new horizontal wall check if there is already a
+    vertical wall there and vice versa.
+  Solved:
+    Bug #1:
     - Showboard: when printing the board's configuration, the walls do not have
     a middle section. For example, when printing a horizontal wall it prints
     like this: ===+===, instead it should be printed like this: =======.
     The same thing happens with vertical walls.
-  Solved:
