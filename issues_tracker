@@ -17,9 +17,14 @@ Features:
     Boardsize
     Clear_board
 
-Bugs:
+Bugs: (next bug #5)
   Known:
+    Bug #4:
+    - Playwall: when placing a new wall check if the wall is out of board's
+    bounds.
+    Bug #3:
     - Playwall: when placing a new wall check if there is already a wall there.
+    Bug #2:
     - Playwall: when placing a new horizontal wall check if there is already a
     vertical wall there and vice versa.
   Solved:
