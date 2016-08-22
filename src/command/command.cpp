@@ -445,10 +445,78 @@ bool Quoridors_game::playmove()
   return true;
 }
 
-//@function:
-Quoridors_game::playwall(char player, uint32_t x, uint32_t y, char orientation)
+/*
+@function: places a wall at the user defined board's location.
+@tested:
+*/
+bool Quoridors_game::playwall()
 {
+  //@command: checks if the user inputed the correct amount of arguments.
+  if(user_commands.num_arguments != 3)
+  {
+    cout << "? Error: you need to give three(3) arguments, the player, the location and the direction (ex. playwall w d3 h)" << endl << endl;
+    return false;
+  }
 
+  //@commands: convert and store the move's information (player, coordinates, direction).
+  char player = user_commands.arguments[0][0];
+  int32_t x = board.board_size - (user_commands.arguments[1][1] - '0');
+  int32_t y = user_commands.arguments[1][0] - 'a';
+  char direction = user_commands.arguments[2][0];
+
+  cout << "inputed player:" << player << endl; //Debug
+  cout << "inputed x:" << x << endl; //Debug
+  cout << "inputed y:" << y << endl; //Debug
+  cout << "inputed direction:" << direction << endl; //Debug
+
+  //@command: checks if the move is out of board's bounds.
+  if(x >= board.board_size || x <= 0 || y <= 0 || y >= board.board_size)
+  {
+    cout << "? Error: you issued a move that is out of board's bounds" << endl << endl;
+    return false;
+  }
+
+  //@command: places the actual wall and checks if there is already one there.
+  if(direction == 'h')
+  {
+    //@command: checks if there is already a wall there.
+    if(board.board_config[x][y].can_move_up = false)
+    {
+      cout << "? Error: there is already a wall there" << endl << endl;
+      return false;
+    }
+    //@commands: place the actual wall.
+    board.board_config[x][y].can_move_up = false;
+    board.board_config[x][y + 1].can_move_up = false;
+    board.board_config[x - 1][y].can_move_down = false;
+    board.board_config[x - 1][y + 1].can_move_down = false;
+  }
+  else if(direction == 'v')
+  {
+    //@command: checks if there is already a wall there.
+    if(board.board_config[x][y].can_move_right == false)
+    {
+      cout << "? Error: there is already a wall there" << endl << endl;
+      return false;
+    }
+    //@commands: place the actual wall.
+    board.board_config[x][y].can_move_right = false;
+    board.board_config[x + 1][y].can_move_right = false;
+    board.board_config[x][y + 1].can_move_left = false;
+    board.board_config[x + 1][y + 1].can_move_left = false;
+  }
+
+  //@command: removes one available wall from the player that just placed the wall.
+  if(player == 'w')
+  {
+    white_player.num_walls--;
+  }
+  else if(player == 'b')
+  {
+    black_player.num_walls--;
+  }
+
+  return true;
 }
 
 //@function:
@@ -849,16 +917,16 @@ void Quoridors_game::start_game()
       Quoridors_game::set_board_config();
     else if(user_commands.command.compare("walls") == 0)
       Quoridors_game::set_num_walls();
-    // else if(command.compare("playwall") == 0)
-    //   Quoridors_game::playwall(char player, uint32_t x, uint32_t y, char orientation);
-    // else if(command.compare("genmove") == 0)
-    //   genmove();
-    // else if(command.compare("undo") == 0)
-    //   undo();
-    // else if(strcmp(command, "winner") == 0)
-    //   winner();
     else if(user_commands.command.compare("playmove") == 0)
       Quoridors_game::playmove();
+    else if(user_commands.command.compare("playwall") == 0)
+      Quoridors_game::playwall();
+    //else if(command.compare("genmove") == 0)
+    //  genmove();
+    //else if(command.compare("undo") == 0)
+    //  undo();
+    //else if(user_commands.command.compare("winner") == 0)
+    //  winner();
     else if(user_commands.command.compare("showboard") == 0)
       showboard();
     else
