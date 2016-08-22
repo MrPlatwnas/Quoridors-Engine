@@ -10,6 +10,12 @@ Features:
     Name
     Known_command
     Walls
+    List_commands
+    Showboard
+    Winner
+    Quit
+    Boardsize
+    Clear_board
 
 Bugs:
   Known:
