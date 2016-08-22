@@ -1,0 +1,20 @@
+Features:
+  To be implemented:
+    Playwall - Platon-Nikolaos Kiorpelidis (platwnace@gmail.com)
+    Playmove - Platon-Nikolaos Kiorpelidis (platwnace@gmail.com)
+    Genmove
+    Undo
+    Winner
+
+  Implemented:
+    Name
+    Known_command
+    Walls
+
+Bugs:
+  Known:
+    - Showboard: when printing the board's configuration, the walls do not have
+    a middle section. For example, when printing a horizontal wall it prints
+    like this: ===+===, instead it should be printed like this: =======.
+    The same thing happens with vertical walls.
+  Solved:
