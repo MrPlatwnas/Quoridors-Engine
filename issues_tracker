@@ -36,6 +36,10 @@ Bugs: (next bug #8)
     - Playmove: when reading the user's input specificaly the first argument,
     that is the player, we should consider "white" and "black" inpute the same
     as "w" and "b" input.
+    Bug #8:
+    - Clean_board: add qtp compatibility.
+    Bug #9:
+    - Winner: does not print a result.
 
   Solved:
     Bug #1:
