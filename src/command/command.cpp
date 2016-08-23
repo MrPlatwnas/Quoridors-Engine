@@ -352,6 +352,17 @@ bool Quoridors_game::playmove()
     return false;
   }
 
+  if(white_player.location.x == x && white_player.location.y == y)
+  {
+    cout << "? Error: the white player is already at " << static_cast<char>(y + 'A') << board.board_size - x << endl << endl;
+    return false;
+  }
+  if(black_player.location.x == x && black_player.location.y == y)
+  {
+    cout << "? Error: the black player is already at " << static_cast<char>(y + 'A') << board.board_size - x << endl << endl;
+    return false;
+  }
+
   //cout << "inputed player:" << player << endl; //Debug
   //cout << "inputed x:" << x << endl; //Debug
   //cout << "inputed y:" << y << endl; //Debug
