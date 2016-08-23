@@ -360,7 +360,6 @@ bool Quoridors_game::playmove()
   cout << "white_player.location.y - y:" << white_player.location.y - y << endl; //Debug
 
   //TODO: check if it's a valid move using the player objects (white_player and black_player) and board object (for the walls). if it is not valid then return.
-  //TODO: remove the old pawn and place the new one. to do this just update the player objects (white_player and black_player) location.
   //TODO: implement the diagonal move when there is a player and a wall in from of the moving player.
 
   if(player == 'w')
@@ -469,18 +468,17 @@ bool Quoridors_game::playwall()
   cout << "inputed y:" << y << endl; //Debug
   cout << "inputed direction:" << direction << endl; //Debug
 
-  //@command: checks if the move is out of board's bounds.
-  if(x >= board.board_size || x <= 0 || y <= 0 || y >= board.board_size)
-  {
-    cout << "? Error: you issued a move that is out of board's bounds" << endl << endl;
-    return false;
-  }
-
   //@command: places the actual wall and checks if there is already one there.
   if(direction == 'h')
   {
+    //@command: checks if the move is out of the board's bounds.
+    if(x <= 0 || x >= board.board_size || y <= -1 || y >= board.board_size - 1)
+    {
+      cout << "? Error: you issued a wall placement that is out of the board's boundaries" << endl << endl;
+      return false;
+    }
     //@command: checks if there is already a wall there.
-    if(board.board_config[x][y].can_move_up = false)
+    if(board.board_config[x][y].can_move_up == false)
     {
       cout << "? Error: there is already a wall there" << endl << endl;
       return false;
@@ -490,9 +488,16 @@ bool Quoridors_game::playwall()
     board.board_config[x][y + 1].can_move_up = false;
     board.board_config[x - 1][y].can_move_down = false;
     board.board_config[x - 1][y + 1].can_move_down = false;
+    cout << "= placed the wall" << endl << endl;
   }
   else if(direction == 'v')
   {
+    //@command: checks if the move is out of the board's bounds.
+    if(x < 0 || x >= board.board_size - 1 || y < 0 || y >= board.board_size - 1)
+    {
+      cout << "? Error: you issued a wall placement that is out of board's boundaries" << endl << endl;
+      return false;
+    }
     //@command: checks if there is already a wall there.
     if(board.board_config[x][y].can_move_right == false)
     {
@@ -504,6 +509,7 @@ bool Quoridors_game::playwall()
     board.board_config[x + 1][y].can_move_right = false;
     board.board_config[x][y + 1].can_move_left = false;
     board.board_config[x + 1][y + 1].can_move_left = false;
+    cout << "= placed the wall" << endl << endl;
   }
 
   //@command: removes one available wall from the player that just placed the wall.
