@@ -619,9 +619,9 @@ bool Quoridors_game::showboard()
     cout << "|";
 
     //@commands: checks if there is a player at the current square and prints him.
-    if(white_player.location.x == 0 && white_player.location.y == 0)
+    if(white_player.location.x == i && white_player.location.y == 0)
       cout << " W ";
-    else if(black_player.location.x == 0 && black_player.location.y == 0)
+    else if(black_player.location.x == i && black_player.location.y == 0)
       cout << " B ";
     else
       cout << "   ";
