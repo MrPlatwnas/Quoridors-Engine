@@ -17,7 +17,7 @@ Features:
     Boardsize
     Clear_board
 
-Bugs: (next bug #10)
+Bugs: (next bug #11)
   Known:
     Bug #2:
     - Playwall: when placing a new horizontal wall check if there is already a
@@ -38,6 +38,10 @@ Bugs: (next bug #10)
     - Clean_board: add qtp compatibility.
     Bug #9:
     - Winner: does not print a result.
+    Bug #10:
+    - Playmove: players can't move pass the 9th row, because playmove does not
+    support user inputs with two numbers (ex. "playmove w e10" gets
+    interpreted into "playmove w e1").
 
   Solved:
     Bug #1:
