@@ -36,8 +36,6 @@ Bugs: (next bug #12)
     as "w" and "b" input.
     Bug #8:
     - Clean_board: add qtp compatibility.
-    Bug #9:
-    - Winner: does not print a result.
     Bug #10:
     - Playmove: players can't move pass the 9th row, because playmove does not
     support user inputs with two numbers (ex. "playmove w e10" gets
@@ -62,3 +60,5 @@ Bugs: (next bug #12)
     - Showboard: if the player is at the left side of the board (y == 0) then
     showboard won't show him/her. if the player is at the top left square
     then he will get printed all over the y == 0 column.
+    Bug #9:
+    - Winner: does not print a result.
