@@ -48,6 +48,8 @@ Bugs: (next bug #12)
     then he will get printed all over the y == 0 column.
     Bug #12:
     - Playmove: players can play on top of each other.
+    Bug #13:
+    - Playmove: players can't play at the top row (x == 0).
 
   Solved:
     Bug #1:
