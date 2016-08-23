@@ -42,10 +42,6 @@ Bugs: (next bug #12)
     - Playmove: players can't move pass the 9th row, because playmove does not
     support user inputs with two numbers (ex. "playmove w e10" gets
     interpreted into "playmove w e1").
-    Bug #11:
-    - Showboard: if the player is at the left side of the board (y == 0) then
-    showboard won't show him/her. if the player is at the top left square
-    then he will get printed all over the y == 0 column.
 
   Solved:
     Bug #1:
@@ -62,3 +58,7 @@ Bugs: (next bug #12)
     - Playmove: players can play on top of each other.
     Bug #13:
     - Playmove: players can't play at the top row (x == 0).
+    Bug #11:
+    - Showboard: if the player is at the left side of the board (y == 0) then
+    showboard won't show him/her. if the player is at the top left square
+    then he will get printed all over the y == 0 column.
