@@ -46,6 +46,8 @@ Bugs: (next bug #12)
     - Showboard: if the player is at the left side of the board (y == 0) then
     showboard won't show him/her. if the player is at the top left square
     then he will get printed all over the y == 0 column.
+    Bug #12:
+    - Playmove: players can play on top of each other.
 
   Solved:
     Bug #1:
