@@ -17,7 +17,7 @@ Features:
     Boardsize
     Clear_board
 
-Bugs: (next bug #11)
+Bugs: (next bug #12)
   Known:
     Bug #2:
     - Playwall: when placing a new horizontal wall check if there is already a
@@ -42,6 +42,10 @@ Bugs: (next bug #11)
     - Playmove: players can't move pass the 9th row, because playmove does not
     support user inputs with two numbers (ex. "playmove w e10" gets
     interpreted into "playmove w e1").
+    Bug #11:
+    - Showboard: if the player is at the left side of the board (y == 0) then
+    showboard won't show him/her. if the player is at the top left square
+    then he will get printed all over the y == 0 column.
 
   Solved:
     Bug #1:
