@@ -346,7 +346,7 @@ bool Quoridors_game::playmove()
   int32_t x = board.board_size - (user_commands.arguments[1][1] - '0');
 
   //@command: checks if the move is out of bounds.
-  if(x >= board.board_size || x <= 0 || y <= 0 || y >= board.board_size)
+  if(x >= board.board_size || x < 0 || y < 0 || y >= board.board_size)
   {
     cout << "? Error: you issued a move that is out of board's bounds" << endl << endl;
     return false;
