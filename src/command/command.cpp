@@ -573,6 +573,7 @@ bool Quoridors_game::winner()
     cout << "= black" << endl << endl;
     return true;
   }
+  cout << "=" << endl << endl;
 }
 
 /*
