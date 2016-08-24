@@ -485,7 +485,7 @@ bool Quoridors_game::playwall()
   char player = user_commands.arguments[0][0];
   int32_t x = board.board_size - (user_commands.arguments[1][1] - '0');
   int32_t y = user_commands.arguments[1][0] - 'a';
-  char direction = user_commands.arguments[2][0];
+  string direction = user_commands.arguments[2];
 
   //cout << "inputed player:" << player << endl; //Debug
   //cout << "inputed x:" << x << endl; //Debug
@@ -493,7 +493,7 @@ bool Quoridors_game::playwall()
   //cout << "inputed direction:" << direction << endl; //Debug
 
   //@command: checks if the wall's placement is horizontal.
-  if(direction == 'h')
+  if(direction.compare("h") == 0 || direction.compare("horizontal") == 0)
   {
     //@command: checks if the move is out of the board's bounds.
     if(x <= 0 || x >= board.board_size || y <= -1 || y >= board.board_size - 1)
@@ -521,7 +521,7 @@ bool Quoridors_game::playwall()
     cout << "= placed the wall" << endl << endl;
   }
   //@command: checks if the board's placement is vertical.
-  else if(direction == 'v')
+  else if(direction == "v" || direction == "vertical")
   {
     //@command: checks if the move is out of the board's bounds.
     if(x < 0 || x >= board.board_size - 1 || y < 0 || y >= board.board_size - 1)
@@ -899,13 +899,10 @@ string *Quoridors_game::User_command::arguments_decode()
       }
       else
       {
-        output_arguments[num_rows].append(1, '\0');
         num_rows++;
       }
       index++;
     }
-    output_arguments[num_rows].append(1, '\0');
-
     return output_arguments;
   }
   return NULL;
