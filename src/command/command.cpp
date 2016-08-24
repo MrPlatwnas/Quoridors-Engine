@@ -348,7 +348,7 @@ bool Quoridors_game::playmove()
   }
 
   //@commands: store and convert the user inputed move information.
-  char player = user_commands.arguments[0][0];
+  string player = user_commands.arguments[0];
   int32_t y = user_commands.arguments[1][0] - 'a';
   int32_t x = board.board_size - (user_commands.arguments[1][1] - '0');
 
@@ -359,6 +359,7 @@ bool Quoridors_game::playmove()
     return false;
   }
 
+  //@command: checks if there is a player already there.
   if(white_player.location.x == x && white_player.location.y == y)
   {
     cout << "? Error: the white player is already at " << static_cast<char>(y + 'A') << board.board_size - x << endl << endl;
@@ -380,7 +381,7 @@ bool Quoridors_game::playmove()
 
   //TODO: implement the diagonal move when there is a player and a wall in from of the moving player.
 
-  if(player == 'w')
+  if(player == "w" || player == "white")
   {
     //@command: checks if it is a horizontal move.
     if(abs(white_player.location.x - x) == 0 && abs(white_player.location.y - y) == 1)
@@ -422,7 +423,7 @@ bool Quoridors_game::playmove()
       return false;
     }
   }
-  else if(player == 'b')
+  else if(player == "b" || player == "black")
   {
     //@command: checks if it is a horizontal move.
     if(abs(black_player.location.x - x) == 0 && abs(black_player.location.y - y) == 1)
@@ -465,6 +466,13 @@ bool Quoridors_game::playmove()
       return false;
     }
   }
+  else
+  {
+    cout << "? Error: the \"" << player << "\" is not a player (input white/w or black/w for player ex. playmove white e5)" << endl << endl;
+    return false;
+  }
+
+
   return true;
 }
 
