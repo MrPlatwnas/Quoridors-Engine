@@ -507,6 +507,12 @@ bool Quoridors_game::playwall()
       cout << "? Error: there is already a wall there" << endl << endl;
       return false;
     }
+    //@command: checks if there is a vertical wall there blocking the new horizontal wall placement.
+    if(board.board_config[x][y].can_move_right == false && board.board_config[x - 1][y].can_move_right == false)
+    {
+      cout << "? Error: there is a vertical wall there and the horizontal and vertical walls can't intersect" << endl << endl;
+      return false;
+    }
     //@commands: place the actual wall.
     board.board_config[x][y].can_move_up = false;
     board.board_config[x][y + 1].can_move_up = false;
@@ -527,6 +533,12 @@ bool Quoridors_game::playwall()
     if(board.board_config[x][y].can_move_right == false)
     {
       cout << "? Error: there is already a wall there" << endl << endl;
+      return false;
+    }
+    //@command: checks if there is a horizontal wall there blocking the new vertical wall placement.
+    if(board.board_config[x][y].can_move_down == false && board.board_config[x][y + 1].can_move_down == false)
+    {
+      cout << "? Error: there is a horizontal wall there and vertical and horizontal walls can't intersect" << endl << endl;
       return false;
     }
     //@commands: place the actual wall.

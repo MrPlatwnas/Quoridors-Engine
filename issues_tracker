@@ -19,9 +19,6 @@ Features:
 
 Bugs: (next bug #12)
   Known:
-    Bug #2:
-    - Playwall: when placing a new horizontal wall check if there is already a
-    vertical wall there and vice versa.
     Bug #5:
     - Playwall: when reading the user's input, specifialy the first argument
     that is the player, we should consider "white" and "black" input the same
@@ -62,3 +59,6 @@ Bugs: (next bug #12)
     - Winner: does not print a result.
     Bug #8:
     - Clean_board: add qtp compatibility.
+    Bug #2:
+    - Playwall: when placing a new horizontal wall check if there is already a
+    vertical wall there and vice versa.
