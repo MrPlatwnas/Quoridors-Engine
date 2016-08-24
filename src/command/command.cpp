@@ -56,7 +56,7 @@ Quoridors_game::Quoridors_game()
     board.board_config[i] = new Square[9];
 
   //@command: sets the pawns at their correct squares and clears the walls.
-  set_board_config();
+  set_board_config(true);
 
   //@commands: sets the user_commands' variables to NULL, empty or 0.
   user_commands.num_arguments = 0;
@@ -184,7 +184,7 @@ bool Quoridors_game::set_board_size()
   //@command: updates the board's size.
   board.board_size = size;
 
-  set_board_config();
+  set_board_config(true);
 
   cout << "= board size set to " << size << "x" << size << endl << endl;
   return true;
@@ -195,7 +195,7 @@ bool Quoridors_game::set_board_size()
 @funtion: places/resets the pawns to the correct positions and removes any placed walls.
 @tested:
 */
-bool Quoridors_game::set_board_config()
+bool Quoridors_game::set_board_config(bool flag)
 {
   //@command: check if there is no memory allocated for the board configuration.
   //It should always be not NULL since we allocated memory in the constructor.
@@ -296,6 +296,13 @@ bool Quoridors_game::set_board_config()
       board.board_config[i][j].can_move_right = true;
       board.board_config[i][j].can_move_left = true;
     }
+  }
+
+  cout << "flag is:" << flag << endl;
+
+  if(flag == false)
+  {
+    cout << "= cleared the board" << endl << endl;
   }
 
   return true;
