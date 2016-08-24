@@ -17,7 +17,7 @@ Features:
     Boardsize
     Clear_board
 
-Bugs: (next bug #12)
+Bugs: (next bug #15)
   Known:
     Bug #5:
     - Playwall: when reading the user's input, specifialy the first argument
@@ -31,6 +31,10 @@ Bugs: (next bug #12)
     - Playmove: players can't move pass the 9th row, because playmove does not
     support user inputs with two numbers (ex. "playmove w e10" gets
     interpreted into "playmove w e1").
+    Bug #14:
+    - Showboard: when there are two or more vertical walls in a row, showboard
+    does not print the character + between them.
+
 
   Solved:
     Bug #1:
