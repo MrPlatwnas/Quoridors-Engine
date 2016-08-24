@@ -482,10 +482,25 @@ bool Quoridors_game::playwall()
   }
 
   //@commands: convert and store the wall's placement informations (player, coordinates, direction).
-  char player = user_commands.arguments[0][0];
+  string player = user_commands.arguments[0];
   int32_t x = board.board_size - (user_commands.arguments[1][1] - '0');
   int32_t y = user_commands.arguments[1][0] - 'a';
   string direction = user_commands.arguments[2];
+
+  //@command: removes one available wall from the player that just placed the wall.
+  if(player == "w" || player == "white")
+  {
+    white_player.num_walls--;
+  }
+  else if(player == "b" || player == "black")
+  {
+    black_player.num_walls--;
+  }
+  else
+  {
+    cout << "? Error: the \"" << player << "\" is not a player (input white/w or black/w for player ex. playwall white e5 h)" << endl << endl;
+    return false;
+  }
 
   //cout << "inputed player:" << player << endl; //Debug
   //cout << "inputed x:" << x << endl; //Debug
@@ -548,15 +563,18 @@ bool Quoridors_game::playwall()
     board.board_config[x + 1][y + 1].can_move_left = false;
     cout << "= placed the wall" << endl << endl;
   }
-
-  //@command: removes one available wall from the player that just placed the wall.
-  if(player == 'w')
+  else
   {
-    white_player.num_walls--;
-  }
-  else if(player == 'b')
-  {
-    black_player.num_walls--;
+    cout << "? Error: the \"" << direction << "\" is not a direction (input horizontal/h or vertical/v for orientation ex. playwall w e5 horizontal)" << endl << endl;
+    //@command: increasing the previous, faulty, available walls increase.
+    if(player == "w" || player == "white")
+    {
+      white_player.num_walls++;
+    }
+    else if(player == "b" || player == "black")
+    {
+      black_player.num_walls++;
+    }
   }
 
   return true;

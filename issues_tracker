@@ -19,10 +19,6 @@ Features:
 
 Bugs: (next bug #15)
   Known:
-    Bug #5:
-    - Playwall: when reading the user's input, specifialy the first argument
-    that is the player, we should consider "white" and "black" input the same
-    as "w" and "b" input.
     Bug #7:
     - Playmove: when reading the user's input specificaly the first argument,
     that is the player, we should consider "white" and "black" inpute the same
@@ -66,3 +62,7 @@ Bugs: (next bug #15)
     - Playwall: when reading the user's input, specificaly the third argument
     that is the wall's orientation, we should consider the "horizontal" and
     "vertical" input the same as "h" and "v".
+    Bug #5:
+    - Playwall: when reading the user's input, specifialy the first argument
+    that is the player, we should consider "white" and "black" input the same
+    as "w" and "b" input.
