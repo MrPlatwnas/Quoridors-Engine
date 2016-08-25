@@ -350,7 +350,18 @@ bool Quoridors_game::playmove()
   //@commands: store and convert the user inputed move information.
   string player = user_commands.arguments[0];
   int32_t y = user_commands.arguments[1][0] - 'a';
-  int32_t x = board.board_size - (user_commands.arguments[1][1] - '0');
+  int32_t x = 0;
+  if(user_commands.arguments[1].length() == 3)
+  {
+    x = user_commands.arguments[1][1] - '0';
+    x *= 10;
+    x += user_commands.arguments[1][2] - '0';
+    x = board.board_size - x;
+  }
+  else
+  {
+    x = board.board_size - (user_commands.arguments[1][1] - '0');
+  }
 
   //@command: checks if the move is out of bounds.
   if(x >= board.board_size || x < 0 || y < 0 || y >= board.board_size)

@@ -19,10 +19,6 @@ Features:
 
 Bugs: (next bug #15)
   Known:
-    Bug #10:
-    - Playmove: players can't move pass the 9th row, because playmove does not
-    support user inputs with two numbers (ex. "playmove w e10" gets
-    interpreted into "playmove w e1").
     Bug #14:
     - Showboard: when there are two or more vertical walls in a row, showboard
     does not print the character + between them.
@@ -66,3 +62,7 @@ Bugs: (next bug #15)
     - Playmove: when reading the user's input specificaly the first argument,
     that is the player, we should consider "white" and "black" inpute the same
     as "w" and "b" input.
+    Bug #10:
+    - Playmove: players can't move pass the 9th row, because playmove does not
+    support user inputs with two numbers (ex. "playmove w e10" gets
+    interpreted into "playmove w e1").
