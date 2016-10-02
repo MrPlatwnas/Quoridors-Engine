@@ -6,17 +6,6 @@ Date created        : 28-01-2016
 Language            : C++
 */
 
-/*
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-enim ad minim veniam, quis nostrud exercitation ullamco laboris
-nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-sunt in culpa qui officia deserunt mollit anim id est laborum.
-(not really, I did my best to provide exellent documentation)
-*/
-
 #include <iostream>
 #include <string>
 #include <cstdint>
@@ -29,7 +18,6 @@ using namespace std;
 /*
 @function: creates a board 9x9 and sets the variables to the default starting state.
 The default starting state is explained in the documentation.
-@date tested:
 */
 Quoridors_game::Quoridors_game()
 {
@@ -43,9 +31,9 @@ Quoridors_game::Quoridors_game()
   black_player.location.x = 0;
   black_player.location.y = 5;
 
-  //@command: the quit_game variable in control for when the game quits.
-  //take a look at start_game function if you want to know more about this variable.
-  //it's value can only change by the quit function.
+  /*@command: the quit_game variable in control for when the game quits.
+  take a look at start_game function if you want to know more about this variable.
+  it's value can only change by the quit function.*/
   quit_game = false;
 
   board.board_config = NULL;
@@ -67,7 +55,6 @@ Quoridors_game::Quoridors_game()
 
 /*
 @function: prints the engine's name to stdout.
-@date tested: yes
 */
 void Quoridors_game::engine_name()
 {
@@ -76,13 +63,12 @@ void Quoridors_game::engine_name()
 
 /*
 @function: takes as argument one command and returns true if the command exists otherwise returns false.
-@date tested: yes
 */
 void Quoridors_game::known_command()
 {
   cout << user_commands.num_arguments << endl;
-  //@command: checks if the user's command has one argument.
-  //if it is not one argument then the function returns.
+  /*@command: checks if the user's command has one argument.
+  if it is not one argument then the function returns.*/
   if(user_commands.num_arguments != 1)
   {
     cout << "? Error: you need to give one(1) argument (ex. known_command playwall)" << endl << endl;
@@ -98,8 +84,8 @@ void Quoridors_game::known_command()
 
   for(size_t num_rows = 0; num_rows < num_commands; num_rows++)
   {
-    //@command: checks if the user's argument matches with one of the available commands.
-    //Prints true if it is, otherwise prints false.
+    /*@command: checks if the user's argument matches with one of the available commands.
+    Prints true if it is, otherwise prints false.*/
     if(known_commands[num_rows].compare(user_commands.command) == 0)
     {
       cout << "= true" << endl << endl;
@@ -111,7 +97,6 @@ void Quoridors_game::known_command()
 
 /*
 @funtion: lists all the available commands.
-@date tested: yes
 */
 void Quoridors_game::list_commands()
 {
@@ -127,7 +112,6 @@ void Quoridors_game::list_commands()
 
 /*
 @function: quits from the game.
-@tested: yes
 */
 bool Quoridors_game::quit()
 {
@@ -139,12 +123,11 @@ bool Quoridors_game::quit()
 
 /*
 @funtion: creates a size*size board.
-@tested: yes
 */
 bool Quoridors_game::set_board_size()
 {
-  //@command: checks if the user's input is valid.
-  //if it is not valid then the function returns.
+  /*@command: checks if the user's input is valid.
+  if it is not valid then the function returns.*/
   if(user_commands.num_arguments != 1)
   {
     cout << "? Error: you need to give one(1) argument (ex. boardsize 9)" << endl << endl;
@@ -155,18 +138,18 @@ bool Quoridors_game::set_board_size()
   //ex. "5" -> 5.
   uint32_t size = stoi(user_commands.arguments[0], nullptr);
 
-  //@command: checks if the user's inputed size is valid.
-  //if it is not valid then the function returns.
+  /*@command: checks if the user's inputed size is valid.
+  if it is not valid then the function returns.*/
   if(size > 26 || size < 3 || size % 2 != 1)
   {
     cout << "? Error: you need to give an odd size between 3 and 26 (ex. boardsize 3 or boardsize 11)" << endl << endl;
     return false;
   }
 
-  //@command: checks if there is no memory allocated for the board configuration.
-  //It should always be not NULL since we allocated memory in the constructor.
-  //Therefore it should never get inside the if body.
-  //But to be safe I keep this check, just in case.
+  /*@command: checks if there is memory allocated for the board configuration.
+  It should always be not NULL since we allocated memory in the constructor.
+  Therefore it should always get inside the if body.
+  But to be safe I keep this check, just in case.*/
   if(board.board_config != NULL)
   {
     for(size_t i = 0; i < board.board_size; i++)
@@ -193,95 +176,94 @@ bool Quoridors_game::set_board_size()
 
 /*
 @funtion: places/resets the pawns to the correct positions and removes any placed walls.
-@tested:
 */
 bool Quoridors_game::set_board_config(bool flag)
 {
-  //@command: check if there is no memory allocated for the board configuration.
-  //It should always be not NULL since we allocated memory in the constructor.
-  //Therefore it should never get inside the if body.
-  //But to be safe I keep this check, just in case.
+  /*@command: check if there is no memory allocated for the board configuration.
+  It should always be not NULL since we allocated memory in the constructor.
+  Therefore it should never get inside the if body.
+  But to be safe I keep this check, just in case.*/
   if(board.board_config == NULL)
   {
     cout << "? Error: run boardsize <size> first (ex. boardsize 9)" << endl << endl;
     return false;
   }
 
-  //@commands: sets the white player's info.
-  //when counting from 0.
+  /*@commands: sets the white player's info.
+  When counting from 0.*/
   white_player.location.x = board.board_size - 1;
   white_player.location.y = board.board_size / 2;
 
-  //@commands: sets the black player's info.
-  //when counting from 0.
+  /*@commands: sets the black player's info.
+  When counting from 0.*/
   black_player.location.x = 0;
   black_player.location.y = board.board_size / 2;
 
 
-  //@commands: sets the board's limits for the upper left square.
-  //@command: since it's the upper left square then the players can't move to the up or to the left.
+  /*@commands: sets the board's limits for the upper left square.
+  Since it's the upper left square then the players can't move up or left.*/
   board.board_config[0][0].can_move_up = false;
-  board.board_config[0][0].can_move_left = false;
   board.board_config[0][0].can_move_down = true;
+  board.board_config[0][0].can_move_left = false;
   board.board_config[0][0].can_move_right = true;
 
-  //@command: sets the left side of the board's limits.
+  /*@command: sets the left side of the board's borders.
+  Since it's the left side of the board then players can't move left.*/
   for(size_t i = 1; i < board.board_size - 1; i++)
   {
-    //@command: since it's the left side of the board then players can't move to the left.
-    board.board_config[i][0].can_move_left = false;
-    board.board_config[i][0].can_move_right = true;
     board.board_config[i][0].can_move_up = true;
     board.board_config[i][0].can_move_down = true;
+    board.board_config[i][0].can_move_left = false;
+    board.board_config[i][0].can_move_right = true;
   }
 
-  //@commands: sets the board's limits for the bottom left square.
-  //@command: since it's the bottom left square then the players can't move to the down or to the left.
-  board.board_config[board.board_size - 1][0].can_move_left = false;
-  board.board_config[board.board_size - 1][0].can_move_down = false;
-  board.board_config[board.board_size - 1][0].can_move_right = true;
+  /*@commands: sets the board's limits for the bottom left square.
+  Since it's the bottom left square then the players can't move down or left.*/
   board.board_config[board.board_size - 1][0].can_move_up = true;
+  board.board_config[board.board_size - 1][0].can_move_down = false;
+  board.board_config[board.board_size - 1][0].can_move_left = false;
+  board.board_config[board.board_size - 1][0].can_move_right = true;
 
-  //@command: sets the top side of the board's limits.
+  /*@command: sets the top side of the board's borders.
+  Since it's the upwards side of the board then players can't move up.*/
   for(size_t i = 1; i < board.board_size - 1; i++)
   {
-    //@command: since it's the left side of the board then players can't move to the up.
     board.board_config[0][i].can_move_up = false;
     board.board_config[0][i].can_move_down = true;
-    board.board_config[0][i].can_move_right = true;
     board.board_config[0][i].can_move_left = true;
+    board.board_config[0][i].can_move_right = true;
   }
 
-  //@commands: sets the board's limits for the top right square.
-  //@command: since it's the top right square then the players can't move to the up or to the right.
+  /*@commands: sets the board's limits for the top right square.
+  Since it's the top right square then the players can't move up or right.*/
   board.board_config[0][board.board_size - 1].can_move_up = false;
-  board.board_config[0][board.board_size - 1].can_move_right = false;
   board.board_config[0][board.board_size - 1].can_move_down = true;
   board.board_config[0][board.board_size - 1].can_move_left = true;
+  board.board_config[0][board.board_size - 1].can_move_right = false;
 
-  //@command: sets the right side of the board's limits.
+  /*@command: sets the right side of the board's borders.
+  Since it's the right side of the board then players can't move right.*/
   for(size_t i = 1; i < board.board_size - 1; i++)
   {
-    //@command: since it's the right side of the board then players can't move to the right.
-    board.board_config[i][board.board_size - 1].can_move_right = false;
-    board.board_config[i][board.board_size - 1].can_move_left = true;
     board.board_config[i][board.board_size - 1].can_move_up = true;
     board.board_config[i][board.board_size - 1].can_move_down = true;
+    board.board_config[i][board.board_size - 1].can_move_left = true;
+    board.board_config[i][board.board_size - 1].can_move_right = false;
   }
 
-  //@commands: sets the board's limits for the bottom right square.
-  //@command: since it's the bottom right square then players can't move to the right or to the down.
-  board.board_config[board.board_size - 1][board.board_size - 1].can_move_down = false;
-  board.board_config[board.board_size - 1][board.board_size - 1].can_move_right = false;
+  /*@commands: sets the board's limits for the bottom right square.
+  Since it's the bottom right square then players can't move right or down.*/
   board.board_config[board.board_size - 1][board.board_size - 1].can_move_up = true;
+  board.board_config[board.board_size - 1][board.board_size - 1].can_move_down = false;
   board.board_config[board.board_size - 1][board.board_size - 1].can_move_left = true;
+  board.board_config[board.board_size - 1][board.board_size - 1].can_move_right = false;
 
-  //@command: set's the bottom side of the board's limits.
+  //@command: set's the bottom side of the board's borders.
   for(size_t i = 1; i < board.board_size - 1; i++)
   {
-    //@command: since it's the bottom side of the board then players can't move to the down.
-    board.board_config[board.board_size - 1][i].can_move_down = false;
+    //@command: since it's the bottom side of the board then players can't move down.
     board.board_config[board.board_size - 1][i].can_move_up = true;
+    board.board_config[board.board_size - 1][i].can_move_down = false;
     board.board_config[board.board_size - 1][i].can_move_left = true;
     board.board_config[board.board_size - 1][i].can_move_right = true;
   }
@@ -311,23 +293,22 @@ bool Quoridors_game::set_board_config(bool flag)
 
 /*
 @function: updates each player's available walls to num_walls.
-@tested:
 */
 bool Quoridors_game::set_num_walls()
 {
-  //@command: checks if the user's input is valid.
-  //if it is not then the function returns.
+  /*@command: checks if the user's input is valid.
+  If it is not then the function returns.*/
   if(user_commands.num_arguments != 1)
   {
     cout << "? Error: you need to give one(1) argument, the number of walls (ex. walls 10)" << endl << endl;
     return false;
   }
 
-  //@command: makes the string's content a number.
-  //ex. "5" -> 5.
+  /*@command: makes the string's content a number.
+  ex. "5" -> 5.*/
   uint32_t num_walls = stoi(user_commands.arguments[0], nullptr);
 
-  //@commands: changes the amount of the available walls for both players.
+  //@commands: sets the amount of the available walls for both players.
   white_player.num_walls = num_walls;
   black_player.num_walls = num_walls;
 
@@ -335,12 +316,11 @@ bool Quoridors_game::set_num_walls()
 }
 
 /*
-@function: plays the user's requester move.
-@tested:
+@function: plays the user's requested move.
 */
 bool Quoridors_game::playmove()
 {
-  //@command: checks if the user inputed the correct amount of arguments.
+  //@command: checks if the user inputed the correct number of arguments.
   if(user_commands.num_arguments != 2)
   {
     cout << "? Error: you need to give two(2) arguments, the player and the square position (ex. playmove w A5)" << endl << endl;
@@ -382,16 +362,10 @@ bool Quoridors_game::playmove()
     return false;
   }
 
-  //cout << "inputed player:" << player << endl; //Debug
-  //cout << "inputed x:" << x << endl; //Debug
-  //cout << "inputed y:" << y << endl; //Debug
-
-  //cout << "abs white_player.location.x - x:" << abs(white_player.location.x - x) << endl; //Debug
-  //cout << "abs white_player.location.y - y:" << abs(white_player.location.y - y) << endl; //Debug
-  //cout << "white_player.location.y - y:" << white_player.location.y - y << endl; //Debug
-
   //TODO: implement the diagonal move when there is a player and a wall in from of the moving player.
 
+  /*@command: checks one player at a time.
+  First we check the white player.*/
   if(player == "w" || player == "white")
   {
     //@command: checks if it is a horizontal move.
@@ -404,8 +378,8 @@ bool Quoridors_game::playmove()
         cout << "? Error: there is a wall blocking the white player from moving to the " << static_cast<char>(y + 'A') << board.board_size - x << " square" << endl << endl;
         return false;
       }
-      //cout << "Valid move (horizontal) (debug)" << endl; //Debug
-      //@commands: plays the actual move.
+
+      //@commands: plays the actual move since there is no wall blocking.
       white_player.location.x = x;
       white_player.location.y = y;
       cout << "= moved white player to " << static_cast<char>(y + 'A') << board.board_size - x << endl << endl;
@@ -420,8 +394,8 @@ bool Quoridors_game::playmove()
         cout << "? Error: There is a wall blocking the white player from moving to the " << static_cast<char>(y + 'A') << board.board_size - x << " square" << endl << endl;
         return false;
       }
-      //cout << "Valid move (vertical) (debug)" << endl; //Debug
-      //@commands: plays the actual move.
+
+      //@commands: plays the actual move since there is no wall blocking.
       white_player.location.x = x;
       white_player.location.y = y;
       cout << "= moved white player to " << static_cast<char>(y + 'A') << board.board_size - x  << endl << endl;
@@ -429,26 +403,26 @@ bool Quoridors_game::playmove()
     //@command: if it's not a vertical or horizontal move then it's an illegal move.
     else
     {
-      //cout << "Invalid move (debug)" << endl; //Debug
       cout << "? Error: Invalid move" << endl << endl;
       return false;
     }
   }
+  //@command: now we check for the black player in the same way we did for the white.
   else if(player == "b" || player == "black")
   {
     //@command: checks if it is a horizontal move.
     if(abs(black_player.location.x - x) == 0 && abs(black_player.location.y - y) == 1)
     {
-      //@command: checks if there is a wall blocking the player from moving.
-      //if there is a wall then the function returns.
+      /*@command: checks if there is a wall blocking the player from moving.
+      If there is a wall then the function returns.*/
       if( (black_player.location.y - y == 1 && board.board_config[black_player.location.x][black_player.location.y].can_move_left == false) ||
       (black_player.location.y - y == -1 && board.board_config[black_player.location.x][black_player.location.y].can_move_right == false) )
       {
         cout << "? Error: there is a wall blocking the black player from moving to the " << static_cast<char>(y + 'A') << board.board_size - x << " square" << endl << endl;
         return false;
       }
-      //cout << "Valid move (horizontal) (debug)" << endl; //Debug
-      //@commands: plays the actual move.
+
+      //@commands: plays the actual move since there is no wall blocking.
       black_player.location.x = x;
       black_player.location.y = y;
       cout << "= moved black player to " << static_cast<char>(y + 'A') << board.board_size - x  << endl << endl;
@@ -463,7 +437,7 @@ bool Quoridors_game::playmove()
         cout << "? Error: There is a wall blocking the white player from moving to the " << static_cast<char>(y + 'A') << board.board_size - x << " square" << endl << endl;
         return false;
       }
-      //cout << "Valid move (vertical) (debug)" << endl; //Debug
+
       //@commands: plays the actual move.
       black_player.location.x = x;
       black_player.location.y = y;
@@ -472,7 +446,6 @@ bool Quoridors_game::playmove()
     //@command: if it's a vertical or an horizontal move then it's an illegal move.
     else
     {
-      //cout << "Invalid move (debug)" << endl; //Debug
       cout << "? Error: Invalid move" << endl << endl;
       return false;
     }
@@ -483,13 +456,11 @@ bool Quoridors_game::playmove()
     return false;
   }
 
-
   return true;
 }
 
 /*
 @function: places a wall at the user defined board's location.
-@tested:
 */
 bool Quoridors_game::playwall()
 {
@@ -506,7 +477,8 @@ bool Quoridors_game::playwall()
   int32_t y = user_commands.arguments[1][0] - 'a';
   string direction = user_commands.arguments[2];
 
-  //@command: removes one available wall from the player that just placed the wall.
+  /*@command: removes one available wall from the player that just placed the wall.
+  Afterwards, if the wall placement is illegal we increase the number of walls. */
   if(player == "w" || player == "white")
   {
     white_player.num_walls--;
@@ -520,11 +492,6 @@ bool Quoridors_game::playwall()
     cout << "? Error: the \"" << player << "\" is not a player (input white/w or black/w for player ex. playwall white e5 h)" << endl << endl;
     return false;
   }
-
-  //cout << "inputed player:" << player << endl; //Debug
-  //cout << "inputed x:" << x << endl; //Debug
-  //cout << "inputed y:" << y << endl; //Debug
-  //cout << "inputed direction:" << direction << endl; //Debug
 
   //@command: checks if the wall's placement is horizontal.
   if(direction.compare("h") == 0 || direction.compare("horizontal") == 0)
@@ -615,7 +582,6 @@ Quoridors_game::undo(uint32_t num_undo)
 
 /*
 @function: checks if there is a winner.
-@tested:
 */
 bool Quoridors_game::winner()
 {
@@ -634,7 +600,6 @@ bool Quoridors_game::winner()
 
 /*
 @function: prints the current board configuration at stdout.
-@tested:
 */
 bool Quoridors_game::showboard()
 {
@@ -662,8 +627,8 @@ bool Quoridors_game::showboard()
 
   //@command: stores the each row's number name.
   uint32_t row_num = board.board_size;
-  //@command: starts printing the rows two at a time.
-  //one with the players and the vertical walls and one with the horizontal walls.
+  /*@command: starts printing the rows two at a time.
+  One with the players and the vertical walls and one with the horizontal walls.*/
   for(size_t i = 0; i < board.board_size; i++)
   {
     //@commands: print the row's number.
@@ -782,26 +747,24 @@ bool Quoridors_game::showboard()
 
 /*
 @function: replaces the unwanted_char in my_string with the replacement_char.
-@date tested:
 */
 void Quoridors_game::User_command::replace_string_chars(string& my_string, char unwanted_char, char replacement_char)
 {
   uint32_t string_length = my_string.length();
   uint32_t string_counter = 0;
-  //TODO: change the for loop to stop when it finds a null character, instead when it reaches string_length.
+
   for(string_counter = 0; string_counter < string_length; string_counter++)
   {
     if(my_string[string_counter] == unwanted_char)
       my_string[string_counter] = replacement_char;
   }
-  //@command: TODO: probably unnecessery. Invastigate if we can remove it.
-  //if it is necessery then add comments explaining why it is necessery.
+  /*@command: TODO: probably unnecessery. Invastigate if we can remove it.
+  if it is necessery then add comments explaining why it is necessery.*/
   my_string[string_length] = '\0';
 }
 
 /*
 @funtion: removes the garbage_char from my_string.
-@date tested:
 */
 void Quoridors_game::User_command::remove_char(string& my_string, char garbage_char)
 {
@@ -821,7 +784,6 @@ void Quoridors_game::User_command::remove_char(string& my_string, char garbage_c
 
 /*
 @function: removes leading, trailing and intercepting spaces.
-@date tested:
 */
 void Quoridors_game::User_command::remove_extra_spaces(string& my_string)
 {
@@ -847,8 +809,8 @@ void Quoridors_game::User_command::remove_extra_spaces(string& my_string)
   {
     //@command: copies one character at a time.
     my_string_edited[j] = my_string[i];
-    //@command: to understand use DeMorgan's theorem.
-    //if there aren't two spaces in a row then allocate space for the next character.
+    /*@command: to understand use DeMorgan's theorem.
+    if there aren't two spaces in a row then allocate space for the next character.*/
     if(my_string_edited[j] != my_string[i + 1] || my_string_edited[j] != ' ')
     {
       edited_string_size++;
@@ -868,7 +830,6 @@ void Quoridors_game::User_command::remove_extra_spaces(string& my_string)
 
 /*
 @function: seperates the command from the user's input and stores it into command.
-@date tested: yes
 */
 string Quoridors_game::User_command::command_decode()
 {
@@ -886,7 +847,6 @@ string Quoridors_game::User_command::command_decode()
 
 /*
 @funtion: seperates the arguments from the user's input.
-@date tested: yes
 */
 string *Quoridors_game::User_command::arguments_decode()
 {
@@ -926,8 +886,8 @@ string *Quoridors_game::User_command::arguments_decode()
     //@command: to go from ' ' to the next character.
     index++;
 
-    //@commands: stores one by one each character of each argument.
-    //Then appends the NULL character.
+    /*@commands: stores one by one each character of each argument.
+    Then appends the NULL character.*/
     while(inputed_command[index] != '\0')
     {
       if(inputed_command[index] != ' ')
@@ -947,7 +907,6 @@ string *Quoridors_game::User_command::arguments_decode()
 
 /*
 @function: removes the character after character #.
-@tested: yes
 */
 void Quoridors_game::User_command::remove_comments()
 {
@@ -972,7 +931,6 @@ void Quoridors_game::User_command::remove_comments()
 
 /*
 @function: makes capital letters to lower-case.
-@tested: yes
 */
 void Quoridors_game::User_command::uncapitalize(string& my_string)
 {
@@ -992,12 +950,11 @@ void Quoridors_game::User_command::uncapitalize(string& my_string)
 It calls other functions to seperate the command from the arguments and the arguments from the command.
 As well as to edit the user's input(remove comments, trailing and leading spaces etc.).
 At the end it calls the correct funtion to execute the user's request.
-@date tested:
 */
 void Quoridors_game::start_game()
 {
-  //@command: runs until the quit function is called.
-  //This while loop analizes line by line the user's input.
+  /*@command: runs until the quit function is called.
+  This while loop analizes line by line the user's input.*/
   while(quit_game == false)
   {
     //@command: reads the next user's input line.
@@ -1013,13 +970,13 @@ void Quoridors_game::start_game()
 
     //@command: the command gets seperated from the user's input ex. playmove w c3, here the command is playmove.
     user_commands.command = user_commands.command_decode();
-    //@command: the arguments are seperated from the user's input in an 2D array
-    //ex. playmove w c3, here the arguments are w and c3.
+    /*@command: the arguments are seperated from the user's input in an 2D array
+    ex. playmove w c3, here the arguments are w and c3.*/
     user_commands.arguments = user_commands.arguments_decode();
 
-    //@command: the user's requested command is executed by matching the user's command
-    //with the engine's available commands.
-    //if the user's command is not one of the engine's known commands then a descriptive error is printed.
+    /*@command: the user's requested command is executed by matching the user's command
+    with the engine's available commands.
+    If the user's command is not one of the engine's known commands then a descriptive error is printed.*/
     if(user_commands.command.compare("name") == 0)
       engine_name();
     else if(user_commands.command.compare("known_command") == 0)
@@ -1037,11 +994,11 @@ void Quoridors_game::start_game()
     else if(user_commands.command.compare("playmove") == 0)
       Quoridors_game::playmove();
     else if(user_commands.command.compare("playwall") == 0)
-      Quoridors_game::playwall();
-    //else if(command.compare("genmove") == 0)
-    //  genmove();
-    //else if(command.compare("undo") == 0)
-    //  undo();
+      Quoridors_game::playwall();/*
+    else if(command.compare("genmove") == 0)
+      genmove();
+    else if(command.compare("undo") == 0)
+      undo();*/
     else if(user_commands.command.compare("winner") == 0)
       winner();
     else if(user_commands.command.compare("showboard") == 0)
