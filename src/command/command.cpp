@@ -728,7 +728,16 @@ bool Quoridors_game::showboard()
             j++;
           }
         }
-        cout << "===+";
+
+        if(board.board_config[i][j].can_move_right == false && board.board_config[i + 1][j].can_move_right == false
+        && j != board.board_size - 1)
+        {
+          cout << "===H";
+        }
+        else
+        {
+          cout << "===+";
+        }
       }
     }
 
