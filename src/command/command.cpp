@@ -768,9 +768,7 @@ void Quoridors_game::User_command::replace_string_chars(string& my_string, char 
     if(my_string[string_counter] == unwanted_char)
       my_string[string_counter] = replacement_char;
   }
-  /*@command: TODO: probably unnecessery. Invastigate if we can remove it.
-  if it is necessery then add comments explaining why it is necessery.*/
-  my_string[string_length] = '\0';
+  return;
 }
 
 /*
