@@ -515,6 +515,16 @@ bool Quoridors_game::playwall()
     board.board_config[x - 1][y + 1].can_move_down = false;
     cout << "= placed the wall" << endl << endl;
 
+    if(is_wall_valid() == false)
+    {
+      cout << "? Error: invalid wall placement" << endl << endl;
+      board.board_config[x][y].can_move_up = true;
+      board.board_config[x][y + 1].can_move_up = true;
+      board.board_config[x - 1][y].can_move_down = true;
+      board.board_config[x - 1][y + 1].can_move_down = true;
+      return false;
+    }
+
     //@command: removes one available wall from the player that just placed the wall.
     if(player == "w" || player == "white")
     {
@@ -557,6 +567,16 @@ bool Quoridors_game::playwall()
     board.board_config[x][y + 1].can_move_left = false;
     board.board_config[x + 1][y + 1].can_move_left = false;
     cout << "= placed the wall" << endl << endl;
+
+    if(is_wall_valid() == false)
+    {
+      cout << "? Error: invalid wall placement" << endl << endl;
+      board.board_config[x][y].can_move_right = true;
+      board.board_config[x + 1][y].can_move_right = true;
+      board.board_config[x][y + 1].can_move_left = true;
+      board.board_config[x + 1][y + 1].can_move_left = true;
+      return false;
+    }
 
     //@command: removes one available wall from the player that just placed the wall.
     if(player == "w" || player == "white")
