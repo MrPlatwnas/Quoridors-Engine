@@ -637,6 +637,13 @@ bool Quoridors_game::showboard()
 
   //@command: stores the each row's number name.
   uint32_t row_num = board.board_size;
+
+  /*@commands: the previous_placed_vertical_walls array exists to address the bug #59.
+  Specificaly, */
+  int8_t *previous_placed_vertical_walls = (int8_t*)malloc(sizeof(int8_t) * board.board_size);
+  for(size_t i = 0; i < board.board_size; i++)
+    previous_placed_vertical_walls[i] = 0;
+
   /*@command: starts printing the rows two at a time.
   One with the players and the vertical walls and one with the horizontal walls.*/
   for(size_t i = 0; i < board.board_size; i++)
@@ -664,7 +671,17 @@ bool Quoridors_game::showboard()
       if(board.board_config[i][j].can_move_left == true)
         cout << "|";
       else
+      {
         cout << "H";
+        if(previous_placed_vertical_walls[j - 1] == 1)
+        {
+          previous_placed_vertical_walls[j - 1] = 0;
+        }
+        else
+        {
+          previous_placed_vertical_walls[j - 1] = 1;
+        }
+      }
 
       //@commands: prints the players.
       if(white_player.location.x == i && white_player.location.y == j)
@@ -708,7 +725,7 @@ bool Quoridors_game::showboard()
         }
         else if(i != board.board_size - 1 && board.board_config[i][j].can_move_right == false)
         {
-          if(j != board.board_size - 1 && board.board_config[i + 1][j].can_move_right == false)
+          if(j != board.board_size - 1 && board.board_config[i + 1][j].can_move_right == false && previous_placed_vertical_walls[j] == 1)
           {
             cout << "---H";
           }
@@ -718,6 +735,7 @@ bool Quoridors_game::showboard()
           }
         }
       }
+      //command: if can't move down.
       else
       {
         if(j != board.board_size - 1)
@@ -730,7 +748,7 @@ bool Quoridors_game::showboard()
         }
 
         if(board.board_config[i][j].can_move_right == false && board.board_config[i + 1][j].can_move_right == false
-        && j != board.board_size - 1)
+        && j != board.board_size - 1 && previous_placed_vertical_walls[j] == 1)
         {
           cout << "===H";
         }
@@ -761,6 +779,9 @@ bool Quoridors_game::showboard()
 
   //@command: qtp compatibility.
   cout << endl << endl;
+
+  free(previous_placed_vertical_walls);
+
   return true;
 }
 
