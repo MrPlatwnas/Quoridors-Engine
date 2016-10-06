@@ -487,22 +487,6 @@ bool Quoridors_game::playwall()
   int32_t y = user_commands.arguments[1][0] - 'a';
   string direction = user_commands.arguments[2];
 
-  /*@command: removes one available wall from the player that just placed the wall.
-  Afterwards, if the wall placement is illegal we increase the number of walls. */
-  if(player == "w" || player == "white")
-  {
-    white_player.num_walls--;
-  }
-  else if(player == "b" || player == "black")
-  {
-    black_player.num_walls--;
-  }
-  else
-  {
-    cout << "? Error: the \"" << player << "\" is not a player (input white/w or black/w for player ex. playwall white e5 h)" << endl << endl;
-    return false;
-  }
-
   //@command: checks if the wall's placement is horizontal.
   if(direction.compare("h") == 0 || direction.compare("horizontal") == 0)
   {
@@ -530,6 +514,21 @@ bool Quoridors_game::playwall()
     board.board_config[x - 1][y].can_move_down = false;
     board.board_config[x - 1][y + 1].can_move_down = false;
     cout << "= placed the wall" << endl << endl;
+
+    //@command: removes one available wall from the player that just placed the wall.
+    if(player == "w" || player == "white")
+    {
+      white_player.num_walls--;
+    }
+    else if(player == "b" || player == "black")
+    {
+      black_player.num_walls--;
+    }
+    else
+    {
+      cout << "? Error: the \"" << player << "\" is not a player (input white/w or black/w for player ex. playwall white e5 h)" << endl << endl;
+      return false;
+    }
   }
   //@command: checks if the board's placement is vertical.
   else if(direction == "v" || direction == "vertical")
@@ -558,18 +557,20 @@ bool Quoridors_game::playwall()
     board.board_config[x][y + 1].can_move_left = false;
     board.board_config[x + 1][y + 1].can_move_left = false;
     cout << "= placed the wall" << endl << endl;
-  }
-  else
-  {
-    cout << "? Error: the \"" << direction << "\" is not a direction (input horizontal/h or vertical/v for orientation ex. playwall w e5 horizontal)" << endl << endl;
-    //@command: increasing the previous, faulty, available walls increase.
+
+    //@command: removes one available wall from the player that just placed the wall.
     if(player == "w" || player == "white")
     {
-      white_player.num_walls++;
+      white_player.num_walls--;
     }
     else if(player == "b" || player == "black")
     {
-      black_player.num_walls++;
+      black_player.num_walls--;
+    }
+    else
+    {
+      cout << "? Error: the \"" << player << "\" is not a player (input white/w or black/w for player ex. playwall white e5 h)" << endl << endl;
+      return false;
     }
   }
 
