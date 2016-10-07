@@ -1,101 +1,99 @@
-/******************************************************
-File implementation : command.h
-Authors             : Platwnas-Nikolaos Kiorpelidis
-Purpose             : command functions declarations
-Date                : 28-1-2015
-*******************************************************/
+/*
+File implementation : command.hpp
+Authors             : Platon-Nikolaos Kiorpelidis
+Purpose             : Data structures declarations
+Date created        : 28-01-2016
+Language            : C++
+*/
 
-#ifndef COMMAND_H
-#define COMMAND_H
+#include <iostream>
+#include <cstdint>
+#include <string>
 
-#include <stdbool.h>
+using namespace std;
 
-typedef struct gridsize {
-  unsigned v_size;
-  unsigned h_size;
-  unsigned size;
-}ArraySize;
+class Quoridors_game
+{
+  private:
 
-typedef struct vertex {
-  unsigned v_coordinate;
-  unsigned h_coordinate;
-}Vertex;
+    class User_command
+    {
+      public:
+        uint32_t num_arguments;  //counts the number of arguments in order to check if there are missing arguments. ex. playmove w, misses the coordinates.
+        string inputed_command;  //stores the user's input one line each time.
+        string command;          //stores the command only(without the arguments).
+        string *arguments;       //stores the command's arguments only.
 
-typedef struct walls {
-  unsigned white_walls;
-  unsigned black_walls;
-}Walls;
+        void replace_string_chars(string& inputed_command, char unwanted_char, char replacement_char); //replaces a character with another one in a string.
+        void remove_char(string& my_string, char garbage_char); //removes a character from a string.
+        void remove_extra_spaces(string& my_string);            //removes the leading, trailing and middle extra spaces.
+        void uncapitalize(string& my_string);         //turns all the characters in a string to lower-case.
 
-typedef struct move_info {
-  char player;
-  unsigned n_row;
-  unsigned n_col;
-}Move_info;
+        string command_decode();       //stores the command only from the user's input into command.
+        string *arguments_decode();    //stores the arguments only from the user's input into arguments.
 
-typedef struct wall_info {
-  char player;
-  unsigned n_row;
-  unsigned n_col;
-  char orientation;
-}Wall_info;
+        void remove_comments();      //removes the characters after the character #.
+    };
 
-typedef struct players_location {
-  Vertex white_location;
-  Vertex black_location;
-}Players_location;
+    struct Player{
+      private:
+        struct Vertex{
+          int32_t x;  //player's horizontal coordinate.
+          int32_t y;  //player's vertical coordinate.
+        };
+      public:
+        Vertex location;     //player's location.
+        uint32_t num_walls;  //player's available walls.
+    };
 
-typedef struct queue_elem {
-  Players_location pawns_location;
-  int** grid;
-  bool isset;
-}Queue_elem;
+    struct Square{  //that's how the engine representes the walls.
+      bool can_move_up;    //setted to true if there is no wall above.
+      bool can_move_down;  //setted to true if there is no wall below.
+      bool can_move_right; //setted to true if there is no wall right.
+      bool can_move_left;  //setted to true if there is no wall left.
+    };
 
-typedef struct queue {
-  Queue_elem* elements;
-  unsigned top;
-  unsigned maxsize;
-}Queue;
+    struct Board{
+      public:
+        uint32_t board_size;   //stores the board size.
+        Square **board_config; //stores the current board configuration.
+    };
 
-//reads the stdin of the program, analyzes it and calls the apropriate function.
-void user_input_decode();
+    Player white_player;  //stores white player's information.
+    Player black_player;  //stores black player's information.
+    Board board;          //stores board's information.
 
-//prints at stdout the engine's name.
-void name();
+    User_command user_commands;
 
-//prints true if command exits otherwise prints false.
-void known_command(char** arguments, unsigned n_arguments);
+    bool quit_game;       //boolean variable so you can quit from the game when the quit function is called.
 
-//Prints at stdin all the commands. One per row.
-void list_commands();
+    bool is_wall_valid();
 
-//the session is terminated and the connection is closed.
-void quit(bool * quit_game);
+  public:
 
-//mallocs a 2D array with n_rows rows and n_cols columns. Changes the board size.
-int** boardsize(ArraySize grid_size, Players_location* pawns_location);
+    Quoridors_game();                    //sets board size to 9x9 (default size).
+    // ~Quoridors_game();
 
-//Clears the board. The two pawns return to their starting position.
-void clear_board(int** grid, ArraySize grid_size, Players_location* pawns_location);
+    void start_game();       //starts the game execution and user command processing.
 
-//Sets the number of walls each player has at the start of the game.
-void walls(Walls* available_walls, unsigned int input_n_walls);
+    bool set_board_size();    //sets the board's size.
+    bool set_num_walls();     //sets the amount of available_walls for each player.
+    bool set_board_config(bool);  //sets the board for a new game.
 
-//the player of the requested color is played at the requested vertex.
-void playmove(int** grid, ArraySize grid_size, Players_location* pawns_location,Move_info move_coordinates);
+    bool playmove();     //moves a player at the requested location.
+    bool playwall();     //places a wall at the requested location.
 
-//a wall place at the requested vertex and orientation. Decrease the number of walls.
-void playwall(int** grid, ArraySize grid_size, Walls* available_walls, Wall_info requested_wall_info, Players_location pawns_location);
+    //bool undo_move(uint32_t);  //undoes user given moves.
 
-//the engine makes a move or wall placement at the requested color.
-void genmove(); //FIXME: Add support for the arguments.
+    //bool genmove();  //generates an AI move.
 
-//the game goes 'times' moves back.
-void undo(int*** grid, unsigned n_undo, Queue* my_queue, Players_location* pawns_location, ArraySize grid_size);
+    bool showboard(); //prints to stdout the current board configuration.
 
-//outputs true and winner's color if the game ended, otherwise false.
-void winner(ArraySize grid_size, Players_location* pawns_location);
+    bool winner();    //checks if there is a winner.
+    bool quit();      //quits the game.
 
-//Prints the whole board as is.
-void showboard(int** grid, Walls available_walls, ArraySize grid_size);
-
-#endif  //ifndef COMMAND_H
+    /*ADMINISTRATIVE COMMANDS*/
+    void engine_name();          //prints the engine's name at stdout.
+    void known_command();        //checks if the given command exists.
+    void list_commands();        //prints all the available commands.
+};
