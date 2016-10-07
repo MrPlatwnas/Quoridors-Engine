@@ -513,7 +513,6 @@ bool Quoridors_game::playwall()
     board.board_config[x][y + 1].can_move_up = false;
     board.board_config[x - 1][y].can_move_down = false;
     board.board_config[x - 1][y + 1].can_move_down = false;
-    cout << "= placed the wall" << endl << endl;
 
     if(is_wall_valid() == false)
     {
@@ -524,6 +523,8 @@ bool Quoridors_game::playwall()
       board.board_config[x - 1][y + 1].can_move_down = true;
       return false;
     }
+
+    cout << "= placed the wall" << endl << endl;
 
     //@command: removes one available wall from the player that just placed the wall.
     if(player == "w" || player == "white")
@@ -566,7 +567,6 @@ bool Quoridors_game::playwall()
     board.board_config[x + 1][y].can_move_right = false;
     board.board_config[x][y + 1].can_move_left = false;
     board.board_config[x + 1][y + 1].can_move_left = false;
-    cout << "= placed the wall" << endl << endl;
 
     if(is_wall_valid() == false)
     {
@@ -577,6 +577,8 @@ bool Quoridors_game::playwall()
       board.board_config[x + 1][y + 1].can_move_left = true;
       return false;
     }
+
+    cout << "= placed the wall" << endl << endl;
 
     //@command: removes one available wall from the player that just placed the wall.
     if(player == "w" || player == "white")
@@ -802,6 +804,12 @@ bool Quoridors_game::showboard()
   cout << endl << endl;
 
   free(previous_placed_vertical_walls);
+
+  return true;
+}
+
+bool Quoridors_game::is_wall_valid()
+{
 
   return true;
 }

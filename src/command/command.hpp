@@ -67,6 +67,8 @@ class Quoridors_game
 
     bool quit_game;       //boolean variable so you can quit from the game when the quit function is called.
 
+    bool is_wall_valid();
+
   public:
 
     Quoridors_game();                    //sets board size to 9x9 (default size).
